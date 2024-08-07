@@ -1,33 +1,33 @@
-class Tablero:
+class Board:
     def __init__(self):
-        # Llama al método crear_tablero al crear una instancia de Tablero y guarda el resultado en self.tablero
-        self.tablero = self.crear_tablero()
+        # Llama al método create_board al crear una instancia de Tablero y guarda el resultado en self.tablero
+        self.board = self.create_board()
 
-    def crear_tablero(self):
-        tablero = []  #Inicializa una lista vacía que representará el tablero
+    def create_board(self):
+        board = []  #Inicializa una lista vacía que representará el tablero
         
-        for fila in range(8): #Recorre 8 filas
+        for row in range(8): #Recorre 8 filas
 
-            tablero.append([])  
+            board.append([]) # Añade una lista vacía para cada fila
 
-            for columna in range(8):
-                if (fila + columna) % 2 == 0: #Alterna entre espacios claros (" ") y casillas oscuras ("#")
-                    tablero[fila].append(" ")
+            for column in range(8):
+                if (row + column) % 2 == 0: #Alterna entre espacios claros (" ") y casillas oscuras ("#")
+                    board[row].append(" ")
                 else:
-                    tablero[fila].append("#")
+                    board[row].append("*")
         
-        return tablero #Devuelve el tablero completo
+        return board #Devuelve el tablero completo
 
-    def mostrar(self):
+    def show_board(self):
         print("  a b c d e f g h")
         #Recorre cada fila del tablero con su índice
-        for i, fila in enumerate(self.tablero): #enumerate: función que devuelve el índice y el elemento para cada iteración sobre self.tablero
+        for i, row in enumerate(self.board): #enumerate: función que devuelve el índice y el elemento para cada iteración sobre self.tablero
 
             print(8 - i, end=" ") #Imprime el número de fila (de 8 a 1) seguido de un espacio
             
-            for casilla in fila: #Recorre cada casilla de la fila e imprime su contenido seguido de un espacio
+            for square in row: #Recorre cada casilla de la fila e imprime su contenido seguido de un espacio
                 
-                print(casilla, end=" ")
+                print(square, end=" ")
             
             print(8 - i) #Imprime el número de fila al final de la fila y salta a la siguiente línea
       
@@ -35,6 +35,6 @@ class Tablero:
 
 if __name__ == "__main__":
     
-    tablero = Tablero() #Crea una instancia de Tablero
+    board = Board() #Crea una instancia de Tablero
     
-    tablero.mostrar() #Llama al método mostrar para imprimir el tablero en la consola
+    board.show_board() #Llama al método show_board para imprimir el tablero en la consola
