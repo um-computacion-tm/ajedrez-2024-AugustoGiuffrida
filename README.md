@@ -14,5 +14,5 @@
 
 3. Desactivar el entorno virtual:
 ```python
-deactivate
+    deactivate
 ```
