@@ -6,6 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Status: [Development]
 
+## [0.0.2] - 2024-08-07
+
+### Added
+- Test del tablero
+
+### To do
+- Terminar de documentar el codigo del tablero
+- Mejorar el diseño del tablero
+
 ## [0.0.1] - 2024-08-07
 
 ### Added
