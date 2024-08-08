@@ -1,7 +1,12 @@
 import unittest
+import sys
+import os
+
+# Asegúrate de que la ruta del directorio del proyecto esté en sys.path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+
 from game.board import Board
-
-
 
 class TestBoard(unittest.TestCase):
 
