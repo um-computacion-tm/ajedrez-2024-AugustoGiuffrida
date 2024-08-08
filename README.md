@@ -42,3 +42,9 @@ coverage report -m
 ```shell
 python -m unittest tests/test_example.py
 ```
+
+4. Reporte y ejecucion:
+```shell
+coverage run -m unittest && coverage xml && coverage report -m
+```
+
