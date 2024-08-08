@@ -6,6 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Status: [Development]
 
+## [0.0.4] - 2024-08-08
+
+### Added
+- Se añadio la clase celda
+
+### To do
+- Terminar de documentar el codigo del tablero
+- Terminar los tests necesarios
+
 ## [0.0.3] - 2024-08-08
 
 ### Added
@@ -13,7 +22,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### To do
 - Terminar de documentar el codigo del tablero
-- Empezar con el codigo de la torre
 
 ### Known issues
 - El test coverage no funciona en el repositorio remoto
