@@ -19,22 +19,13 @@ class Board:
         return board #Devuelve el tablero completo
 
     def show_board(self):
-        print("  a b c d e f g h")
-        #Recorre cada fila del tablero con su índice
-        for i, row in enumerate(self.board): #enumerate: función que devuelve el índice y el elemento para cada iteración sobre self.tablero
-
-            print(8 - i, end=" ") #Imprime el número de fila (de 8 a 1) seguido de un espacio
-            
-            for square in row: #Recorre cada casilla de la fila e imprime su contenido seguido de un espacio
-                
-                print(square, end=" ")
-            
-            print(8 - i) #Imprime el número de fila al final de la fila y salta a la siguiente línea
-      
-        print("  a b c d e f g h")
+        output = "  a b c d e f g h\n"
+        # Recorre cada fila del tablero con su índice
+        for i, row in enumerate(self.board):
+            output += f"{8 - i} " + " ".join(row) + f" {8 - i}\n"
+        output += "  a b c d e f g h"
+        return output
 
 if __name__ == "__main__":
-    
-    board = Board() #Crea una instancia de Tablero
-    
-    board.show_board() #Llama al método show_board para imprimir el tablero en la consola
+    board = Board()  # Crea una instancia de Board
+    print(board.show_board())  # Imprime la salida del método show_board en la consola
