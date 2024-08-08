@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Status: [Development]
 
+## [0.0.5] - 2024-08-08
+
+### Added
+- Se añadieron los tests de las celdas
+
+### To do
+- Terminar de documentar 
+
 ## [0.0.4] - 2024-08-08
 
 ### Added
