@@ -1,7 +1,9 @@
 class Cell:
     def __init__(self, color, content=" "):
-        self.color = color  # Color de la celda ("white" o "black")
-        self.content = content  # Contenido de la celda (pieza, vacío, etc.)
+        if color not in ["white", "black"]:
+            raise ValueError(f"Invalid color: {color}")
+        self.color = color
+        self.content = content
 
     def __str__(self): #método que se utiliza para representar una instancia de la clase como una cadena de texto
         return self.content# Retorna el contenido de la celda para su visualización
@@ -13,3 +15,7 @@ class Cell:
             return " "  # Celda blanca
         else:
             return "*"  # Celda negra
+
+cell = Cell("black", "p")
+print(cell)
+print (cell.display_symbol())
