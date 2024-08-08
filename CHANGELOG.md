@@ -6,6 +6,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Status: [Development]
 
+## [0.0.3] - 2024-08-08
+
+### Added
+- Se mejoro la estetica del tablero
+
+### To do
+- Terminar de documentar el codigo del tablero
+- Empezar con el codigo de la torre
+
+### Known issues
+- El test coverage no funciona en el repositorio remoto
+
 ## [0.0.2] - 2024-08-07
 
 ### Added
