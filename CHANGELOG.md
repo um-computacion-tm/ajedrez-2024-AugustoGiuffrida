@@ -6,6 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Status: [Development]
 
+## [0.0.6] - 2024-08-09
+
+### Added
+- Se añadieron las funciones `place_piece`, `remove_piece`, `is_occupied` a la clase Cell
+- Se añadieron los test de dichas funciones
+### To do
+- Terminar de documentar 
+- Implementar con la clase Piece
+
 ## [0.0.5] - 2024-08-08
 
 ### Added
