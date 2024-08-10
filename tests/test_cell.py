@@ -4,60 +4,58 @@ from game.cell import Cell
 class TestCell(unittest.TestCase):
 
     def test_cell_creation_black(self):
-        cell = Cell("black")
-        self.assertEqual(cell.color, "black")
-        self.assertEqual(cell.content, " ")  
+        cell = Cell("black", (0, 0))
+        self.assertEqual(cell.get_color(), "black")
+        self.assertEqual(cell.get_content(), " ")
 
     def test_cell_creation_white(self):
-        cell = Cell("white")
-        self.assertEqual(cell.color, "white")
-        self.assertEqual(cell.content, " ")  
+        cell = Cell("white", (0, 0))
+        self.assertEqual(cell.get_color(), "white")
+        self.assertEqual(cell.get_content(), " ")
 
-    def test_cell_creation_back_with_content(self):
-        cell = Cell("black", "p")
-        self.assertEqual(cell.color, "black")
-        self.assertEqual(cell.content, "p")
+    def test_cell_creation_black_with_content(self):
+        cell = Cell("black", (0, 0), "p")
+        self.assertEqual(cell.get_color(), "black")
+        self.assertEqual(cell.get_content(), "p")
 
     def test_cell_creation_white_with_content(self):
-        cell = Cell("white", "p")
-        self.assertEqual(cell.color, "white")
-        self.assertEqual(cell.content, "p")
+        cell = Cell("white", (0, 0), "p")
+        self.assertEqual(cell.get_color(), "white")
+        self.assertEqual(cell.get_content(), "p")
 
-    def test_invalid_color(self):          #asegura que el código lance una excepción del tipo ValueError. 
-        with self.assertRaises(ValueError):#Si el código no lanza la excepción esperada, el test fallará.
-            Cell("blue")                   #Se espera que la clase Cell lance una excepción ValueError 
-                                           #porque "blue" no es un color válido
+    def test_invalid_color(self):
+        with self.assertRaises(ValueError):
+            Cell("blue", (0, 0))
 
     def test_display_symbol(self):
-        self.assertEqual(Cell("black").display_symbol(), "*")
-        self.assertEqual(Cell("white").display_symbol(), " ")
+        self.assertEqual(Cell("black", (0, 0)).display_symbol(), "*")
+        self.assertEqual(Cell("white", (0, 0)).display_symbol(), " ")
 
-
-    def test_place_piece(self): #Si la pieza en la celda no coincide con la que intentamos colocar         
-        cell = Cell("white")    #la prueba fallará
-        piece = "Pawn"  
+    def test_place_piece(self):
+        cell = Cell("white", (0, 0))
+        piece = "Pawn"
         cell.place_piece(piece)
-        self.assertEqual(cell.piece, piece)
+        self.assertEqual(cell.get_piece(), piece)
 
-    def test_remove_piece(self): 
-        cell = Cell("black")
+    def test_remove_piece(self):
+        cell = Cell("black", (0, 0))
         piece = "Knight"
-        cell.place_piece(piece) #El método place_piece debe asignar la pieza a la celda.
-        removed_piece = cell.remove_piece() #Se quita la pieza de la celda utilizando el método remove_piece.
-        self.assertEqual(removed_piece, piece)#El método debería devolver la pieza que estaba almacenada en la celda antes de quitarla
-        self.assertIsNone(cell.piece) #verifica que después de haber quitado la pieza, la celda no contenga ninguna pieza 
+        cell.place_piece(piece)
+        removed_piece = cell.remove_piece()
+        self.assertEqual(removed_piece, piece)
+        self.assertIsNone(cell.get_piece())
 
     def test_is_occupied(self):
-        cell = Cell("white")                #Se verifica que la celda recién creada no esté ocupada. 
-        self.assertFalse(cell.is_occupied())#La función is_occupied debería devolver False
-        cell.place_piece("Bishop")          #Se coloca una pieza,
-        self.assertTrue(cell.is_occupied()) ##La función is_occupied debería devolver True
+        cell = Cell("white", (0, 0))
+        self.assertFalse(cell.is_occupied())
+        cell.place_piece("Bishop")
+        self.assertTrue(cell.is_occupied())
 
     def test_place_piece_on_occupied_cell(self):
-        cell = Cell("black")
+        cell = Cell("black", (0, 0))
         cell.place_piece("Queen")
-        with self.assertRaises(ValueError):#si se intenta colocar una segunda pieza en una celda ocupada, debería lanzar un error
-            cell.place_piece("King")       #Se intenta colocar una segunda pieza en la celda que ya está ocupada 
-                                           
+        with self.assertRaises(ValueError):
+            cell.place_piece("King")
+
 if __name__ == '__main__':
     unittest.main()
