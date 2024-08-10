@@ -1,47 +1,52 @@
+import sys
+sys.stdout.reconfigure(encoding='utf-8')
 
-from .cell import Cell 
+from .cell import Cell
+from .piece import Pieces
 
 class Board:
-
     def __init__(self):
-        self.board = self.create_board()  # Crea el tablero con celdas
+        self.__board__ = self.create_board()
+        self.setup_pieces()
 
+    def get_board(self):
+        return self.__board__
 
     def create_board(self):
-        board = []  # Inicializa una lista vacía para el tablero
+        board = []
         for row in range(8):
-            board.append([])  # Agrega una nueva fila al tablero
+            board.append([])
             for column in range(8):
-                if (row + column) % 2 == 0: # Determina el color de la celda
-                    color = "white" 
-                else:
-                    color = "black"  
-                board[row].append(Cell(color))  # Crea una celda con el color correspondiente
-        return board  # Devuelve el tablero completo
-
+                color = "white" if (row + column) % 2 == 0 else "black"
+                board[row].append(Cell(color, (row, column)))
+        return board
 
     def show_board(self):
-        output = "     a     b     c     d     e     f     g     h\n"  # Encabezado de columnas
-        output += "  ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┐\n"  # Línea superior del tablero
-        
-        for i, row in enumerate(self.board):
-            output += f"{8 - i} │"  # Etiqueta de la fila (número de fila)
+        output = "    a     b     c     d     e     f     g     h\n"
+        output += "  ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┐\n"
+
+        for i, row in enumerate(self.__board__):
+            output += f"{8 - i} │"
             for cell in row:
-                # Añade el símbolo visual de la celda y las líneas divisorias
-                output += f"  {cell.display_symbol()}  │"
-            output += f" {8 - i}\n"  # Etiqueta de la fila (número de fila) al final de la línea
+                piece = cell.get_piece()
+                if piece:
+                    content = f"{piece}".center(5)  # Centramos la pieza en una celda de 5 caracteres
+                else:
+                    content = " ".center(5)  # Centramos un espacio en una celda de 5 caracteres
+                output += f"{content}│"
+            output += f" {8 - i}\n"
             if i < 7:
                 output += "  ├─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┤\n"
             else:
-                output += "  └─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┘\n"  # Línea inferior del tablero
-        
-        output += "     a     b     c     d     e     f     g     h\n"  # Etiqueta de columnas
-        return output  # Devuelve la representación en texto del tablero
+                output += "  └─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┘\n"
+
+        output += "    a     b     c     d     e     f     g     h\n"
+        return output
+
+    def setup_pieces(self):
+        pieces = Pieces(self.__board__)
+        pieces.place_pieces()
 
 if __name__ == "__main__":
-    board = Board()  # Crea una instancia del tablero
-    print(board.show_board())  # Imprime la representación en texto del tablero
-
-
-
-
+    board = Board()
+    print(board.show_board())

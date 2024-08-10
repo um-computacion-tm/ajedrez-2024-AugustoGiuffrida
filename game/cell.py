@@ -1,36 +1,42 @@
 class Cell:
-    def __init__(self, color, content=" "):
+    def __init__(self, color, position, content=" "):
         if color not in ["white", "black"]:
             raise ValueError(f"Invalid color: {color}")
-        self.color = color
-        self.content = content
-        self.piece = None 
+        self.__color__ = color
+        self.__content__ = content
+        self.__position__ = position
+        self.__piece__ = None 
 
-    def __str__(self): #-->método que se utiliza para representar una instancia de la clase como una cadena de texto
-        return self.content# Retorna el contenido de la celda para su visualización
-                           #cuando se imprime o converte una celda a una cadena de texto, devuelve el valor almacenado 
+    def get_color(self):
+        return self.__color__
+
+    def get_position(self):
+        return self.__position__
+
+    def get_piece(self):
+        return self.__piece__
+
+    def get_content(self):
+        return self.__content__
+
+    def __str__(self):
+        return self.__content__
 
     def display_symbol(self):
-        # Devuelve el símbolo basado en el color de la celda
-        if self.color == "white":
-            return " "  # Celda blanca
-        else:
-            return "*"  # Celda negra
+        # Devuelve el símbolo basado en el contenido de la celda, si hay una pieza
+        if self.__piece__ is not None:
+            return self.__piece__  # Si hay una pieza, muestra el símbolo de la pieza
+        return " " if self.__color__ == "white" else "*"  # Muestra el color de la celda si está vacío
 
-    def place_piece(self, piece): #-->coloca una pieza en la celda actual
-        if self.piece is not None:#si self.piece no es None, significa que hay una pieza, no se puede poner otra pieza en esa celda.
-            raise ValueError("Cell already occupied")#indica que no se puede colocar una nueva pieza porque la celda ya está ocupada
-        self.piece = piece #permite colocar la nueva pieza.
+    def place_piece(self, piece): 
+        if self.__piece__ is not None:
+            raise ValueError("Cell already occupied")
+        self.__piece__ = piece 
 
     def remove_piece(self):
-        piece = self.piece #guarda la pieza que está en la celda (self.piece) en la variable piece.
-        self.piece = None  #la celda se "vacía" estableciendo self.piece a None
+        piece = self.__piece__
+        self.__piece__ = None
         return piece
 
-    def is_occupied(self):#-->verifica si la celda ya tiene una pieza
-        return self.piece is not None #Si hay una pieza (self.piece no es None), la función devuelve True. 
-                                      #Si no hay ninguna pieza en la celda (self.piece es None), devuelve False
-
-#cell = Cell("black", "p")
-#print(cell)
-#print (cell.display_symbol())
+    def is_occupied(self):
+        return self.__piece__ is not None
