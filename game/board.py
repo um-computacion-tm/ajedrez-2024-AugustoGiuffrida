@@ -1,13 +1,16 @@
 import sys
 sys.stdout.reconfigure(encoding='utf-8')
 
+
+
 from .cell import Cell
 from .piece import Pieces
+
 
 class Board:
     def __init__(self):
         self.__board__ = self.create_board()
-        self.setup_pieces()
+        self.show_pieces()
 
     def get_board(self):
         return self.__board__
@@ -17,11 +20,19 @@ class Board:
         for row in range(8):
             board.append([])
             for column in range(8):
-                color = "white" if (row + column) % 2 == 0 else "black"
+                if (row + column) % 2 == 0:
+                    color = "white" 
+                else: 
+                    color = "black"
                 board[row].append(Cell(color, (row, column)))
         return board
 
     def show_board(self):
+        # Definimos los códigos de colores ANSI
+        WHITE_BG = '\033[47m'
+        BLACK_BG = '\033[40m'
+        RESET = '\033[0m'
+
         output = "    a     b     c     d     e     f     g     h\n"
         output += "  ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┐\n"
 
@@ -29,11 +40,13 @@ class Board:
             output += f"{8 - i} │"
             for cell in row:
                 piece = cell.get_piece()
-                if piece:
-                    content = f"{piece}".center(5)  # Centramos la pieza en una celda de 5 caracteres
+                content = f"{piece}" if piece else " "
+                if cell.get_color() == "white":
+                    cell_color = WHITE_BG
                 else:
-                    content = " ".center(5)  # Centramos un espacio en una celda de 5 caracteres
-                output += f"{content}│"
+                    cell_color = BLACK_BG
+                
+                output += f"{cell_color}{content.center(5)}{RESET}│"
             output += f" {8 - i}\n"
             if i < 7:
                 output += "  ├─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┤\n"
@@ -43,9 +56,10 @@ class Board:
         output += "    a     b     c     d     e     f     g     h\n"
         return output
 
-    def setup_pieces(self):
+    def show_pieces(self):
         pieces = Pieces(self.__board__)
-        pieces.place_pieces()
+        pieces.set_pieces()
+        
 
 if __name__ == "__main__":
     board = Board()
