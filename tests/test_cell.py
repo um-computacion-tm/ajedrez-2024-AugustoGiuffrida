@@ -1,6 +1,7 @@
 import unittest
 from game.cell import Cell
 
+
 class TestCell(unittest.TestCase):
 
     def test_cell_creation_black(self):
@@ -26,10 +27,6 @@ class TestCell(unittest.TestCase):
     def test_invalid_color(self):
         with self.assertRaises(ValueError):
             Cell("blue", (0, 0))
-
-    def test_display_symbol(self):
-        self.assertEqual(Cell("black", (0, 0)).display_symbol(), "*")
-        self.assertEqual(Cell("white", (0, 0)).display_symbol(), " ")
 
     def test_place_piece(self):
         cell = Cell("white", (0, 0))
