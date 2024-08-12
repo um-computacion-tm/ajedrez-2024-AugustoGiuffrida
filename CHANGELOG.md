@@ -6,11 +6,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Status: [Development]
 
+## [0.0.8] - 2024-08-11
+
+### Added
+- Se añadieron mejoras esteticas al tablero (colores)
+- Se  mejoraron los test es general
+
+### To do
+- Terminar de documentar 
+- Terminar la clase Piece
+- Terminar los tests de la clase Piece 
+
 ## [0.0.7] - 2024-08-10
 
 ### Added
 - Se añadio la clase Pieces
-- Se mejoro el metodo show_board de la Board
+- Se mejoro el metodo show_board de la clase Board
 - Se los atributos pasaron de publicos a privados
 
 ### To do
