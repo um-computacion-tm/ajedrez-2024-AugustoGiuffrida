@@ -54,21 +54,25 @@ class Board:
         Returns:
             str: Una representación en formato de texto del tablero de ajedrez.
         """
-        # Define códigos de colores para las celdas del tablero.
         WHITE_BG = '\033[47m'  # Código ANSI para fondo blanco.
         BLACK_BG = '\033[40m'  # Código ANSI para fondo negro.
-        RESET = '\033[0m'  # Código ANSI para reiniciar el color.
+        RESET = '\033[0m'      # Código ANSI para reiniciar el color.
 
-        # Encabezado del tablero con las letras de las columnas.
         output = "    a     b     c     d     e     f     g     h\n"
         output += "  ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┐\n"
 
-        # Itera sobre cada fila del tablero.
+        #i: índice de la fila actual en el tablero
+        #row: lista que representa una fila del tablero
         for i, row in enumerate(self.__board__):
-            output += f"{8 - i} │"  # Añade el número de fila al inicio de la línea.
-            for cell in row:  # Itera sobre cada celda en la fila.
-                piece = cell.get_piece()  # Obtiene la pieza en la celda.
-                content = f"{piece}" if piece else " "  # Si hay una pieza, se muestra; de lo contrario, muestra un espacio.
+            output += f"{8 - i} │"        # Añade el número de fila al inicio de la línea.
+            for cell in row:              
+                piece = cell.get_piece()  
+
+                # Si hay una pieza, se muestra; de lo contrario, muestra un espacio.
+                if piece is not None:  
+                    content = f"{piece}" 
+                else:
+                    content = " "
                 
                 # Determina el color de la celda.
                 if cell.get_color() == "white":
@@ -79,11 +83,10 @@ class Board:
                 # Añade la celda al tablero con el color de fondo correspondiente y el contenido centrado.
                 output += f"{cell_color}{content.center(5)}{RESET}│"
             output += f" {8 - i}\n"  # Añade el número de fila al final de la línea.
+            
             if i < 7:
-                # Añade una línea divisoria entre filas.
                 output += "  ├─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┤\n"
             else:
-                # Añade la línea final del tablero.
                 output += "  └─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┘\n"
 
         # Añade el encabezado de las columnas nuevamente en la parte inferior.

@@ -61,20 +61,20 @@ class Pieces:
         # Diccionario que define las posiciones iniciales de las piezas para ambos colores en el tablero.
         initial_positions = {
             "white": {
-                "rook": [(7, 0), (7, 7)],  # Posiciones iniciales de las torres blancas.
-                "knight": [(7, 1), (7, 6)],  # Posiciones iniciales de los caballos blancos.
-                "bishop": [(7, 2), (7, 5)],  # Posiciones iniciales de los alfiles blancos.
-                "queen": [(7, 3)],  # Posición inicial de la reina blanca.
-                "king": [(7, 4)],  # Posición inicial del rey blanco.
-                "pawn": [(6, i) for i in range(8)]  # Posiciones iniciales de los peones blancos.
+                "rook": [(7, 0), (7, 7)],  
+                "knight": [(7, 1), (7, 6)],  
+                "bishop": [(7, 2), (7, 5)],  
+                "queen": [(7, 3)],  
+                "king": [(7, 4)], 
+                "pawn": [(6, i) for i in range(8)]  
             },
             "black": {
-                "rook": [(0, 0), (0, 7)],  # Posiciones iniciales de las torres negras.
-                "knight": [(0, 1), (0, 6)],  # Posiciones iniciales de los caballos negros.
-                "bishop": [(0, 2), (0, 5)],  # Posiciones iniciales de los alfiles negros.
-                "queen": [(0, 3)],  # Posición inicial de la reina negra.
-                "king": [(0, 4)],  # Posición inicial del rey negro.
-                "pawn": [(1, i) for i in range(8)]  # Posiciones iniciales de los peones negros.
+                "rook": [(0, 0), (0, 7)],  
+                "knight": [(0, 1), (0, 6)], 
+                "bishop": [(0, 2), (0, 5)],  
+                "queen": [(0, 3)],  
+                "king": [(0, 4)],  
+                "pawn": [(1, i) for i in range(8)]  
             }
         }
 
@@ -84,4 +84,4 @@ class Pieces:
                     row, col = position
                     if self.__board__[row][col].is_occupied(): # Verifica si la celda ya está ocupada antes de colocar la pieza
                         raise ValueError(f"Cell at {position} already occupied.")
-                    self.__board__[row][col].place_piece(chess_pieces[color][piece])
+                    self.__board__[row][col].place_piece(chess_pieces2[color][piece])

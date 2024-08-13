@@ -18,32 +18,70 @@ class TestBoard(unittest.TestCase):
                 self.assertEqual(cell.get_color(), expected_color, f"Celda en la posición {(row, col)} debería ser {expected_color}.")
 
 
-    def test_initial_piece_placement(self):
-            board = Board().get_board()
-            # Verificar las piezas blancas
-            self.assertEqual(str(board[7][0].get_piece()), 'r', "Debe haber una torre blanca en la posición a8.")
-            self.assertEqual(str(board[7][1].get_piece()), 'h', "Debe haber un caballo blanco en la posición b8.")
-            self.assertEqual(str(board[7][2].get_piece()), 'b', "Debe haber un alfil blanco en la posición c8.")
-            self.assertEqual(str(board[7][3].get_piece()), 'q', "Debe haber una reina blanca en la posición d8.")
-            self.assertEqual(str(board[7][4].get_piece()), 'k', "Debe haber un rey blanco en la posición e8.")
-            self.assertEqual(str(board[7][5].get_piece()), 'b', "Debe haber un alfil blanco en la posición f8.")
-            self.assertEqual(str(board[7][6].get_piece()), 'h', "Debe haber un caballo blanco en la posición g8.")
-            self.assertEqual(str(board[7][7].get_piece()), 'r', "Debe haber una torre blanca en la posición h8.")
-            # Verificar los peones blancos en la fila 7
-            for col in range(8):
-                self.assertEqual(str(board[6][col].get_piece()), 'p', f"Debe haber un peón blanco en la posición {chr(97 + col)}7.")
-            # Verificar las piezas negras
-            self.assertEqual(str(board[0][0].get_piece()), 'R', "Debe haber una torre negra en la posición a1.")
-            self.assertEqual(str(board[0][1].get_piece()), 'H', "Debe haber un caballo negro en la posición b1.")
-            self.assertEqual(str(board[0][2].get_piece()), 'B', "Debe haber un alfil negro en la posición c1.")
-            self.assertEqual(str(board[0][3].get_piece()), 'Q', "Debe haber una reina negra en la posición d1.")
-            self.assertEqual(str(board[0][4].get_piece()), 'K', "Debe haber un rey negro en la posición e1.")
-            self.assertEqual(str(board[0][5].get_piece()), 'B', "Debe haber un alfil negro en la posición f1.")
-            self.assertEqual(str(board[0][6].get_piece()), 'H', "Debe haber un caballo negro en la posición g1.")
-            self.assertEqual(str(board[0][7].get_piece()), 'R', "Debe haber una torre negra en la posición h1.")
-            # Verificar los peones negros en la fila 1
-            for col in range(8):
-                self.assertEqual(str(board[1][col].get_piece()), 'P', f"Debe haber un peón negro en la posición {chr(97 + col)}2.")
+    def test_initial_piece_placement_white(self):
+        board = Board().get_board()
+        
+        # Verificar las piezas blancas
+        piece = str(board[7][0].get_piece())
+        self.assertTrue(piece in ['r', '♖'], "Debe haber una torre blanca en la posición a1.")
+        
+        piece = str(board[7][1].get_piece())
+        self.assertTrue(piece in ['h', '♘'], "Debe haber un caballo blanco en la posición b1.")
+        
+        piece = str(board[7][2].get_piece())
+        self.assertTrue(piece in ['b', '♗'], "Debe haber un alfil blanco en la posición c1.")
+        
+        piece = str(board[7][3].get_piece())
+        self.assertTrue(piece in ['q', '♕'], "Debe haber una reina blanca en la posición d1.")
+        
+        piece = str(board[7][4].get_piece())
+        self.assertTrue(piece in ['k', '♔'], "Debe haber un rey blanco en la posición e1.")
+        
+        piece = str(board[7][5].get_piece())
+        self.assertTrue(piece in ['b', '♗'], "Debe haber un alfil blanco en la posición f1.")
+        
+        piece = str(board[7][6].get_piece())
+        self.assertTrue(piece in ['h', '♘'], "Debe haber un caballo blanco en la posición g1.")
+        
+        piece = str(board[7][7].get_piece())
+        self.assertTrue(piece in ['r', '♖'], "Debe haber una torre blanca en la posición h1.")
+        
+        # Verificar los peones blancos en la fila 6
+        for col in range(8):
+            piece = str(board[6][col].get_piece())
+            self.assertTrue(piece in ['p', '♙'], f"Debe haber un peón blanco en la posición {chr(97 + col)}7.")
+    
+    def test_initial_piece_placement_black(self):
+        board = Board().get_board()
+
+        piece = str(board[0][0].get_piece())
+        self.assertTrue(piece in ['R', '♜'], "Debe haber una torre negra en la posición a8.")
+        
+        piece = str(board[0][1].get_piece())
+        self.assertTrue(piece in ['H', '♞'], "Debe haber un caballo negro en la posición b8.")
+        
+        piece = str(board[0][2].get_piece())
+        self.assertTrue(piece in ['B', '♝'], "Debe haber un alfil negro en la posición c8.")
+        
+        piece = str(board[0][3].get_piece())
+        self.assertTrue(piece in ['Q', '♛'], "Debe haber una reina negra en la posición d8.")
+        
+        piece = str(board[0][4].get_piece())
+        self.assertTrue(piece in ['K', '♚'], "Debe haber un rey negro en la posición e8.")
+        
+        piece = str(board[0][5].get_piece())
+        self.assertTrue(piece in ['B', '♝'], "Debe haber un alfil negro en la posición f8.")
+        
+        piece = str(board[0][6].get_piece())
+        self.assertTrue(piece in ['H', '♞'], "Debe haber un caballo negro en la posición g8.")
+        
+        piece = str(board[0][7].get_piece())
+        self.assertTrue(piece in ['R', '♜'], "Debe haber una torre negra en la posición h8.")
+
+        # Verificar los peones negros en la fila 1
+        for col in range(8):
+            piece = str(board[1][col].get_piece())
+            self.assertTrue(piece in ['P', '♟'], f"Debe haber un peón negro en la posición {chr(97 + col)}2.")
 
 
     def test_show_board_format(self):
