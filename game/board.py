@@ -1,51 +1,27 @@
 import sys
-sys.stdout.reconfigure(encoding='utf-8')  # Reconfigura la salida estándar para que utilice la codificación UTF-8.
+sys.stdout.reconfigure(encoding='utf-8') 
 
-from .cell import Cell  # Importa la clase Cell desde el módulo cell en el mismo paquete.
-from .piece import Pieces  # Importa la clase Pieces desde el módulo piece en el mismo paquete.
+from .cell import Cell 
+from .piece import Pieces 
 
 class Board:
-    """
-    Esta clase representa un tablero de ajedrez. Contiene métodos para crear el tablero,
-    mostrar las piezas en él y renderizar el tablero en formato de texto.
-    """
 
     def __init__(self):
-        """
-        Constructor de la clase Board. Inicializa el tablero creando las celdas y 
-        colocando las piezas en sus posiciones iniciales.
-        """
-        self.__board__ = self.create_board()  # Crea el tablero de ajedrez.
-        self.show_pieces()  # Coloca las piezas en sus posiciones iniciales.
-
-    def get_board(self):
-        """
-        Retorna el tablero actual.
-
-        Returns:
-            list: El tablero de ajedrez representado como una lista de listas de objetos Cell.
-        """
-        return self.__board__
-
-    def create_board(self):
-        """
-        Crea el tablero de ajedrez como una lista de listas de objetos Cell.
-
-        Returns:
-            list: Una lista de listas, donde cada sublista representa una fila del tablero,
-                  y cada elemento de la sublista es una instancia de la clase Cell.
-        """
-        board = []  # Inicializa una lista vacía para el tablero.
+        self.__positions__ = []
         for row in range(8):  # Itera sobre las filas del tablero (0 a 7).
-            board.append([])  # Añade una nueva fila como una lista vacía.
+            self.__positions__ .append([])  # Añade una nueva fila como una lista vacía.
             for column in range(8):  # Itera sobre las columnas del tablero (0 a 7).
                 # Determina el color de la celda: blanco si la suma de la fila y columna es par, negro si es impar.
                 if (row + column) % 2 == 0:
                     color = "white" 
                 else: 
                     color = "black"
-                board[row].append(Cell(color, (row, column)))  # Añade una celda al tablero con el color correspondiente.
-        return board  # Retorna el tablero creado.
+                self.__positions__ [row].append(Cell(color, (row, column)))  # Añade una celda al tablero con el color correspondiente.
+        
+
+    def get_positions(self):
+        return self.__positions__
+
 
     def show_board(self):
         """
@@ -63,7 +39,7 @@ class Board:
 
         #i: índice de la fila actual en el tablero
         #row: lista que representa una fila del tablero
-        for i, row in enumerate(self.__board__):
+        for i, row in enumerate(self.__positions__):
             output += f"{8 - i} │"        # Añade el número de fila al inicio de la línea.
             for cell in row:              
                 piece = cell.get_piece()  
@@ -93,11 +69,6 @@ class Board:
         output += "    a     b     c     d     e     f     g     h\n"
         return output  # Retorna el tablero en formato de texto.
 
-    def show_pieces(self):
-        """
-        Coloca las piezas en el tablero utilizando la clase Pieces.
-        """
-        pieces = Pieces(self.__board__)  # Crea una instancia de la clase Pieces con el tablero actual.
-        pieces.set_pieces()  # Coloca las piezas en sus posiciones iniciales.
+
 
 

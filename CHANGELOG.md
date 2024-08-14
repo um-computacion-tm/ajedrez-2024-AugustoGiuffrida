@@ -9,6 +9,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [0.0.9] - 2024-08-12
 
 ### Added
+- Clase Chess
+- Correcciones clase Board y Cell
+
+### To do
+- Terminar la clase Piece
+- Terminar los tests de la clase Piece 
+
+## [0.0.9] - 2024-08-12
+
+### Added
 - Se documentaron las funciones
 
 ### To do
