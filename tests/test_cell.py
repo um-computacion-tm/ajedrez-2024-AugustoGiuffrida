@@ -54,5 +54,21 @@ class TestCell(unittest.TestCase):
         with self.assertRaises(ValueError):
             cell.place_piece("King")
 
+    def test_str_method(self):
+        cell = Cell("white", (0, 0), "p")
+        self.assertEqual(str(cell), "p")
+
+    def test_get_position(self):
+        cell = Cell("white", (0, 0))
+        self.assertEqual(cell.get_position(), (0, 0))
+
+    def test_invalid_color_empty_string(self):
+        with self.assertRaises(ValueError):
+            Cell("", (0, 0))
+
+    def test_invalid_color_none(self):
+        with self.assertRaises(ValueError):
+            Cell(None, (0, 0))
+
 if __name__ == '__main__':
     unittest.main()
