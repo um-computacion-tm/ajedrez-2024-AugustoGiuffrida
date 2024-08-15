@@ -1,3 +1,5 @@
+from .piece import Pieces
+
 class Rook(Pieces):
     def __init__(self, color, position):
         super().__init__(color, position)
