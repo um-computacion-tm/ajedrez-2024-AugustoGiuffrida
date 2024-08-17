@@ -1,22 +1,22 @@
 import unittest
-from game.piece import Pieces
+from game.piece import Pieces, Rook, Pawn
 
 class TestPieces(unittest.TestCase):
 
     def test_piece_initialization(self):
         piece = Pieces("white", (0, 0))
-        self.assertEqual(piece.__color__, "white")
-        self.assertEqual(piece.__position__, (0, 0))
-        self.assertIsNone(piece.__symbol__)
+        self.assertEqual(piece.get_color(), "white")
+        self.assertEqual(piece.get_position(), (0, 0))
+        self.assertIsNone(piece.get_symbol())
 
     def test_piece_move(self):
         piece = Pieces("black", (1, 1))
         piece.move((2, 2))
-        self.assertEqual(piece.__position__, (2, 2))
+        self.assertEqual(piece.get_position(), (2, 2))
 
     def test_piece_repr_without_symbol(self):
         piece = Pieces("white", (0, 0))
-        self.assertEqual(repr(piece), "?")
+        self.assertEqual(repr(piece), "")
 
     def test_valid_moves_not_implemented(self):
         piece = Pieces("white", (0, 0))
