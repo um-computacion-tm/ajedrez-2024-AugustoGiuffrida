@@ -32,16 +32,9 @@ class Rook(Pieces):
     def __init__(self, color, position):
         super().__init__(color, position)
 
-    def valid_moves(self, board):
+    def valid_moves_vertical(self, board):
         moves = []
         row, column = self.get_position() 
-
-        for i in range(8):
-            if i != row:
-                moves.append((i,column))
-            if i != column:
-                moves.append((row,i))      
-        #return moves
 
         #Movimientos hacia arriba (columna fija, fila decrece)
         for i in range (row-1,-1,-1):
@@ -60,6 +53,11 @@ class Rook(Pieces):
                     moves.append((i,column))                       
                 break
             moves.append((i, column))    
+        return moves
+
+    def valid_moves_horizontal(self, board):
+        moves = []
+        row, column = self.get_position() 
 
         #Movimientos hacia la izquierda (fila fija, columna decrece)
         for i in range (column-1,-1,-1):
@@ -79,8 +77,7 @@ class Rook(Pieces):
                 break
             moves.append((row, i))   
         return moves                           
-                
-
+        
 class Pawn(Pieces):
     def __init__(self, color, position):
         super().__init__(color, position)
