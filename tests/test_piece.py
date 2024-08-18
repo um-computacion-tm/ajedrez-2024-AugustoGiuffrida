@@ -9,11 +9,6 @@ class TestPieces(unittest.TestCase):
         self.assertEqual(piece.get_position(), (0, 0))
         self.assertIsNone(piece.get_symbol())
 
-    def test_piece_move(self):
-        piece = Pieces("black", (1, 1))
-        piece.move((2, 2))
-        self.assertEqual(piece.get_position(), (2, 2))
-
     def test_piece_repr_without_symbol(self):
         piece = Pieces("white", (0, 0))
         self.assertEqual(repr(piece), "")

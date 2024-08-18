@@ -1,5 +1,4 @@
 class Cell:
-
     def __init__(self, color, position, content=" "):
         # Verifica que el color sea válido.
         if color not in ["white", "black"]:
