@@ -17,7 +17,7 @@ class TestBoard(unittest.TestCase):
 
 
     def test_initial_piece_placement_white(self):
-        board = Chess().get_board().get_positions()  # Acceder al tablero a través del método público
+        board = Chess().board().get_positions()  # Acceder al tablero a través del método público
         
         # Verificar las piezas blancas
         piece = str(board[7][0].get_piece())
@@ -50,7 +50,7 @@ class TestBoard(unittest.TestCase):
             self.assertIn(piece, ['p', '♙'], f"Debe haber un peón blanco en la posición {chr(97 + col)}7.")
     
     def test_initial_piece_placement_black(self):
-        board = Chess().get_board().get_positions()  # Acceder al tablero a través del método público
+        board = Chess().board().get_positions()  # Acceder al tablero a través del método público
 
         piece = str(board[0][0].get_piece())
         self.assertIn(piece, ['R', '♜'], "Debe haber una torre negra en la posición a8.")

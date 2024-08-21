@@ -4,11 +4,11 @@ from game.piece import Pieces
 class Chess:
 
     def __init__(self):
-        self.__board__ = Board()
-        self.__matrix__ = __make_board__.get_position()
+        #self.__board__ = Board()
+        #self.__matrix__ = __make_board__.get_position()
 
-        # self.__board__ = Board()  # Inicializa el tablero.
-        # self.__positions__ = self.__board__.get_positions()  # Obtén las posiciones del tablero.
+        self.__board__ = Board()  # Inicializa el tablero.
+        self.__matrix__= self.__board__.get_positions()  # Obtén las posiciones del tablero.
         self.set_pieces()  # Coloca las piezas en sus posiciones iniciales.
         #print(self.__board__.show_board())
 
@@ -16,25 +16,6 @@ class Chess:
         return self.__board__
 
     def set_pieces(self):
-        # Diccionario que almacena la representación de las piezas de ajedrez con letras minúsculas (blanco) y mayúsculas (negro).
-        chess_pieces = {
-            "white": {
-                "king": "k",
-                "queen": "q",
-                "rook": "r",
-                "bishop": "b",
-                "knight": "h",
-                "pawn": "p"
-            },
-            "black": {
-                "king": "K",
-                "queen": "Q",
-                "rook": "R",
-                "bishop": "B",
-                "knight": "H",
-                "pawn": "P"
-            }
-        }
         # Diccionario alternativo con la representación de las piezas de ajedrez usando símbolos unicode.
         chess_pieces2 = {
             "white": {

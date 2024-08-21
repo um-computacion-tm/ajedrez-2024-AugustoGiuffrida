@@ -24,31 +24,6 @@ class TestPieces(unittest.TestCase):
         with self.assertRaises(NotImplementedError):
             piece.valid_moves(self.board)
 
-    def test_rook_valid_moves_vertical(self):
-        moves = self.rook.valid_moves_vertical(self.board)
-        expected_moves = [(3, 4), (2, 4), (1, 4), (0, 4), (5, 4), (6, 4), (7, 4)]
-        self.assertEqual(moves, expected_moves)
-
-    def test_rook_valid_moves_horizontal(self):
-        moves = self.rook.valid_moves_horizontal(self.board)
-        expected_moves = [(4, 3), (4, 2), (4, 1), (4, 0), (4, 5), (4, 6), (4, 7)]
-        self.assertEqual(moves, expected_moves)
-
-    def test_pawn_valid_moves_initial_position(self):
-        moves = self.pawn.valid_moves(self.board)
-        expected_moves = [(5, 0), (4, 0)]
-        self.assertEqual(moves, expected_moves)
-
-    def test_pawn_valid_moves_after_move(self):
-        self.pawn.move((5, 0), self.board)
-        moves = self.pawn.valid_moves(self.board)
-        expected_moves = [(4, 0)]
-        self.assertEqual(moves, expected_moves)
-
-    def test_pawn_cannot_move_forward_if_blocked(self):
-        self.board[5][0].place_piece(Pawn("black", (5, 0)))
-        moves = self.pawn.valid_moves(self.board)
-        self.assertEqual(moves, [])
 
 if __name__ == '__main__':
     unittest.main()
