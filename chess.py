@@ -1,5 +1,5 @@
 from game.board import Board
-from game.piece import Pieces
+from game.piece import Pieces, Pawn, Rook, King, Knight, Queen, Bishop
 
 class Chess:
 
@@ -15,28 +15,26 @@ class Chess:
     def board(self):
         return self.__board__
 
-    def set_pieces(self):
-        # Diccionario alternativo con la representación de las piezas de ajedrez usando símbolos unicode.
-        chess_pieces2 = {
-            "white": {
-                "king": "♔",
-                "queen": "♕",
-                "rook": "♖",
-                "bishop": "♗",
-                "knight": "♘",
-                "pawn": "♙"
-            },
-            "black": {
-                "king": "♚",
-                "queen": "♛",
-                "rook": "♜",
-                "bishop": "♝",
-                "knight": "♞",
-                "pawn": "♟"
-            }
-        }
+    def make_piece(self, piece, color, position):
+        if piece == "pawn":
+            return Pawn(color, position)
 
-        # Diccionario que define las posiciones iniciales de las piezas para ambos colores en el tablero.
+        elif piece == "rook":
+            return Rook(color, position)
+
+        elif piece == "knight":
+            return Knight(color, position)
+
+        elif piece == "bishop":
+            return Bishop(color, position)
+
+        elif piece == "queen":
+            return Queen(color, position)
+
+        elif piece == "king":
+            return King(color, position)
+    def set_pieces(self):
+
         initial_positions = {
             "white": {
                 "rook": [(7, 0), (7, 7)],  
@@ -60,9 +58,9 @@ class Chess:
             for piece, positions in pieces.items():
                 for position in positions:
                     row, col = position
-                    if self.__matrix__[row][col].is_occupied():
-                        raise ValueError(f"Cell at {position} already occupied.")
-                    self.__matrix__[row][col].place_piece(chess_pieces2[color][piece])
+                    piece_obj = self.make_piece(piece,color, position)
+                    self.__matrix__[row][col].place_piece(piece_obj)
+
 
 if __name__ == "__main__":
     chess = Chess()  # Crea una instancia del juego de ajedrez.
