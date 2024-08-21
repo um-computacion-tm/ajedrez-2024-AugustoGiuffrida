@@ -4,12 +4,15 @@ from game.piece import Pieces
 class Chess:
 
     def __init__(self):
-        self.__board__ = Board()  # Inicializa el tablero.
-        self.__positions__ = self.__board__.get_positions()  # Obtén las posiciones del tablero.
+        self.__board__ = Board()
+        self.__matrix__ = __make_board__.get_position()
+
+        # self.__board__ = Board()  # Inicializa el tablero.
+        # self.__positions__ = self.__board__.get_positions()  # Obtén las posiciones del tablero.
         self.set_pieces()  # Coloca las piezas en sus posiciones iniciales.
         #print(self.__board__.show_board())
 
-    def get_board(self):
+    def board(self):
         return self.__board__
 
     def set_pieces(self):
@@ -76,9 +79,9 @@ class Chess:
             for piece, positions in pieces.items():
                 for position in positions:
                     row, col = position
-                    if self.__positions__[row][col].is_occupied():
+                    if self.__matrix__[row][col].is_occupied():
                         raise ValueError(f"Cell at {position} already occupied.")
-                    self.__positions__[row][col].place_piece(chess_pieces2[color][piece])
+                    self.__matrix__[row][col].place_piece(chess_pieces2[color][piece])
 
 if __name__ == "__main__":
     chess = Chess()  # Crea una instancia del juego de ajedrez.
