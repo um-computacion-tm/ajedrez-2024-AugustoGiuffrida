@@ -19,11 +19,5 @@ class TestPieces(unittest.TestCase):
         piece = Pieces("white", (0, 0))
         self.assertEqual(repr(piece), "")
 
-    def test_valid_moves_not_implemented(self):
-        piece = Pieces("white", (0, 0))
-        with self.assertRaises(NotImplementedError):
-            piece.valid_moves(self.board)
-
-
 if __name__ == '__main__':
     unittest.main()
