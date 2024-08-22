@@ -16,23 +16,34 @@ class Chess:
         return self.__board__
 
     def make_piece(self, piece, color, position):
-        if piece == "pawn":
-            return Pawn(color, position)
+        piece_classes = {
+            "pawn": Pawn,
+            "rook": Rook,
+            "knight": Knight,
+            "bishop": Bishop,
+            "queen": Queen,
+            "king": King
+        }
+        return piece_classes[piece](color, position) if piece in piece_classes else None
 
-        elif piece == "rook":
-            return Rook(color, position)
+        # if piece == "pawn":
+        #     return Pawn(color, position)
 
-        elif piece == "knight":
-            return Knight(color, position)
+        # elif piece == "rook":
+        #     return Rook(color, position)
 
-        elif piece == "bishop":
-            return Bishop(color, position)
+        # elif piece == "knight":
+        #     return Knight(color, position)
 
-        elif piece == "queen":
-            return Queen(color, position)
+        # elif piece == "bishop":
+        #     return Bishop(color, position)
 
-        elif piece == "king":
-            return King(color, position)
+        # elif piece == "queen":
+        #     return Queen(color, position)
+
+        # elif piece == "king":
+        #     return King(color, position)
+            
     def set_pieces(self):
 
         initial_positions = {
