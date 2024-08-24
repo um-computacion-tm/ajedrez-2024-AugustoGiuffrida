@@ -2,7 +2,7 @@ import unittest
 
 from game.board import Board
 from game.cell import Cell
-from chess import Chess  
+from game.chess import Chess  
 
 class TestBoard(unittest.TestCase):
 
