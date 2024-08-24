@@ -67,13 +67,6 @@ class Queen(Pieces):
     def __repr__(self):
         return "♕" if self.get_color() == "white" else "♛"
 
-       
-rook_white = Rook("white", "a1")
-rook_black = Rook("black", "h8")
-
-print(rook_white)  
-print(rook_black)  
-
 # chess_pieces2 = {
 #     "white": {
 #         "king": "♔",
