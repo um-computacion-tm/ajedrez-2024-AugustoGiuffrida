@@ -20,11 +20,8 @@ class Chess:
         return True
    
     def change_turn(self):
-        if self.__turn__ == "white":
-            self.__turn__ = "black"
-        else:
-            self.__turn__ = "white"
-
+        self.__turn__ = "black" if self.__turn__ == "white" else "white"
+            
     def make_piece(self, piece, color, position):
         piece_classes = {
             "pawn": Pawn,
