@@ -19,7 +19,6 @@ class Chess:
     def is_playing(self):
         return True
    
-   
     def change_turn(self):
         if self.__turn__ == "white":
             self.__turn__ = "black"
