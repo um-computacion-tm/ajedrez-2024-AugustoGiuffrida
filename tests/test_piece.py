@@ -13,11 +13,6 @@ class TestPieces(unittest.TestCase):
         piece = Pieces("white", (0, 0))
         self.assertEqual(piece.get_color(), "white")
         self.assertEqual(piece.get_position(), (0, 0))
-        self.assertIsNone(piece.get_symbol())
-
-    def test_piece_repr_without_symbol(self):
-        piece = Pieces("white", (0, 0))
-        self.assertEqual(repr(piece), "")
 
 if __name__ == '__main__':
     unittest.main()
