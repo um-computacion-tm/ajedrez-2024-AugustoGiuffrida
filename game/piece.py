@@ -18,30 +18,42 @@ class Pieces:
     def get_symbol(self):
         return self.__symbol__
 
+
 class Rook(Pieces):
-    white_repr = "♖"
-    black_repr = "♜"
+    def __init__(self, color, position):
+        super().__init__(color, position)
+        self.white_repr = "♖"
+        self.black_repr = "♜"
 
 class Pawn(Pieces):
-    white_repr = "♙"
-    black_repr = "♟"
-         
-class Bishop(Pieces):  
-    white_repr = "♗"
-    black_repr = "♝"  
+    def __init__(self, color, position):
+        super().__init__(color, position)
+        self.white_repr = "♙"
+        self.black_repr = "♟"
+
+class Bishop(Pieces):
+    def __init__(self, color, position):
+        super().__init__(color, position)
+        self.white_repr = "♗"
+        self.black_repr = "♝"
 
 class Knight(Pieces):
-    white_repr = "♘"
-    black_repr = "♞"
+    def __init__(self, color, position):
+        super().__init__(color, position)
+        self.white_repr = "♘"
+        self.black_repr = "♞"
 
 class King(Pieces):
-    white_repr = "♔"
-    black_repr = "♚"
-
+    def __init__(self, color, position):
+        super().__init__(color, position)
+        self.white_repr = "♔"
+        self.black_repr = "♚"
 
 class Queen(Pieces):
-    white_repr = "♕"
-    black_repr = "♛"
+    def __init__(self, color, position):
+        super().__init__(color, position)
+        self.white_repr = "♕"
+        self.black_repr = "♛"
 
 
 # chess_pieces2 = {
