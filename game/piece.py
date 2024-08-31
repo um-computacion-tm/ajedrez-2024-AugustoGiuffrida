@@ -23,51 +23,24 @@ class Rook(Pieces):
         self.white_repr = "♖"
         self.black_repr = "♜"
 
-    def valid_moves_vertical(self, board):
+    def valid_moves(self, board):
         moves = []
-        row, col = self.get_position() 
+        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]  # (fila, columna)
+        row, col = self.get_position()
 
-        #Movimientos hacia arriba (columna fija, fila decrece)
-        for i in range (row-1,-1,-1):
-            cell = board[i][col]
-            if cell.is_occupied():
-                if cell.get_piece().get_color() != self.get_color(): 
-                    moves.append((i,col))                            
-                break
-            moves.append((i, col))
-
-        #Movimientos hacia abajo (columna fija, fila aumenta)
-        for i in range (row+1,8):
-            cell = board[i][col]
-            if cell.is_occupied():
-                if cell.get_piece().get_color() != self.get_color():
-                    moves.append((i,col))                       
-                break
-            moves.append((i, col))    
-
-
-    def valid_moves_horizontal(self, board):
-        moves = []
-        row, col = self.get_position() 
-
-        #Movimientos hacia la izquierda (fila fija, columna decrece)
-        for i in range (col-1,-1,-1):
-            cell = board[row][i]
-            if cell.is_occupied():
-                if cell.get_piece().get_color() != self.get_color(): 
-                    moves.append((row,i))                       
-                break
-            moves.append((row, i))
-
-        #Movimientos hacia la derecha (fila fija, columna aumenta)
-        for i in range(col + 1, 8):
-            cell = board[row][i]
-            if cell.is_occupied():
-                if cell.get_piece().get_color() != self.get_color():
-                    moves.append((row, i))
-                break
-            moves.append((row, i))   
-        return moves   
+        for dr, dc in directions:
+            for i in range(1,8):
+                new_row, new_col = row + i*dr, col + i*dc
+                if 0<= new_row <=7 and 0<= new_col <=7:
+                    cell = board[new_row][new_col]   
+                    if cell.is_occupied():
+                        if cell.get_piece().get_color() != self.get_color():
+                            moves.append((new_row,new_col))
+                        break
+                    moves.append((new_row,new_col))
+                else:
+                    break 
+        return moves  
 
 
 class Bishop(Pieces):
@@ -76,67 +49,24 @@ class Bishop(Pieces):
         self.white_repr = "♗"
         self.black_repr = "♝"
 
-    def valid_moves_asc(self, board):
+    def valid_moves(self, board):
         moves = []
+        directions = [(-1, 1), (-1, -1), (1, 1), (1, -1)]  # Arriba-Derecha, Arriba-Izquierda, Abajo-Derecha, Abajo-Izquierda
         row, col = self.get_position() 
 
-        #Movimientos hacia arriba y la derecha 
-        for i in range(1,8):
-            new_row, new_col = row - i, col + i
-            if 0<= new_row <=7 and 0<= new_col <=7:
-                cell = board[new_row][new_col]   
-                if cell.is_occupied():
-                    if cell.get_piece().get_color() != self.get_color:
-                        moves.append((new_row,new_col))
-                    break
-                moves.append((new_row,new_col))
-            else:
-                break  
-
-        #Movimientos hacia arriba y la izquierda 
-        for i in range(1,8):
-            new_row, new_col = row - i, col - i
-            if 0<= new_row <=7 and 0<= new_col <=7:
-                cell = board[new_row][new_col]   
-                if cell.is_occupied():
-                    if cell.get_piece().get_color() != self.get_color:
-                        moves.append((new_row,new_col))
-                    break
-                moves.append((new_row,new_col))
-            else:
-                break  
-
-
-    def valid_moves_desc(self, board):
-        moves = []
-        row, col = self.get_position() 
-
-        #Movimientos hacia abajo y la derecha 
-        for i in range(1,8):
-            new_row, new_col = row + i, col + i
-            if 0<= new_row <=7 and 0<= new_col <=7:
-                cell = board[new_row][new_col]   
-                if cell.is_occupied():
-                    if cell.get_piece().get_color() != self.get_color:
-                        moves.append((new_row,new_col))
-                    break
-                moves.append((new_row,new_col))
-            else:
-                break  
-
-        #Movimientos hacia abajo y la izquierda 
-        for i in range(1,8):
-            new_row, new_col = row + i, col - i
-            if 0<= new_row <=7 and 0<= new_col <=7:
-                cell = board[new_row][new_col]   
-                if cell.is_occupied():
-                    if cell.get_piece().get_color() != self.get_color:
-                        moves.append((new_row,new_col))
-                    break
-                moves.append((new_row,new_col))
-            else:
-                break            
-
+        for dr, dc in directions:
+            for i in range(1,8):
+                new_row, new_col = row + i*dr, col + i*dc
+                if 0<= new_row <=7 and 0<= new_col <=7:
+                    cell = board[new_row][new_col]   
+                    if cell.is_occupied():
+                        if cell.get_piece().get_color() != self.get_color():
+                            moves.append((new_row,new_col))
+                        break
+                    moves.append((new_row,new_col))
+                else:
+                    break 
+        return moves         
 
 class Pawn(Pieces):
     def __init__(self, color, position):
@@ -161,7 +91,6 @@ class Queen(Pieces):
         super().__init__(color, position)
         self.white_repr = "♕"
         self.black_repr = "♛"
-
 
 # chess_pieces2 = {
 #     "white": {
