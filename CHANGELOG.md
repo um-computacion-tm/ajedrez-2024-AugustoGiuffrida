@@ -9,6 +9,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [0.0.10] - 2024-08-24
 
 ### Added
+- Validaciones de las posiciones ingresadas por el usuario  
+
+
+### To do
+- tests de la clase Piece 
+- tests de la clase Chess
+- tests de la clase Cli
+
+
+## [0.0.10] - 2024-08-24
+
+### Added
 - Clase Cli
 - Funciones change_turn, is_playing, turn en la clase Chess
 
