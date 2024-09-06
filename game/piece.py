@@ -16,16 +16,8 @@ class Pieces:
     def get_position(self):
         return self.__position__
 
-
-class Rook(Pieces):
-    def __init__(self, color, position):
-        super().__init__(color, position)
-        self.white_repr = "♖"
-        self.black_repr = "♜"
-
-    def valid_moves(self, board):
+    def possible_moves(self, board, directions):
         moves = []
-        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]  # (fila, columna)
         row, col = self.get_position()
 
         for dr, dc in directions:
@@ -43,6 +35,16 @@ class Rook(Pieces):
         return moves  
 
 
+class Rook(Pieces):
+    def __init__(self, color, position):
+        super().__init__(color, position)
+        self.white_repr = "♖"
+        self.black_repr = "♜"
+
+    def valid_moves(self, board):
+        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]  # (fila, columna)
+        return self.possible_moves(board, directions)
+
 class Bishop(Pieces):
     def __init__(self, color, position):
         super().__init__(color, position)
@@ -50,23 +52,8 @@ class Bishop(Pieces):
         self.black_repr = "♝"
 
     def valid_moves(self, board):
-        moves = []
         directions = [(-1, 1), (-1, -1), (1, 1), (1, -1)]  # Arriba-Derecha, Arriba-Izquierda, Abajo-Derecha, Abajo-Izquierda
-        row, col = self.get_position() 
-
-        for dr, dc in directions:
-            for i in range(1,8):
-                new_row, new_col = row + i*dr, col + i*dc
-                if 0<= new_row <=7 and 0<= new_col <=7:
-                    cell = board[new_row][new_col]   
-                    if cell.is_occupied():
-                        if cell.get_piece().get_color() != self.get_color():
-                            moves.append((new_row,new_col))
-                        break
-                    moves.append((new_row,new_col))
-                else:
-                    break 
-        return moves         
+        return self.possible_moves(board, directions)
 
 class Pawn(Pieces):
     def __init__(self, color, position):
