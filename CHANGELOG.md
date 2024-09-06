@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Status: [Development]
 
-## [0.0.10] - 2024-08-24
+## [0.0.11] - 2024-09-06
 
 ### Added
 - Validaciones de las posiciones ingresadas por el usuario  
