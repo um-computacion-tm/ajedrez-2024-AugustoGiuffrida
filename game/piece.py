@@ -16,23 +16,27 @@ class Pieces:
     def get_position(self):
         return self.__position__
 
+    def possible_cell(self, board, moves, new_row, new_col):
+        if 0 <= new_row <= 7 and 0 <= new_col <= 7:
+            cell = board[new_row][new_col]
+            if cell.is_occupied():
+                if cell.get_piece().get_color() != self.get_color():
+                    moves.append((new_row, new_col))
+                return False                    # Detener el bucle de movimientos en esta dirección
+            moves.append((new_row, new_col))
+            return True                         # Continuar buscando en esta dirección
+        return False                            # Fuera del tablero, detener el bucle en esta dirección
+
     def possible_moves(self, board, directions):
         moves = []
         row, col = self.get_position()
 
         for dr, dc in directions:
-            for i in range(1,8):
-                new_row, new_col = row + i*dr, col + i*dc
-                if 0<= new_row <=7 and 0<= new_col <=7:
-                    cell = board[new_row][new_col]   
-                    if cell.is_occupied():
-                        if cell.get_piece().get_color() != self.get_color():
-                            moves.append((new_row,new_col))
-                        break
-                    moves.append((new_row,new_col))
-                else:
-                    break 
-        return moves  
+            for i in range(1, 8):
+                new_row, new_col = row + i * dr, col + i * dc
+                if not self.possible_cell(board, moves, new_row, new_col):
+                    break  # Detener la búsqueda en esta dirección si `possible_cell` devuelve False
+        return moves
 
 
 class Rook(Pieces):
