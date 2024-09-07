@@ -1,4 +1,4 @@
-# Ajedrez
+# Ajedrez-Augusto Giuffrida
 
 | **Metric**        | **Badge**|
 |-------------------|------------------|
