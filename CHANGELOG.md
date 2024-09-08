@@ -6,17 +6,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Status: [Development]
 
-## [0.0.11] - 2024-09-06
+## [0.0.12] - 2024-09-08
 
 ### Added
-- Validaciones de las posiciones ingresadas por el usuario  
-
+- Mejoras esteticas al cli 
 
 ### To do
 - tests de la clase Piece 
 - tests de la clase Chess
 - tests de la clase Cli
 
+## [0.0.11] - 2024-09-06
+
+### Added
+- Validaciones de las posiciones ingresadas por el usuario  
+
+### To do
+- tests de la clase Piece 
+- tests de la clase Chess
+- tests de la clase Cli
 
 ## [0.0.10] - 2024-08-24
 
