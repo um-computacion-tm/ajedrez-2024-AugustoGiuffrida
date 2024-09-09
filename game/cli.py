@@ -2,13 +2,8 @@ import os
 import sys
 from colorama import Fore, Style, init
 from .chess import Chess
-
-# Importaciones específicas de plataforma
-if os.name == 'nt':  # Windows
-    import msvcrt
-else:  # Linux/Unix
-    import tty
-    import termios
+import tty
+import termios
 
 init(autoreset=True)  # Inicializa colorama para resetear colores automáticamente
 
@@ -39,7 +34,7 @@ class Cli:
 
     def display_menu(self):
         """Muestra el menú con el título y opciones."""
-        os.system('cls' if os.name == 'nt' else 'clear')  # Limpia la consola
+        os.system('clear')  # Limpia la consola en Linux
         try:
             width = os.get_terminal_size().columns  # Obtiene el ancho de la consola
         except OSError:
@@ -55,12 +50,12 @@ class Cli:
     def display_title(self, width):
         """Muestra el título 'Ajedrez' usando ASCII Art con colores variados."""
         title_art = [
-            f"{Fore.RED} █████╗      ██╗███████╗██████╗ ██████╗ ███████╗███████╗",
-            f"{Fore.YELLOW}██╔══██╗     ██║██╔════╝██╔══██╗██╔══██╗██╔════╝╚══███╔╝",
-            f"{Fore.GREEN}███████║     ██║█████╗  ██║  ██║██████╔╝█████╗    ███╔╝ ",
-            f"{Fore.CYAN}██╔══██║██   ██║██╔══╝  ██║  ██║██╔══██╗██╔══╝   ███╔╝  ",
-            f"{Fore.BLUE}██║  ██║╚█████╔╝███████╗██████╔╝██║  ██║███████╗███████╗",
-            f"{Fore.MAGENTA}╚═╝  ╚═╝ ╚════╝ ╚══════╝╚═════╝ ╚═╝  ╚═╝╚══════╝╚══════╝",
+            f"{Fore.RED}      █████╗      ██╗███████╗██████╗ ██████╗ ███████╗███████╗",
+            f"{Fore.YELLOW}     ██╔══██╗     ██║██╔════╝██╔══██╗██╔══██╗██╔════╝╚══███╔╝",
+            f"{Fore.GREEN}     ███████║     ██║█████╗  ██║  ██║██████╔╝█████╗    ███╔╝ ",
+            f"{Fore.CYAN}     ██╔══██║██   ██║██╔══╝  ██║  ██║██╔══██╗██╔══╝   ███╔╝  ",
+            f"{Fore.BLUE}     ██║  ██║╚█████╔╝███████╗██████╔╝██║  ██║███████╗███████╗",
+            f"{Fore.MAGENTA}     ╚═╝  ╚═╝ ╚════╝ ╚══════╝╚═════╝ ╚═╝  ╚═╝╚══════╝╚══════╝",
         ]
 
         # Mostrar cada línea del título centrada
@@ -77,27 +72,34 @@ class Cli:
         """Devuelve el texto de la opción en ASCII Art compacto."""
         if option == "Iniciar Juego":
             return f"""{color}
-      _                        
-     | |_   _  __ _  __ _ _ __ 
-  _  | | | | |/ _` |/ _` | '__|
- | |_| | |_| | (_| | (_| | |   
-  \___/ \__,_|\__, |\__,_|_|   
-              |___/            
+
+     ██ ██    ██  ██████   █████  ██████  
+     ██ ██    ██ ██       ██   ██ ██   ██ 
+     ██ ██    ██ ██   ███ ███████ ██████  
+██   ██ ██    ██ ██    ██ ██   ██ ██   ██ 
+ █████   ██████   ██████  ██   ██ ██   ██ 
+                                          
+                                          
+
 """
 
         elif option == "Salir":
             return f"""{color}
-  ____        _ _      
- / ___|  __ _| (_)_ __ 
- \___ \ / _` | | | '__|
-  ___) | (_| | | | |   
- |____/ \__,_|_|_|_|   
-                       
+
+███████  █████  ██      ██ ██████  
+██      ██   ██ ██      ██ ██   ██ 
+███████ ███████ ██      ██ ██████  
+     ██ ██   ██ ██      ██ ██   ██ 
+███████ ██   ██ ███████ ██ ██   ██ 
+                                   
+                                   
+
 """
 
     def handle_menu_selection(self):
         """Maneja la selección del menú según la opción elegida."""
         if self.selected_index == 0:
+            os.system('clear')
             self.start_game()
         elif self.selected_index == 1:
             print("Saliendo del juego...")
@@ -129,35 +131,24 @@ class Cli:
                 print("Entrada no válida. Por favor, introduce un número entre 0 y 7.")
 
     def get_key(self):
-        """Obtiene la entrada del teclado sin bloqueo."""
-        if os.name == 'nt':  # Windows
-            key = msvcrt.getch()
-            if key in {b'\x00', b'\xe0'}:  # Captura teclas especiales (flechas)
-                key = msvcrt.getch()
-                if key == b'H':
-                    return 'up'
-                elif key == b'P':
-                    return 'down'
-            elif key == b'\r':
+        """Obtiene la entrada del teclado sin bloqueo en Linux."""
+        fd = sys.stdin.fileno()
+        old_settings = termios.tcgetattr(fd)
+        try:
+            tty.setraw(sys.stdin.fileno())
+            key = sys.stdin.read(1)
+            if key == '\x1b':  # Secuencia de escape de teclas
+                next_key = sys.stdin.read(1)
+                if next_key == '[':  # Comienza secuencia de flechas
+                    arrow_key = sys.stdin.read(1)
+                    if arrow_key == 'A':
+                        return 'up'
+                    elif arrow_key == 'B':
+                        return 'down'
+            elif key == '\r' or key == '\n':  # Enter puede ser '\r' o '\n'
                 return 'enter'
-        else:  # Linux/Unix
-            fd = sys.stdin.fileno()
-            old_settings = termios.tcgetattr(fd)
-            try:
-                tty.setraw(sys.stdin.fileno())
-                key = sys.stdin.read(1)
-                if key == '\x1b':  # Secuencia de escape de teclas
-                    next_key = sys.stdin.read(1)
-                    if next_key == '[':  # Comienza secuencia de flechas
-                        arrow_key = sys.stdin.read(1)
-                        if arrow_key == 'A':
-                            return 'up'
-                        elif arrow_key == 'B':
-                            return 'down'
-                elif key == '\r' or key == '\n':  # Enter puede ser '\r' o '\n'
-                    return 'enter'
-            finally:
-                termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+        finally:
+            termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
         return None
 
 
