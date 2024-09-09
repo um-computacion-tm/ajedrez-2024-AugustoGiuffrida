@@ -1,9 +1,17 @@
 import os
+import sys
 from colorama import Fore, Style, init
-import msvcrt  # Importamos msvcrt para capturar entrada de teclado sin bloqueo en Windows
 from .chess import Chess
 
+# Importaciones específicas de plataforma
+if os.name == 'nt':  # Windows
+    import msvcrt
+else:  # Linux/Unix
+    import tty
+    import termios
+
 init(autoreset=True)  # Inicializa colorama para resetear colores automáticamente
+
 
 class Cli:
 
@@ -19,20 +27,24 @@ class Cli:
         while True:
             self.display_menu()
 
-            key = msvcrt.getch()  # Captura la entrada del teclado
+            key = self.get_key()  # Captura la entrada del teclado
 
-            if key == b'H':  # Flecha hacia arriba
+            if key == 'up':  # Flecha hacia arriba
                 self.selected_index = (self.selected_index - 1) % len(self.menu_options)
-            elif key == b'P':  # Flecha hacia abajo
+            elif key == 'down':  # Flecha hacia abajo
                 self.selected_index = (self.selected_index + 1) % len(self.menu_options)
-            elif key == b'\r':  # Enter
+            elif key == 'enter':  # Enter
                 self.handle_menu_selection()
                 break
 
     def display_menu(self):
         """Muestra el menú con el título y opciones."""
         os.system('cls' if os.name == 'nt' else 'clear')  # Limpia la consola
-        width = os.get_terminal_size().columns  # Obtiene el ancho de la consola
+        try:
+            width = os.get_terminal_size().columns  # Obtiene el ancho de la consola
+        except OSError:
+            width = 80  # Valor predeterminado si no se puede obtener el tamaño de la terminal
+
         self.display_title(width)  # Muestra el título en ASCII Art
 
         # Mostrar opciones de menú en ASCII Art
@@ -115,6 +127,38 @@ class Cli:
                     print("Las coordenadas están fuera del rango permitido (0-7). Inténtalo de nuevo")
             except ValueError:
                 print("Entrada no válida. Por favor, introduce un número entre 0 y 7.")
+
+    def get_key(self):
+        """Obtiene la entrada del teclado sin bloqueo."""
+        if os.name == 'nt':  # Windows
+            key = msvcrt.getch()
+            if key in {b'\x00', b'\xe0'}:  # Captura teclas especiales (flechas)
+                key = msvcrt.getch()
+                if key == b'H':
+                    return 'up'
+                elif key == b'P':
+                    return 'down'
+            elif key == b'\r':
+                return 'enter'
+        else:  # Linux/Unix
+            fd = sys.stdin.fileno()
+            old_settings = termios.tcgetattr(fd)
+            try:
+                tty.setraw(sys.stdin.fileno())
+                key = sys.stdin.read(1)
+                if key == '\x1b':  # Secuencia de escape de teclas
+                    next_key = sys.stdin.read(1)
+                    if next_key == '[':  # Comienza secuencia de flechas
+                        arrow_key = sys.stdin.read(1)
+                        if arrow_key == 'A':
+                            return 'up'
+                        elif arrow_key == 'B':
+                            return 'down'
+                elif key == '\r' or key == '\n':  # Enter puede ser '\r' o '\n'
+                    return 'enter'
+            finally:
+                termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+        return None
 
 
 if __name__ == "__main__":
