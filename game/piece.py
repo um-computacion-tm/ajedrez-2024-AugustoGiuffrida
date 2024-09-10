@@ -40,48 +40,49 @@ class Pieces:
 
 
 class Rook(Pieces):
+    self.white_repr = "♖"
+    self.black_repr = "♜"
     def __init__(self, color, position):
         super().__init__(color, position)
-        self.white_repr = "♖"
-        self.black_repr = "♜"
+
 
     def valid_moves(self, board):
         directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]  # (fila, columna)
         return self.possible_moves(board, directions)
 
 class Bishop(Pieces):
+    self.white_repr = "♗"
+    self.black_repr = "♝"
     def __init__(self, color, position):
         super().__init__(color, position)
-        self.white_repr = "♗"
-        self.black_repr = "♝"
 
     def valid_moves(self, board):
         directions = [(-1, 1), (-1, -1), (1, 1), (1, -1)]  # Arriba-Derecha, Arriba-Izquierda, Abajo-Derecha, Abajo-Izquierda
         return self.possible_moves(board, directions)
 
 class Pawn(Pieces):
+    self.white_repr = "♙"
+    self.black_repr = "♟"
     def __init__(self, color, position):
         super().__init__(color, position)
-        self.white_repr = "♙"
-        self.black_repr = "♟"
 
 class Knight(Pieces):
+    self.white_repr = "♘"
+    self.black_repr = "♞"
     def __init__(self, color, position):
         super().__init__(color, position)
-        self.white_repr = "♘"
-        self.black_repr = "♞"
 
 class King(Pieces):
+    self.white_repr = "♔"
+    self.black_repr = "♚"
     def __init__(self, color, position):
         super().__init__(color, position)
-        self.white_repr = "♔"
-        self.black_repr = "♚"
 
 class Queen(Pieces):
+    self.white_repr = "♕"
+    self.black_repr = "♛"
     def __init__(self, color, position):
         super().__init__(color, position)
-        self.white_repr = "♕"
-        self.black_repr = "♛"
 
 # chess_pieces2 = {
 #     "white": {
