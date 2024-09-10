@@ -43,7 +43,7 @@ class Rook(Pieces):
     self.white_repr = "♖"
     self.black_repr = "♜"
 
-    def valid_moves(self, board):
+    def valid_moves_Rook(self, board):
         directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]  # (fila, columna)
         return self.possible_moves(board, directions)
 
@@ -51,7 +51,7 @@ class Bishop(Pieces):
     self.white_repr = "♗"
     self.black_repr = "♝"
 
-    def valid_moves(self, board):
+    def valid_moves_Bishop(self, board):
         directions = [(-1, 1), (-1, -1), (1, 1), (1, -1)]  # Arriba-Derecha, Arriba-Izquierda, Abajo-Derecha, Abajo-Izquierda
         return self.possible_moves(board, directions)
 
