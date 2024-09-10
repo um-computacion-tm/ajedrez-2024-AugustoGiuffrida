@@ -75,14 +75,12 @@ class Knight(Pieces):
 class King(Pieces):
     self.white_repr = "♔"
     self.black_repr = "♚"
-    def __init__(self, color, position):
-        super().__init__(color, position)
+
 
 class Queen(Pieces):
     self.white_repr = "♕"
     self.black_repr = "♛"
-    def __init__(self, color, position):
-        super().__init__(color, position)
+
 
 # chess_pieces2 = {
 #     "white": {
