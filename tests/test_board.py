@@ -88,12 +88,12 @@ class TestBoard(unittest.TestCase):
         self.assertEqual(len(lines), 19, "El tablero debe representarse en 19 líneas.")
 
         # Verificar las primeras y últimas líneas
-        self.assertTrue(lines[0].startswith("    a     b     c     d     e     f     g     h"), "La primera línea del tablero no es correcta.")
-        self.assertTrue(lines[-1].startswith("    a     b     c     d     e     f     g     h"), "La última línea del tablero no es correcta.")
+        self.assertTrue(lines[0].startswith("                                               a      b        c       d       e       f       g       h"), "La primera línea del tablero no es correcta.")
+        self.assertTrue(lines[-1].startswith("                                               a      b        c       d       e       f       g       h"), "La última línea del tablero no es correcta.")
         
         # Verificar algunas líneas centrales del tablero
-        self.assertIn("  └─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┘", lines, "La línea final del tablero no está presente.")
-        self.assertIn("  ├─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┤", lines, "La línea de separación del tablero no está presente.")
+        self.assertIn("                                           └───────┴───────┴───────┴───────┴───────┴───────┴───────┴───────┘", lines, "La línea final del tablero no está presente.")
+        self.assertIn("                                           ├───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┤", lines, "La línea de separación del tablero no está presente.")
 
 if __name__ == "__main__":
     unittest.main()
