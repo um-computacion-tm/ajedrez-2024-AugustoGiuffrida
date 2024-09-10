@@ -42,9 +42,6 @@ class Pieces:
 class Rook(Pieces):
     self.white_repr = "♖"
     self.black_repr = "♜"
-    def __init__(self, color, position):
-        super().__init__(color, position)
-
 
     def valid_moves(self, board):
         directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]  # (fila, columna)
@@ -53,8 +50,6 @@ class Rook(Pieces):
 class Bishop(Pieces):
     self.white_repr = "♗"
     self.black_repr = "♝"
-    def __init__(self, color, position):
-        super().__init__(color, position)
 
     def valid_moves(self, board):
         directions = [(-1, 1), (-1, -1), (1, 1), (1, -1)]  # Arriba-Derecha, Arriba-Izquierda, Abajo-Derecha, Abajo-Izquierda
@@ -63,19 +58,14 @@ class Bishop(Pieces):
 class Pawn(Pieces):
     self.white_repr = "♙"
     self.black_repr = "♟"
-    def __init__(self, color, position):
-        super().__init__(color, position)
 
 class Knight(Pieces):
     self.white_repr = "♘"
     self.black_repr = "♞"
-    def __init__(self, color, position):
-        super().__init__(color, position)
 
 class King(Pieces):
     self.white_repr = "♔"
     self.black_repr = "♚"
-
 
 class Queen(Pieces):
     self.white_repr = "♕"
