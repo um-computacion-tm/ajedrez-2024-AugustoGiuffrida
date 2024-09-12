@@ -1,20 +1,14 @@
+from .cell import Cell 
 import sys
-sys.stdout.reconfigure(encoding='utf-8') 
+sys.stdout.reconfigure(encoding='utf-8')
 
 class Pieces:
     def __init__(self, color, position):
         self.__color__ = color
         self.__position__ = position
-        self.__symbol__ = None
-
-    def move(self, new_position, board):
-        if new_position in self.valid_moves(board):
-            self.__position__ = new_position
-        else:
-            raise ValueError("Movimiento no válido.")
 
     def __repr__(self):
-        return self.__symbol__ if self.__symbol__ is not None else ""
+        return self.white_repr if self.__color__ == "white" else self.black_repr
 
     def get_color(self):
         return self.__color__
@@ -22,66 +16,61 @@ class Pieces:
     def get_position(self):
         return self.__position__
 
-    def get_symbol(self):
-        return self.__symbol__
+    def possible_cell(self, board, moves, new_row, new_col):
+        if 0 <= new_row <= 7 and 0 <= new_col <= 7:
+            cell = board[new_row][new_col]
+            if cell.is_occupied():
+                if cell.get_piece().get_color() != self.get_color():
+                    moves.append((new_row, new_col))
+                return False                    # Detener el bucle de movimientos en esta dirección
+            moves.append((new_row, new_col))
+            return True                         # Continuar buscando en esta dirección
+        return False                            # Fuera del tablero, detener el bucle en esta dirección
+
+    def possible_moves(self, board, directions):
+        moves = []
+        row, col = self.get_position()
+
+        for dr, dc in directions:
+            for i in range(1, 8):
+                new_row, new_col = row + i * dr, col + i * dc
+                if not self.possible_cell(board, moves, new_row, new_col):
+                    break  # Detener la búsqueda en esta dirección si `possible_cell` devuelve False
+        return moves
+
 
 class Rook(Pieces):
-    def __init__(self, color, position):
-        super().__init__(color, position)
-    
-    def __repr__(self):
-        return "♖" if self.get_color() == "white" else "♜"
+    white_repr = "♖"
+    black_repr = "♜"
 
-class Pawn(Pieces):
     def __init__(self, color, position):
         super().__init__(color, position)
-         
-    def __repr__(self):
-        return "♙" if self.get_color() == "white" else "♟"    
+
+    def valid_moves(self, board):
+        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]  # (fila, columna)
+        return self.possible_moves(board, directions)
+
 
 class Bishop(Pieces):
-    def __init__(self, color, position):
-        super().__init__(color, position)
-    
-    def __repr__(self):
-        return "♗" if self.get_color() == "white" else "♝"
+    white_repr = "♗"
+    black_repr = "♝"
+
+    def valid_moves(self, board):
+        directions = [(-1, 1), (-1, -1), (1, 1), (1, -1)]  # Arriba-Derecha, Arriba-Izquierda, Abajo-Derecha, Abajo-Izquierda
+        return self.possible_moves(board, directions)
+
+class Pawn(Pieces):
+    white_repr = "♙"
+    black_repr = "♟"
 
 class Knight(Pieces):
-    def __init__(self, color, position):
-        super().__init__(color, position)
-    
-    def __repr__(self):
-        return "♘" if self.get_color() == "white" else "♞"
+    white_repr = "♘"
+    black_repr = "♞"
 
 class King(Pieces):
-    def __init__(self, color, position):
-        super().__init__(color, position)
-    
-    def __repr__(self):
-        return "♔" if self.get_color() == "white" else "♚"
+    white_repr = "♔"
+    black_repr = "♚"
 
 class Queen(Pieces):
-    def __init__(self, color, position):
-        super().__init__(color, position)
-    
-    def __repr__(self):
-        return "♕" if self.get_color() == "white" else "♛"
-
-# chess_pieces2 = {
-#     "white": {
-#         "king": "♔",
-#         "queen": "♕",
-#         "rook": "♖",
-#         "bishop": "♗",
-#         "knight": "♘",
-#         "pawn": "♙"
-#     },
-#     "black": {
-#         "king": "♚",
-#         "queen": "♛",
-#         "rook": "♜",
-#         "bishop": "♝",
-#         "knight": "♞",
-#         "pawn": "♟"
-#     }
-# }
+    white_repr = "♕"
+    black_repr = "♛"

@@ -25,36 +25,14 @@ class Cell:
         return self.__content__
 
     def place_piece(self, piece):
-        """
-        Coloca una pieza en la celda.
-
-        Args:
-            piece (str): La pieza que se va a colocar en la celda.
-        
-        Raises:
-            ValueError: Si la celda ya está ocupada por otra pieza.
-        """
         if self.__piece__ is not None:
             raise ValueError("Cell already occupied")  # Lanza un error si la celda ya está ocupada.
-        
         self.__piece__ = piece  # Coloca la pieza en la celda.
 
     def remove_piece(self):
-        """
-        Remueve la pieza de la celda y la retorna.
-
-        Returns:
-            str or None: La pieza que fue removida o None si la celda estaba vacía.
-        """
         piece = self.__piece__  # Guarda la pieza actual en una variable temporal.
         self.__piece__ = None  # Vacía la celda.
         return piece  # Retorna la pieza removida.
 
     def is_occupied(self):
-        """
-        Verifica si la celda está ocupada por una pieza.
-
-        Returns:
-            bool: True si la celda está ocupada, False en caso contrario.
-        """
         return self.__piece__ is not None  # Retorna True si hay una pieza en la celda, de lo contrario False.

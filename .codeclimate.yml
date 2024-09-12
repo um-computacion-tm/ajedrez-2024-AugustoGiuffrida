@@ -50,4 +50,5 @@ exclude_patterns:
 - "**/tests/"
 - "**/vendor/"
 - "**/*_test.go"
-- "**/*.d.ts"
+- "**/*.d.ts" 
+- "game/menu.py"

@@ -1,5 +1,6 @@
 from .board import Board
 from .piece import Pieces, Pawn, Rook, King, Knight, Queen, Bishop
+import json
 
 class Chess:
 
@@ -19,13 +20,9 @@ class Chess:
     def is_playing(self):
         return True
    
-   
     def change_turn(self):
-        if self.__turn__ == "white":
-            self.__turn__ = "black"
-        else:
-            self.__turn__ = "white"
-
+        self.__turn__ = "black" if self.__turn__ == "white" else "white"
+            
     def make_piece(self, piece, color, position):
         piece_classes = {
             "pawn": Pawn,
@@ -38,24 +35,8 @@ class Chess:
         return piece_classes[piece](color, position) if piece in piece_classes else None
         
     def set_pieces(self):
-        initial_positions = {
-            "white": {
-                "rook": [(7, 0), (7, 7)],  
-                "knight": [(7, 1), (7, 6)],  
-                "bishop": [(7, 2), (7, 5)],  
-                "queen": [(7, 3)],  
-                "king": [(7, 4)], 
-                "pawn": [(6, i) for i in range(8)]  
-            },
-            "black": {
-                "rook": [(0, 0), (0, 7)],  
-                "knight": [(0, 1), (0, 6)], 
-                "bishop": [(0, 2), (0, 5)],  
-                "queen": [(0, 3)],  
-                "king": [(0, 4)],  
-                "pawn": [(1, i) for i in range(8)]  
-            }
-        }
+        with open('chess_positions.json', 'r') as json_file:
+            initial_positions = json.load(json_file)
 
         for color, pieces in initial_positions.items():
             for piece, positions in pieces.items():
