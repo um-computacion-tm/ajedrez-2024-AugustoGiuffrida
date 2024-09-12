@@ -12,6 +12,9 @@ class  Menu:
         self.selected_index = 0
         self.cli = cli
 
+    def main(self):
+        self.show_start_menu()
+
     def show_start_menu(self):
         """Muestra el menú de inicio y maneja la entrada del usuario."""
         while True:

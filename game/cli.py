@@ -3,10 +3,6 @@ from .menu import Menu
 
 class Cli:
 
-    def main(self):
-        menu = Menu(self) 
-        menu.show_start_menu()
-
     def start_game(self):
         chess = Chess()
         while chess.is_playing():
@@ -32,7 +28,7 @@ class Cli:
             except ValueError:
                 print("Entrada no válida. Por favor, introduce un número entre 0 y 7.")
 
-
 if __name__ == "__main__":
-    cli = Cli()
-    cli.main()
+    cli = Cli() 
+    menu = Menu(cli)  # Pasar la instancia de Cli a Menu
+    menu.main()
