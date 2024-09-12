@@ -3,12 +3,9 @@ import sys
 sys.stdout.reconfigure(encoding='utf-8')
 
 class Pieces:
-    def __init__(self, color, position, white_repr, black_repr, directions=None):
+    def __init__(self, color, position):
         self.__color__ = color
         self.__position__ = position
-        self.white_repr = white_repr
-        self.black_repr = black_repr
-        self.directions = directions if directions else []
 
     def __repr__(self):
         return self.white_repr if self.__color__ == "white" else self.black_repr
@@ -25,46 +22,55 @@ class Pieces:
             if cell.is_occupied():
                 if cell.get_piece().get_color() != self.get_color():
                     moves.append((new_row, new_col))
-                return False  # Detener el bucle de movimientos en esta dirección
+                return False                    # Detener el bucle de movimientos en esta dirección
             moves.append((new_row, new_col))
-            return True  # Continuar buscando en esta dirección
-        return False  # Fuera del tablero, detener el bucle en esta dirección
+            return True                         # Continuar buscando en esta dirección
+        return False                            # Fuera del tablero, detener el bucle en esta dirección
 
-    def possible_moves(self, board):
+    def possible_moves(self, board, directions):
         moves = []
         row, col = self.get_position()
 
-        for dr, dc in self.directions:
+        for dr, dc in directions:
             for i in range(1, 8):
                 new_row, new_col = row + i * dr, col + i * dc
                 if not self.possible_cell(board, moves, new_row, new_col):
                     break  # Detener la búsqueda en esta dirección si `possible_cell` devuelve False
         return moves
 
-# Clases específicas para cada pieza, pasando las direcciones al constructor
+
 class Rook(Pieces):
+    white_repr = "♖"
+    black_repr = "♜"
+
     def __init__(self, color, position):
+        super().__init__(color, position)
+
+    def valid_moves(self, board):
         directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]  # (fila, columna)
-        super().__init__(color, position, "♖", "♜", directions)
+        return self.possible_moves(board, directions)
+
 
 class Bishop(Pieces):
-    def __init__(self, color, position):
-        directions = [(-1, 1), (-1, -1), (1, 1), (1, -1)]  # Arriba-Derecha, Arriba-Izquierda, Abajo-Derecha, Abajo-Izquierda
-        super().__init__(color, position, "♗", "♝", directions)
+    white_repr = "♗"
+    black_repr = "♝"
 
-class Queen(Pieces):
-    def __init__(self, color, position):
-        directions = [(-1, 0), (1, 0), (0, -1), (0, 1), (-1, 1), (-1, -1), (1, 1), (1, -1)]  # Todas las direcciones posibles
-        super().__init__(color, position, "♕", "♛", directions)
+    def valid_moves(self, board):
+        directions = [(-1, 1), (-1, -1), (1, 1), (1, -1)]  # Arriba-Derecha, Arriba-Izquierda, Abajo-Derecha, Abajo-Izquierda
+        return self.possible_moves(board, directions)
 
 class Pawn(Pieces):
-    def __init__(self, color, position):
-        super().__init__(color, position, "♙", "♟")
+    white_repr = "♙"
+    black_repr = "♟"
 
 class Knight(Pieces):
-    def __init__(self, color, position):
-        super().__init__(color, position, "♘", "♞")
+    white_repr = "♘"
+    black_repr = "♞"
 
 class King(Pieces):
-    def __init__(self, color, position):
-        super().__init__(color, position, "♔", "♚")
+    white_repr = "♔"
+    black_repr = "♚"
+
+class Queen(Pieces):
+    white_repr = "♕"
+    black_repr = "♛"
