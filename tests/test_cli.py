@@ -6,30 +6,36 @@ from game.menu import Menu
 
 class TestCli(unittest.TestCase):
 
-    @patch('game.menu.Menu') 
+    @patch('game.menu.Menu')
     def test_main(self, MockMenu):
         # Configurar el mock para Menu
         mock_menu = MockMenu.return_value
         mock_menu.show_start_menu = MagicMock()
+
         cli = Cli()
         cli.main()
+
         # Verificar que Menu fue creado con 'cli'
         MockMenu.assert_called_once_with(cli)       
+
         # Verificar que show_start_menu fue llamado
         mock_menu.show_start_menu.assert_called_once()
 
-    @patch('game.chess.Chess')  
     @patch('game.cli.Cli.play')
-    def test_start_game(self, MockPlay, MockChess):
+    @patch('game.chess.Chess')
+    def test_start_game(self, MockChess, MockPlay):
+        # Configurar el mock para Chess
         mock_chess = MockChess.return_value
         mock_chess.is_playing.side_effect = [True, True, False]  # Simula dos vueltas del bucle
+
         cli = Cli()
         cli.start_game()
+
         # Verificar que Chess fue creado
         MockChess.assert_called_once()
+
         # Verificar que play se llama mientras is_playing devuelve True
         self.assertEqual(MockPlay.call_count, 2)
-
 
     @patch('builtins.input', side_effect=['1', '1', '2', '2'],)
     @patch('builtins.print')
