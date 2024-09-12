@@ -1,7 +1,8 @@
 import unittest
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock
 from game.cli import Cli
-from game.chess import Chess  
+from game.chess import Chess
+from game.menu import Menu
 
 class TestCli(unittest.TestCase):
 
