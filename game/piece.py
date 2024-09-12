@@ -55,41 +55,23 @@ class Bishop(Pieces):
     white_repr = "♗"
     black_repr = "♝"
 
-    def __init__(self, color, position):
-        super().__init__(color, position)
-
     def valid_moves(self, board):
         directions = [(-1, 1), (-1, -1), (1, 1), (1, -1)]  # Arriba-Derecha, Arriba-Izquierda, Abajo-Derecha, Abajo-Izquierda
         return self.possible_moves(board, directions)
-
 
 class Pawn(Pieces):
     white_repr = "♙"
     black_repr = "♟"
 
-    def __init__(self, color, position):
-        super().__init__(color, position)
-
-
 class Knight(Pieces):
     white_repr = "♘"
     black_repr = "♞"
-
-    def __init__(self, color, position):
-        super().__init__(color, position)
-
 
 class King(Pieces):
     white_repr = "♔"
     black_repr = "♚"
 
-    def __init__(self, color, position):
-        super().__init__(color, position)
-
-
 class Queen(Pieces):
     white_repr = "♕"
     black_repr = "♛"
 
-    def __init__(self, color, position):
-        super().__init__(color, position)
