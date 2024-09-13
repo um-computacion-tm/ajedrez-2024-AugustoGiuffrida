@@ -13,7 +13,15 @@ class  Menu:
         self.cli = cli
 
     def main(self):
-        self.show_start_menu()
+        parser = argparse.ArgumentParser(description='Ajedrez CLI')
+        parser.add_argument('--no-menu', action='store_true', help='Ejecuta la opción predeterminada sin mostrar el menú')
+        args = parser.parse_args()
+
+        if args.no_menu:
+            self.handle_menu_selection()  # Ejecuta la opción predeterminada
+        else:
+            self.show_start_menu()
+
 
     def show_start_menu(self):
         """Muestra el menú de inicio y maneja la entrada del usuario."""
