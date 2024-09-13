@@ -18,7 +18,7 @@ class  Menu:
         args = parser.parse_args()
 
         if args.no_menu:
-            self.handle_menu_selection()  # Ejecuta la opción predeterminada
+            self.cli.start_game()  # Ejecuta la opción predeterminada
         else:
             self.show_start_menu()
 
