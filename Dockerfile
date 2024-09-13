@@ -7,7 +7,7 @@ WORKDIR /ajedrez-2024-AugustoGiuffrida
 
 RUN pip install -r requirements.txt
 
-CMD ["sh", "-c",  "python game.cli --no-menu"]
+CMD ["sh", "-c",  "python -m game.cli --no-menu"]
 
 # docker buildx build -t ajedrez-2024-augustogiuffrida .
 # docker run -i ajedrez-2024-augustogiuffrida
