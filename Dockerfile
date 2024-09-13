@@ -12,3 +12,4 @@ CMD ["sh", "-c", "coverage run -m unittest && coverage report -m && python -m ga
 # docker buildx build -t ajedrez-2024-augustogiuffrida .
 # docker run -i ajedrez-2024-augustogiuffrida
 # docker stop ajedrez-2024-augustogiuffrida
+# docker rm ajedrez-2024-augustogiuffrida
