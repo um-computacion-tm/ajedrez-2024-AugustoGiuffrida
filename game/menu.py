@@ -17,11 +17,11 @@ class  Menu:
         parser.add_argument('--no-menu', action='store_true', help='Ejecuta la opción predeterminada sin mostrar el menú')
         args = parser.parse_args()
 
-        if args.no_menu:
-            self.cli.start_game()  # Ejecuta la opción predeterminada
+        # Si no es un terminal interactivo, ejecutar la opción predeterminada
+        if not sys.stdin.isatty() or args.no_menu:
+            self.cli.start_game()
         else:
             self.show_start_menu()
-
 
     def show_start_menu(self):
         """Muestra el menú de inicio y maneja la entrada del usuario."""
