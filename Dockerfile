@@ -9,6 +9,6 @@ RUN pip install -r requirements.txt
 
 CMD ["sh", "-c", "coverage run -m unittest && coverage report -m && python -m game.cli"]
 
-# docker buildx build -t ajedrez-2024-AugustoGiuffrida .
-# docker run -i ajedrez-2024-AugustoGiuffrida
-# docker stop ajedrez-2024-AugustoGiuffrida
+# docker buildx build -t ajedrez-2024-augustogiuffrida .
+# docker run -i ajedrez-2024-augustogiuffrida
+# docker stop ajedrez-2024-augustogiuffrida
