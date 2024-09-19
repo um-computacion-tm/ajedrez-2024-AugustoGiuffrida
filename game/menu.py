@@ -111,16 +111,17 @@ class  Menu:
             print("Saliendo del juego...")
             exit()
 
+
     def get_key(self):
         """Obtiene la entrada del teclado sin bloqueo en Linux."""
         if not sys.stdin.isatty():
-            # Si no es un TTY, devolver una opción predeterminada
+            # Si no es un TTY, devuelve 'enter' o alguna opción predeterminada
             print("Advertencia: No se puede capturar la entrada del teclado en un entorno no interactivo.")
-            return 'enter'  # O cualquier opción predeterminada que prefieras
+            return 'enter'  # O la opción que prefieras
 
-        fd = sys.stdin.fileno()
-        old_settings = termios.tcgetattr(fd)
         try:
+            fd = sys.stdin.fileno()
+            old_settings = termios.tcgetattr(fd)
             tty.setraw(sys.stdin.fileno())
             key = sys.stdin.read(1)
             if key == '\x1b':  # Secuencia de escape de teclas
@@ -133,6 +134,9 @@ class  Menu:
                         return 'down'
             elif key == '\r' or key == '\n':  # Enter puede ser '\r' o '\n'
                 return 'enter'
+        except termios.error as e:
+            print(f"Error de terminal: {e}")
         finally:
             termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
         return None
+
