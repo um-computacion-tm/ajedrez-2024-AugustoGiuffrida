@@ -1,6 +1,6 @@
 from .chess import Chess
 from .menu import Menu
-import os+
+import os
 
 class Cli:
 
