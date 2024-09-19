@@ -111,27 +111,28 @@ class  Menu:
             print("Saliendo del juego...")
             exit()
 
-def get_key(self):
-    """Obtiene la entrada del teclado sin bloqueo en Linux."""
-    if not sys.stdin.isatty():
-        # Si no es un TTY, no se puede obtener la entrada del teclado
-        return None
+    def get_key(self):
+        """Obtiene la entrada del teclado sin bloqueo en Linux."""
+        if not sys.stdin.isatty():
+            # Si no es un TTY, devuelve una opción predeterminada o maneja el caso apropiado
+            print("Advertencia: No se puede capturar la entrada del teclado en un entorno no interactivo.")
+            return 'enter'  # O alguna opción predeterminada que haga sentido en tu aplicación
 
-    fd = sys.stdin.fileno()
-    old_settings = termios.tcgetattr(fd)
-    try:
-        tty.setraw(sys.stdin.fileno())
-        key = sys.stdin.read(1)
-        if key == '\x1b':  # Secuencia de escape de teclas
-            next_key = sys.stdin.read(1)
-            if next_key == '[':  # Comienza secuencia de flechas
-                arrow_key = sys.stdin.read(1)
-                if arrow_key == 'A':
-                    return 'up'
-                elif arrow_key == 'B':
-                    return 'down'
-        elif key == '\r' or key == '\n':  # Enter puede ser '\r' o '\n'
-            return 'enter'
-    finally:
-        termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
-    return None
+        fd = sys.stdin.fileno()
+        old_settings = termios.tcgetattr(fd)
+        try:
+            tty.setraw(sys.stdin.fileno())
+            key = sys.stdin.read(1)
+            if key == '\x1b':  # Secuencia de escape de teclas
+                next_key = sys.stdin.read(1)
+                if next_key == '[':  # Comienza secuencia de flechas
+                    arrow_key = sys.stdin.read(1)
+                    if arrow_key == 'A':
+                        return 'up'
+                    elif arrow_key == 'B':
+                        return 'down'
+            elif key == '\r' or key == '\n':  # Enter puede ser '\r' o '\n'
+                return 'enter'
+        finally:
+            termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+        return None
