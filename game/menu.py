@@ -114,9 +114,9 @@ class  Menu:
     def get_key(self):
         """Obtiene la entrada del teclado sin bloqueo en Linux."""
         if not sys.stdin.isatty():
-            # Si no es un TTY, devuelve una opción predeterminada o maneja el caso apropiado
+            # Si no es un TTY, devolver una opción predeterminada
             print("Advertencia: No se puede capturar la entrada del teclado en un entorno no interactivo.")
-            return 'enter'  # O alguna opción predeterminada que haga sentido en tu aplicación
+            return 'enter'  # O cualquier opción predeterminada que prefieras
 
         fd = sys.stdin.fileno()
         old_settings = termios.tcgetattr(fd)
