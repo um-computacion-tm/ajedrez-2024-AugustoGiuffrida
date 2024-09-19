@@ -34,13 +34,6 @@ class Board:
         BLACK_TEXT = '\033[30m'
         RESET = '\033[0m'
 
-        # Obtener el tamaño de la terminal
-        try:
-            if terminal_width is None:
-                terminal_width = os.get_terminal_size().columns
-        except OSError:
-            terminal_width = 80  # Valor predeterminado si no es un terminal TTY
-
         board_width = 8 * 7 + 9
         left_padding = max((terminal_width - board_width) // 2, 0)
         padding = " " * left_padding

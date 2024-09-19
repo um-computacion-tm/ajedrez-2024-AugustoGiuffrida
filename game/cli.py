@@ -16,6 +16,7 @@ class Cli:
         to_row = self.range_input("To row (0-7): ")
         to_col = self.range_input("To col (0-7): ")
         chess.change_turn()
+        os.system('clear')
 
     def range_input(self, prompt):
         while True:
