@@ -13,15 +13,7 @@ class  Menu:
         self.cli = cli
 
     def main(self):
-        parser = argparse.ArgumentParser(description='Ajedrez CLI')
-        parser.add_argument('--no-menu', action='store_true', help='Ejecuta la opción predeterminada sin mostrar el menú')
-        args = parser.parse_args()
-
-        # Si no es un terminal interactivo, ejecutar la opción predeterminada
-        if not sys.stdin.isatty() or args.no_menu:
-            self.cli.start_game()
-        else:
-            self.show_start_menu()
+        self.show_start_menu()
 
     def show_start_menu(self):
         """Muestra el menú de inicio y maneja la entrada del usuario."""
@@ -111,17 +103,11 @@ class  Menu:
             print("Saliendo del juego...")
             exit()
 
-
     def get_key(self):
         """Obtiene la entrada del teclado sin bloqueo en Linux."""
-        if not sys.stdin.isatty():
-            # Si no es un TTY, devuelve 'enter' o alguna opción predeterminada
-            print("Advertencia: No se puede capturar la entrada del teclado en un entorno no interactivo.")
-            return 'enter'  # O la opción que prefieras
-
+        fd = sys.stdin.fileno()
+        old_settings = termios.tcgetattr(fd)
         try:
-            fd = sys.stdin.fileno()
-            old_settings = termios.tcgetattr(fd)
             tty.setraw(sys.stdin.fileno())
             key = sys.stdin.read(1)
             if key == '\x1b':  # Secuencia de escape de teclas
@@ -134,9 +120,6 @@ class  Menu:
                         return 'down'
             elif key == '\r' or key == '\n':  # Enter puede ser '\r' o '\n'
                 return 'enter'
-        except termios.error as e:
-            print(f"Error de terminal: {e}")
         finally:
             termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
         return None
-
