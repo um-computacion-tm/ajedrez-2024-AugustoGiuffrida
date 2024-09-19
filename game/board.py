@@ -25,8 +25,6 @@ class Board:
     def show_board(self, terminal_width=None):
         """
         Renderiza el tablero en formato de texto, mostrando las piezas en sus posiciones actuales.
-        Args:
-            terminal_width (int, opcional): El ancho de la terminal. Si no se proporciona, se usa un valor predeterminado.
         Returns:
             str: Una representación en formato de texto del tablero de ajedrez.
         """
@@ -36,12 +34,14 @@ class Board:
         BLACK_TEXT = '\033[30m'
         RESET = '\033[0m'
 
+        # Obtener el tamaño de la terminal
+        try:
+            if terminal_width is None:
+                terminal_width = os.get_terminal_size().columns
+        except OSError:
+            terminal_width = 80  # Valor predeterminado si no es un terminal TTY
+
         board_width = 8 * 7 + 9
-
-        # Asigna un valor predeterminado a terminal_width si es None
-        if terminal_width is None:
-            terminal_width = board_width + 20  # Puedes ajustar este valor según tu preferencia
-
         left_padding = max((terminal_width - board_width) // 2, 0)
         padding = " " * left_padding
 
@@ -67,4 +67,3 @@ class Board:
 
         output += padding + "      a      b      c      d      e      f      g      h\n"
         return output
-
