@@ -6,6 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Status: [Development]
 
+## [0.0.12] - 2024-09-20
+
+### Added
+- Validacion de la posicion inicial introducida por el jugador
+- Validacion del contenido de la celdas
+- Validacion del movimiento para la pieza Rook
+
+### To do
+- tests de los metodos implementados
+- Implementar las validaciones para el resto de las piezas
+
 ## [0.0.12] - 2024-09-08
 
 ### Added
