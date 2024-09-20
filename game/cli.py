@@ -1,23 +1,20 @@
 from .chess import Chess
-from .menu import Menu
-import os
+from .exepcions import InvalidPlay
+
 
 class Cli:
 
     def start_game(self):
         chess = Chess()
         while chess.is_playing():
-            self.play(chess)
-
-    def play(self, chess):
-        print(chess.__board__.show_board())
-        print("Turn: ", chess.turn)
-        from_row = self.range_input("From row (0-7): ")
-        from_col = self.range_input("From col (0-7): ")
-        to_row = self.range_input("To row (0-7): ")
-        to_col = self.range_input("To col (0-7): ")
-        chess.change_turn()
-        os.system('clear')
+            print(chess.board.show_board())
+            print("Turn: ", chess.turn)
+            old_pos = (self.range_input("From row (0-7): "),self.range_input("From col (0-7): "))
+            new_pos = (self.range_input("To row (0-7): "),self.range_input("To col (0-7): "))
+            try:
+                chess.play(old_pos,new_pos)
+            except InvalidPlay as e:
+                print(e)
 
     def range_input(self, prompt):
         while True:
@@ -32,5 +29,6 @@ class Cli:
 
 if __name__ == "__main__":
     cli = Cli() 
-    menu = Menu(cli)  # Pasar la instancia de Cli a Menu
-    menu.main()
+    # menu = Menu(cli)  # Pasar la instancia de Cli a Menu
+    # menu.main()
+    cli.start_game()
