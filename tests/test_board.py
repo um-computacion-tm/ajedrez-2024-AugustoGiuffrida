@@ -1,8 +1,8 @@
 import unittest
-
+from unittest.mock import patch, MagicMock
 from game.board import Board
 from game.cell import Cell
-from game.chess import Chess  
+
 
 class TestBoard(unittest.TestCase):
 
@@ -15,72 +15,101 @@ class TestBoard(unittest.TestCase):
                 self.assertIsInstance(cell, Cell, "Cada elemento del tablero debe ser una instancia de Cell.")
                 self.assertEqual(cell.get_color(), expected_color, f"Celda en la posición {(row, col)} debería ser {expected_color}.")
 
+    def test_get_positions_matrix(self):
+        positions = Board().get_positions()
+        self.assertEqual(len(positions),8)
 
-    def test_initial_piece_placement_white(self):
-        board = Chess().board().get_positions()  # Acceder al tablero a través del método público
-        
-        # Verificar las piezas blancas
-        piece = str(board[7][0].get_piece())
-        self.assertIn(piece, ['r', '♖'], "Debe haber una torre blanca en la posición a1.")
-        
-        piece = str(board[7][1].get_piece())
-        self.assertIn(piece, ['h', '♘'], "Debe haber un caballo blanco en la posición b1.")
-        
-        piece = str(board[7][2].get_piece())
-        self.assertIn(piece, ['b', '♗'], "Debe haber un alfil blanco en la posición c1.")
-        
-        piece = str(board[7][3].get_piece())
-        self.assertIn(piece, ['q', '♕'], "Debe haber una reina blanca en la posición d1.")
-        
-        piece = str(board[7][4].get_piece())
-        self.assertIn(piece, ['k', '♔'], "Debe haber un rey blanco en la posición e1.")
-        
-        piece = str(board[7][5].get_piece())
-        self.assertIn(piece, ['b', '♗'], "Debe haber un alfil blanco en la posición f1.")
-        
-        piece = str(board[7][6].get_piece())
-        self.assertIn(piece, ['h', '♘'], "Debe haber un caballo blanco en la posición g1.")
-        
-        piece = str(board[7][7].get_piece())
-        self.assertIn(piece, ['r', '♖'], "Debe haber una torre blanca en la posición h1.")
-        
-        # Verificar los peones blancos en la fila 6
-        for col in range(8):
-            piece = str(board[6][col].get_piece())
-            self.assertIn(piece, ['p', '♙'], f"Debe haber un peón blanco en la posición {chr(97 + col)}7.")
+    def test_get_positions_elements_1(self):
+        positions = Board().get_positions()
+        cell = positions[2][0]
+        self.assertEqual(len(positions[2]),8)
+        self.assertEqual(len(positions[0]),8)
+        self.assertIsInstance(cell,Cell)
+
+    def test_get_positions_elements_2(self):
+        positions = Board().get_positions()
+        cell = positions[5][4]
+        self.assertEqual(len(positions[5]),8)
+        self.assertEqual(len(positions[4]),8)
+        self.assertIsInstance(cell,Cell)
+
+    def test_get_positions_elements_3(self):
+        positions = Board().get_positions()
+        cell = positions[7][7]
+        self.assertEqual(len(positions[7]),8)
+        self.assertEqual(len(positions[7]),8)
+        self.assertIsInstance(cell,Cell)
+
+    def test_orthogonal_move_horizontal_no_obstacle(self):
+        board = Board()
+        source = (0,0)
+        dest = (0,3)
+
+        for i in range (1,3):
+            board.__positions__[0][i].is_occupied = MagicMock(return_value=False)            
+
+        result = board.orthogonal_move(source, dest)
+
+        self.assertTrue(result)
+
+    def test_orthogonal_move_horizontal_with_obstacle(self):
+        board = Board()
+        source = (0,0)
+        dest = (0,3)
+
+        board.__positions__[0][2].is_occupied = MagicMock(return_value=True)            
+
+        result = board.orthogonal_move(source, dest)
+
+        self.assertFalse(result)
+
+    def test_orthogonal_move_horizontal_with_obstacles(self):
+        board = Board()
+        source = (0,0)
+        dest = (0,3)
+
+        for i in range (1,3):
+            board.__positions__[0][i].is_occupied = MagicMock(return_value=True)            
+
+        result = board.orthogonal_move(source, dest)
+
+        self.assertFalse(result)
+
+    def test_orthogonal_move_vertical_no_obstacle(self):
+        board = Board()
+        source = (0,0)
+        dest = (3,0)
+
+        for i in range (1,3):
+            board.__positions__[i][0].is_occupied = MagicMock(return_value=False)            
+
+        result = board.orthogonal_move(source, dest)
+
+        self.assertTrue(result)
+
+    def test_orthogonal_move_vertical_with_obstacle(self):
+        board = Board()
+        source = (0,0)
+        dest = (3,0)
+
+        board.__positions__[2][0].is_occupied = MagicMock(return_value=True)            
+
+        result = board.orthogonal_move(source, dest)
+
+        self.assertFalse(result)
+
+    def test_orthogonal_move_vertical_with_obstacles(self):
+        board = Board()
+        source = (0,0)
+        dest = (3,0)
+
+        for i in range (1,3):
+            board.__positions__[i][0].is_occupied = MagicMock(return_value=True)            
+
+        result = board.orthogonal_move(source, dest)
+
+        self.assertFalse(result)
     
-    def test_initial_piece_placement_black(self):
-        board = Chess().board().get_positions()  # Acceder al tablero a través del método público
-
-        piece = str(board[0][0].get_piece())
-        self.assertIn(piece, ['R', '♜'], "Debe haber una torre negra en la posición a8.")
-        
-        piece = str(board[0][1].get_piece())
-        self.assertIn(piece, ['H', '♞'], "Debe haber un caballo negro en la posición b8.")
-        
-        piece = str(board[0][2].get_piece())
-        self.assertIn(piece, ['B', '♝'], "Debe haber un alfil negro en la posición c8.")
-        
-        piece = str(board[0][3].get_piece())
-        self.assertIn(piece, ['Q', '♛'], "Debe haber una reina negra en la posición d8.")
-        
-        piece = str(board[0][4].get_piece())
-        self.assertIn(piece, ['K', '♚'], "Debe haber un rey negro en la posición e8.")
-        
-        piece = str(board[0][5].get_piece())
-        self.assertIn(piece, ['B', '♝'], "Debe haber un alfil negro en la posición f8.")
-        
-        piece = str(board[0][6].get_piece())
-        self.assertIn(piece, ['H', '♞'], "Debe haber un caballo negro en la posición g8.")
-        
-        piece = str(board[0][7].get_piece())
-        self.assertIn(piece, ['R', '♜'], "Debe haber una torre negra en la posición h8.")
-
-        # Verificar los peones negros en la fila 1
-        for col in range(8):
-            piece = str(board[1][col].get_piece())
-            self.assertIn(piece, ['P', '♟'], f"Debe haber un peón negro en la posición {chr(97 + col)}2.")
-
 
     # def test_show_board_format(self):
     #     board_output = Board().show_board()

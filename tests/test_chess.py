@@ -23,7 +23,7 @@ class TestChess(unittest.TestCase):
 
     def test_board_initialization(self):
         # Verifica que el tablero fue inicializado correctamente
-        board = self.chess.board().get_positions()
+        board = self.chess.board.get_positions()
         self.assertEqual(len(board), 8)
         self.assertEqual(len(board[0]), 8)
 
