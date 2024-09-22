@@ -2,7 +2,7 @@ import unittest
 from unittest.mock import patch, MagicMock
 from game.cli import Cli
 from game.chess import Chess
-from game.menu import Menu
+#from game.menu import Menu
 
 class TestCli(unittest.TestCase):
 
@@ -19,7 +19,7 @@ class TestCli(unittest.TestCase):
         chess = Chess()
         cli = Cli()
         turn = chess.turn
-        cli.start_game(chess)
+        cli.start_game()
         self.assertEqual(turn, "white")
         self.assertEqual(mock_input.call_count, 4)
         self.assertEqual(mock_print.call_count, 2)
@@ -30,7 +30,7 @@ class TestCli(unittest.TestCase):
     def test_play_sad(self, mock_get_terminal_size, mock_print, mock_input):
         chess = Chess()
         cli = Cli()
-        cli.start_game(chess)
+        cli.start_game()
         self.assertEqual(mock_input.call_count, 5)
         self.assertEqual(mock_print.call_count, 3)
         mock_print.assert_any_call("Entrada no válida. Por favor, introduce un número entre 0 y 7.")
