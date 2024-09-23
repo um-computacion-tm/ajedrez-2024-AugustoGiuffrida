@@ -2,7 +2,6 @@ import unittest
 from game.chess import Chess
 from game.piece import Pawn, Rook, Knight, Bishop, Queen, King
 
-
 class TestChess(unittest.TestCase):
 
     def setUp(self):
@@ -47,6 +46,70 @@ class TestChess(unittest.TestCase):
         piece = self.chess.make_piece("king", "black", (0, 4))
         self.assertIsInstance(piece, King)
 
+    def test_set_pieces_white(self):
+        chess = Chess()
+        board = chess.board.get_positions()
+        
+        piece = str(board[7][0].get_piece())
+        self.assertEqual(piece, '♖')
+        
+        piece = str(board[7][1].get_piece())
+        self.assertEqual(piece, '♘')
+        
+        piece = str(board[7][2].get_piece())
+        self.assertEqual(piece, '♗')
+        
+        piece = str(board[7][3].get_piece())
+        self.assertEqual(piece, '♕')
+        
+        piece = str(board[7][4].get_piece())
+        self.assertEqual(piece,'♔' )
+        
+        piece = str(board[7][5].get_piece())
+        self.assertEqual(piece,'♗')
+        
+        piece = str(board[7][6].get_piece())
+        self.assertEqual(piece, '♘')
+        
+        piece = str(board[7][7].get_piece())
+        self.assertEqual(piece, '♖')
+
+        for col in range(8):
+            piece = str(board[6][col].get_piece())
+            self.assertEqual(piece, '♙')
+
+    def test_set_pieces_black(self):
+        chess = Chess()
+        board = chess.board.get_positions()
+
+        piece = str(board[0][0].get_piece())
+        self.assertEqual(piece,'♜')
+        
+        piece = str(board[0][1].get_piece())
+        self.assertEqual(piece,'♞')
+        
+        piece = str(board[0][2].get_piece())
+        self.assertEqual(piece,'♝')
+        
+        piece = str(board[0][3].get_piece())
+        self.assertEqual(piece,'♛')
+        
+        piece = str(board[0][4].get_piece())
+        self.assertEqual(piece,'♚')
+        
+        piece = str(board[0][5].get_piece())
+        self.assertEqual(piece,'♝')
+        
+        piece = str(board[0][6].get_piece())
+        self.assertEqual(piece,'♞')
+        
+        piece = str(board[0][7].get_piece())
+        self.assertEqual(piece,'♜')
+
+        # Verificar los peones negros en la fila 1
+        for col in range(8):
+            piece = str(board[1][col].get_piece())
+            self.assertEqual(piece,'♟')
 
 if __name__ == "__main__":
     unittest.main()
