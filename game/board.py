@@ -1,10 +1,10 @@
 from .piece import Pawn, Rook, King, Knight, Queen, Bishop
+from .piece import Pieces
+from .cell import Cell
 import os
 import sys
 sys.stdout.reconfigure(encoding='utf-8')
 
-from .cell import Cell
-from .piece import Pieces
 
 class Board:
 
@@ -34,6 +34,9 @@ class Board:
                 return False
         return True
 
+    def diagonal_move(self, source, dest):
+        pass
+    
     def check_path(self, piece, source, dest):
         if isinstance(piece, Pawn):
             if dest_cell.is_occupied():
@@ -57,8 +60,6 @@ class Board:
         else:
             return False
 
-    def diagonal_move(self, source, dest):
-        pass
 
     def is_valid(self, source, dest): # -> True/False
         # Buscamos la celda y la pieza a validar

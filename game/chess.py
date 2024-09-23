@@ -35,7 +35,7 @@ class Chess:
     def change_turn(self):
         self.__turn__ = "black" if self.__turn__ == "white" else "white"
             
-    def make_piece(self, piece, color, position):
+    def make_piece(self, piece, color):
         piece_classes = {
             "pawn": Pawn,
             "rook": Rook,
@@ -44,7 +44,7 @@ class Chess:
             "queen": Queen,
             "king": King
         }
-        return piece_classes[piece](color, position) if piece in piece_classes else None
+        return piece_classes[piece](color) if piece in piece_classes else None
         
     def set_pieces(self):
         with open('chess_positions.json', 'r') as json_file:
@@ -54,5 +54,5 @@ class Chess:
             for piece, positions in pieces.items():
                 for position in positions:
                     row, col = position
-                    piece_obj = self.make_piece(piece,color, position)
+                    piece_obj = self.make_piece(piece,color)
                     self.__matrix__[row][col].place_piece(piece_obj)
