@@ -52,3 +52,4 @@ exclude_patterns:
 - "**/*_test.go"
 - "**/*.d.ts" 
 - "game/menu.py"
+- - "game/exepcions.py"
