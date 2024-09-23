@@ -10,9 +10,9 @@ class Board:
 
     def __init__(self):
         self.__positions__ = []
-        for row in range(8):  # Itera sobre las filas del tablero (0 a 7).
+        for row in range(8):               # Itera sobre las filas del tablero (0 a 7).
             self.__positions__.append([])  # Añade una nueva fila como una lista vacía.
-            for column in range(8):  # Itera sobre las columnas del tablero (0 a 7).
+            for column in range(8):        # Itera sobre las columnas del tablero (0 a 7).
                 # Determina el color de la celda: blanco si la suma de la fila y columna es par, negro si es impar.
                 if (row + column) % 2 == 0:
                     color = "white"
@@ -26,7 +26,7 @@ class Board:
     def orthogonal_move(self, source, dest):
         # Si el movimiento es horizontal entonces index = 1
         index = 1 if source[0] == dest[0] else 0
-        mov=dest[index]-source[index]
+        mov = dest[index]-source[index]
         translation = mov if mov>0 else -mov
         sign = 1 if mov>0 else -1
         for i in range(1,translation,sign):
@@ -35,8 +35,21 @@ class Board:
         return True
 
     def diagonal_move(self, source, dest):
-        pass
-    
+        index_row = 1 if (source[0] - dest[0]) < 0   else -1
+        index_col = 1 if (source[1] - dest[1]) < 0   else -1
+
+        # La cantidad de movimientos diagonales (debe ser igual para filas y columnas)
+        translation = abs(dest[0] - source[0])
+
+        for i in range(1,translation):
+            drow = source[0] + i*index_row
+            dcol = source[1] + i*index_col
+
+            if self.__positions__[drow][dcol].is_occupied():
+                return False
+        return True            
+   
+
     def check_path(self, piece, source, dest):
         if isinstance(piece, Pawn):
             if dest_cell.is_occupied():
@@ -52,7 +65,7 @@ class Board:
         elif isinstance(piece, Knight):
             pass
         elif isinstance(piece, Bishop):
-            pass
+            return self.diagonal_move(source,dest)
         elif isinstance(piece, Queen):
             # Detectar tipo de movimiento
             # Este return no está para nada bien
