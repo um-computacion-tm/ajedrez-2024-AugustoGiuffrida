@@ -6,6 +6,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Status: [Development]
 
+## [0.0.14] - 2024-09-23
+
+### Added
+- Validacion de los movimientos implementados
+
+### To do
+- tests de los metodos implementados
+- Implementar las validaciones para el resto de las piezas
+
+## [0.0.13] - 2024-09-22
+
+### Added
+- Validacion del movimiento para la pieza Bishop
+
+### To do
+- tests de los metodos implementados
+- Implementar las validaciones para el resto de las piezas
+
 ## [0.0.12] - 2024-09-20
 
 ### Added
