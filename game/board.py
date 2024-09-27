@@ -34,6 +34,11 @@ class Board:
                 return False
         return True
 
+    def move_knight(self, source, dest):
+        # Solo valida que el movimiento sea un movimiento en "L"
+        knight = Knight()
+        return self.knight.valid_moves(source, dest)
+
     def diagonal_move(self, source, dest):
         index_row = 1 if (source[0] - dest[0]) < 0   else -1
         index_col = 1 if (source[1] - dest[1]) < 0   else -1
