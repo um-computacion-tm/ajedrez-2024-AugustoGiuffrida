@@ -34,11 +34,6 @@ class Board:
                 return False
         return True
 
-    def move_knight(self, source, dest):
-        # Solo valida que el movimiento sea un movimiento en "L"
-        knight = Knight()
-        return self.knight.valid_moves(source, dest)
-
     def diagonal_move(self, source, dest):
         index_row = 1 if (source[0] - dest[0]) < 0   else -1
         index_col = 1 if (source[1] - dest[1]) < 0   else -1
@@ -65,18 +60,23 @@ class Board:
                 pass
         elif isinstance(piece, Rook):
             return self.orthogonal_move(source,dest)
-        elif isinstance(piece, King):
-            pass
+
         elif isinstance(piece, Knight):
-            pass
+            return piece.valid_moves(source,dest)
+
         elif isinstance(piece, Bishop):
             return self.diagonal_move(source,dest)
+            
+        elif isinstance(piece, King):
+            pass
         elif isinstance(piece, Queen):
-            # Detectar tipo de movimiento
-            # Este return no está para nada bien
-            return orthogonal_move(source,dest) and diagonal_move(self, source, dest)
-        else:
-            return False
+            # Si el movimiento es ortogonal
+            if source[0] == dest[0] or source[1] == dest[1]:
+                return self.orthogonal_move(source, dest)
+            # Si el movimiento es diagonal
+            elif abs(source[0] - dest[0]) == abs(source[1] - dest[1]):
+                return self.diagonal_move(source, dest)
+        return False
 
 
     def is_valid(self, source, dest): # -> True/False

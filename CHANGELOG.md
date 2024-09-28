@@ -6,6 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Status: [Development]
 
+## [0.0.14] - 2024-09-28
+
+### Added
+- Validacion de los movimientos todas las piezas
+
+### To do
+- tests de los metodos implementados
+- arreglar los tests que no funcionan
+
 ## [0.0.14] - 2024-09-23
 
 ### Added
