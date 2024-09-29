@@ -28,22 +28,22 @@ class TestChess(unittest.TestCase):
 
     def test_make_piece(self):
         # Verifica la creación de una pieza
-        piece = self.chess.make_piece("pawn", "white", (6, 0))
+        piece = self.chess.make_piece("pawn", "white")
         self.assertIsInstance(piece, Pawn)
 
-        piece = self.chess.make_piece("rook", "black", (0, 0))
+        piece = self.chess.make_piece("rook", "black")
         self.assertIsInstance(piece, Rook)
 
-        piece = self.chess.make_piece("knight", "white", (7, 1))
+        piece = self.chess.make_piece("knight", "white")
         self.assertIsInstance(piece, Knight)
 
-        piece = self.chess.make_piece("bishop", "black", (0, 2))
+        piece = self.chess.make_piece("bishop", "black")
         self.assertIsInstance(piece, Bishop)
 
-        piece = self.chess.make_piece("queen", "white", (7, 3))
+        piece = self.chess.make_piece("queen", "white")
         self.assertIsInstance(piece, Queen)
 
-        piece = self.chess.make_piece("king", "black", (0, 4))
+        piece = self.chess.make_piece("king", "black")
         self.assertIsInstance(piece, King)
 
     def test_set_pieces_white(self):
