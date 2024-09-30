@@ -13,23 +13,9 @@ class Pieces:
         return self.__color__
 
 
-    # # Esto no lo puedo implementar, y si o si lo necesito
-    # # 
-    # def is_valid(self, old_pos, new_pos):
-    #     if self.get_position()
-    #     # ¿Que hay en old_pos?
-    #     # if old_pos is ocupied:
-    #     #   veo que mierda hago
-    #     # else:
-    #     #   return False   
-
-
 class Rook(Pieces):
     white_repr = "♖"
     black_repr = "♜"
-
-    def __init__(self, color, ):
-        super().__init__(color)
 
     def valid_moves(self, old_pos, new_pos):
         return (old_pos[0]==new_pos[0] or old_pos[1]==new_pos[1]) and (old_pos!=new_pos)
@@ -57,7 +43,7 @@ class Pawn(Pieces):
     black_repr = "♟"
 
     def valid_moves(self, old_pos, new_pos, is_capture=False):
-        direction = 1 if self.color == "white" else -1
+        direction = 1 if self.get_color() == "white" else -1
 
         # Movimiento hacia adelante
         if not is_capture:
@@ -86,9 +72,14 @@ class Queen(Pieces):
     white_repr = "♕"
     black_repr = "♛"
 
-def valid_moves(self, old_pos, new_pos):
-    return (old_pos[0] == new_pos[0] or old_pos[1] == new_pos[1]) or \
-           (abs(new_pos[0] - old_pos[0]) == abs(new_pos[1] - old_pos[1]) and old_pos != new_pos)
+    def valid_moves(self, old_pos, new_pos):
+        # Verificar que las posiciones no sean iguales
+        if old_pos == new_pos:
+            return False
+        
+        # Movimiento horizontal o vertical
+        return (old_pos[0] == new_pos[0] or old_pos[1] == new_pos[1]) or \
+              (abs(new_pos[0] - old_pos[0]) == abs(new_pos[1] - old_pos[1]))
 
 
 
