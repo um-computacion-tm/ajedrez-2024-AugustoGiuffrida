@@ -2,6 +2,7 @@ import unittest
 from unittest.mock import patch, MagicMock
 from game.board import Board
 from game.cell import Cell
+from game.piece import Rook
 
 
 class TestBoard(unittest.TestCase):
@@ -111,18 +112,107 @@ class TestBoard(unittest.TestCase):
         self.assertFalse(result)
     
 
-    # def test_show_board_format(self):
-    #     board_output = Board().show_board()
-    #     lines = board_output.splitlines()
-    #     self.assertEqual(len(lines), 19, "El tablero debe representarse en 19 líneas.")
+    def test_diagonal_move_down_no_obstacle_1(self):
+        board = Board()
+        source = (0, 0)
+        dest = (7, 7)
 
-    #     # Verificar las primeras y últimas líneas
-    #     self.assertTrue(lines[0].startswith("                                               a      b        c       d       e       f       g       h"), "La primera línea del tablero no es correcta.")
-    #     self.assertTrue(lines[-1].startswith("                                               a      b        c       d       e       f       g       h"), "La última línea del tablero no es correcta.")
+        for i in range(1, 7):
+            board.__positions__[i][i].is_occupied = MagicMock(return_value=False)            
+
+        result = board.diagonal_move(source, dest)
+        self.assertTrue(result)
+
+    def test_diagonal_move_down_no_obstacle_2(self):
+        board = Board()
+        source = (0, 7)
+        dest = (7, 0)
+
+        for i in range(1, 7):
+            board.__positions__[i][7 - i].is_occupied = MagicMock(return_value=False)            
+
+        result = board.diagonal_move(source, dest)
+        self.assertTrue(result)
+
+    def test_diagonal_move_up_no_obstacle_1(self):
+        board = Board()
+        source = (7, 7)
+        dest = (0, 0)
+
+        for i in range(1, 7):
+            board.__positions__[7 - i][7 - i].is_occupied = MagicMock(return_value=False)            
+
+        result = board.diagonal_move(source, dest)
+        self.assertTrue(result)
+
+    def test_diagonal_move_up_no_obstacle_2(self):
+        board = Board()
+        source = (7, 0)
+        dest = (0, 7)
+
+        for i in range(1, 7):
+            board.__positions__[7 - i][i].is_occupied = MagicMock(return_value=False)            
+
+        result = board.diagonal_move(source, dest)
+        self.assertTrue(result)
+
+    def test_diagonal_move_with_obstacle(self):
+        board = Board()
+        source = (0, 0)
+        dest = (3, 3)
+
+        board.__positions__[2][2].is_occupied = MagicMock(return_value=True)            
+
+        result = board.diagonal_move(source, dest)
+        self.assertFalse(result)
+
+    def test_diagonal_move_with_multiple_obstacles(self):
+        board = Board()
+        source = (7, 7)
+        dest = (0, 0)
+
+        for i in range(1, 7):
+            board.__positions__[7 - i][7 - i].is_occupied = MagicMock(return_value=True)            
+
+        result = board.diagonal_move(source, dest)
+        self.assertFalse(result)
+
+    def test_is_valid(self):
+        source = (1, 1)
+        dest =  (7, 7)
+
+        board = Board()
+
+        piece = Rook("white")
+        board.__positions__[source[0]][source[1]].place_piece(piece)
+
+
+        cell = board.__positions__[source[0]][source[1]]
+        piece = cell.get_piece()
+        piece.valid_moves = MagicMock(return_value=True)
+
+        dest_cell = board.__positions__[dest[0]][dest[1]]
+        dest_cell.is_occupied = MagicMock(return_value=False)
+
+        result = board.is_valid(source,dest)
+
+
+
+        self.assertTrue(result) 
+
+
+    def test_show_board_format(self):
+        board_output = Board().show_board()
+        lines = board_output.splitlines()
+        self.assertEqual(len(lines), 19, "El tablero debe representarse en 19 líneas.")
+
+        # Verificar las primeras y últimas líneas
+        self.assertTrue(lines[0].startswith("    a     b     c     d     e     f     g     h"), "La primera línea del tablero no es correcta.")
+        self.assertTrue(lines[-1].startswith("    a     b     c     d     e     f     g     h"), "La última línea del tablero no es correcta.")
         
-    #     # Verificar algunas líneas centrales del tablero
-    #     self.assertIn("                                           └───────┴───────┴───────┴───────┴───────┴───────┴───────┴───────┘", lines, "La línea final del tablero no está presente.")
-    #     self.assertIn("                                           ├───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┤", lines, "La línea de separación del tablero no está presente.")
+        # Verificar algunas líneas centrales del tablero
+        self.assertIn("  └─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┘", lines, "La línea final del tablero no está presente.")
+        self.assertIn("  ├─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┤", lines, "La línea de separación del tablero no está presente.")
 
 if __name__ == "__main__":
     unittest.main()
