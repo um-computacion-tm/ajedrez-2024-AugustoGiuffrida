@@ -1,38 +1,33 @@
 class Cell:
-    def __init__(self, color, position, content=" "):
-        # Verifica que el color sea válido.
+    def __init__(self, color, position=None):  # Modificado para aceptar una posición
         if color not in ["white", "black"]:
-            raise ValueError(f"Invalid color: {color}")  # Lanza un error si el color es inválido.
+            raise ValueError(f"Invalid color: {color}")
         
-        self.__color__ = color  # Asigna el color al atributo privado __color__.
-        self.__content__ = content  # Asigna el contenido al atributo privado __content__.
-        self.__position__ = position  # Asigna la posición al atributo privado __position__.
-        self.__piece__ = None  # Inicializa la pieza en la celda como None (vacío).
+        self.__color__ = color
+        self.__piece__ = None
+        self.__position__ = position  # Almacena la posición si se proporciona.
 
     def get_color(self):
         return self.__color__
-
-    def get_position(self):
-        return self.__position__
 
     def get_piece(self):
         return self.__piece__
 
     def get_content(self):
-        return self.__content__
+        return str(self.__piece__) if self.__piece__ else " "  # Corregido para devolver un espacio
 
     def __str__(self):
-        return self.__content__
+        return str(self.__piece__) if self.__piece__ else " "
 
     def place_piece(self, piece):
         if self.__piece__ is not None:
-            raise ValueError("Cell already occupied")  # Lanza un error si la celda ya está ocupada.
-        self.__piece__ = piece  # Coloca la pieza en la celda.
+            raise ValueError("Cell already occupied")
+        self.__piece__ = piece
 
     def remove_piece(self):
-        piece = self.__piece__  # Guarda la pieza actual en una variable temporal.
-        self.__piece__ = None  # Vacía la celda.
-        return piece  # Retorna la pieza removida.
+        piece = self.__piece__
+        self.__piece__ = None
+        return piece
 
     def is_occupied(self):
-        return self.__piece__ is not None  # Retorna True si hay una pieza en la celda, de lo contrario False.
+        return bool(self.__piece__)

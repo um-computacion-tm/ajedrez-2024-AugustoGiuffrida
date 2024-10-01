@@ -42,22 +42,30 @@ class Pawn(Pieces):
     white_repr = "♙"
     black_repr = "♟"
 
-    def valid_moves(self, old_pos, new_pos, is_capture=False):
-        direction = 1 if self.get_color() == "white" else -1
-
+    def valid_moves(self, source, dest):
         # Movimiento hacia adelante
-        if not is_capture:
-            # Si es el primer movimiento, puede moverse 2 casillas hacia adelante
-            if old_pos[0] == (1 if self.get_color() == "white" else 6):
-                return new_pos[0] == old_pos[0] + 2 * direction and old_pos[1] == new_pos[1] or \
-                       new_pos[0] == old_pos[0] + 1 * direction and old_pos[1] == new_pos[1]
-            # Movimiento normal (una casilla hacia adelante)
-            else:
-                return new_pos[0] == old_pos[0] + direction and old_pos[1] == new_pos[1]
+        if self.get_color() == "white":
+            # Mover una casilla hacia adelante
+            if source[0] - dest[0] == 1 and source[1] == dest[1]:
+                return True
+            # Primer movimiento: puede avanzar dos casillas
+            if source[0] == 6 and dest[0] == 4 and source[1] == dest[1]:
+                return True
+            # Captura diagonal
+            if source[0] - dest[0] == 1 and abs(source[1] - dest[1]) == 1:
+                return True
+        elif self.get_color() == "black":
+            # Mover una casilla hacia adelante
+            if dest[0] - source[0] == 1 and source[1] == dest[1]:
+                return True
+            # Primer movimiento: puede avanzar dos casillas
+            if source[0] == 1 and dest[0] == 3 and source[1] == dest[1]:
+                return True
+            # Captura diagonal
+            if dest[0] - source[0] == 1 and abs(source[1] - dest[1]) == 1:
+                return True
+        return False
 
-        # Captura diagonal
-        else:
-            return new_pos[0] == old_pos[0] + direction and abs(new_pos[1] - old_pos[1]) == 1
 
 
 

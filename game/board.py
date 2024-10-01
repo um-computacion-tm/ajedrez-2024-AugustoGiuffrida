@@ -18,10 +18,13 @@ class Board:
                     color = "white"
                 else:
                     color = "black"
-                self.__positions__[row].append(Cell(color, (row, column)))  # Añade una celda al tablero con el color correspondiente.
+                self.__positions__[row].append(Cell(color))  # Añade una celda al tablero con el color correspondiente.
 
     def get_positions(self):
         return self.__positions__
+
+    def get_cell(self, row, col):
+        return self.__positions__[row][col]
 
     def orthogonal_move(self, source, dest):
         # Si el movimiento es horizontal entonces index = 1

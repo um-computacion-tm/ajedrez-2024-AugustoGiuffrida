@@ -1,6 +1,7 @@
 from .piece import Pieces, Pawn, Rook, King, Knight, Queen, Bishop
 from .exepcions import InvalidPlay
 from .board import Board
+from .cell import Cell
 import json
 
 class Chess:
@@ -19,21 +20,47 @@ class Chess:
     def board(self):
         return self.__board__
 
-    def play(self,source,dest):
+    def play(self, source, dest):
         cell = self.__matrix__[source[0]][source[1]]
+
+        # Depuración para verificar la celda
+        print(f"Source Cell: {source}, Occupied: {cell.is_occupied()}")
+        
         if cell.is_occupied():
-            turn_color_is_valid = cell.get_piece().get_color() == self.turn
-            move_is_valid = self.__board__.is_valid(source,dest)
+            piece = cell.get_piece()
+            print(f"Piece at Source: {piece}, Color: {piece.get_color() if piece else 'None'}")
+            
+            turn_color_is_valid = piece.get_color() == self.turn
+            move_is_valid = self.__board__.is_valid(source, dest)
+
+            # Depuración para verificar condiciones
+            print(f"Turn color valid: {turn_color_is_valid}, Move valid: {move_is_valid}")
+
             if turn_color_is_valid and move_is_valid:
-                # Hago la jugada
+                self.move(source, dest)
+                self.change_turn()
                 return
+
         raise InvalidPlay
+
+
+    def move(self, source, dest):
+        old_cell = self.__board__.get_cell(source[0], source[1])  # Cambiado
+        new_cell = self.__board__.get_cell(dest[0], dest[1])      # Cambiado
+        new_cell.place_piece(old_cell.remove_piece())
+
 
     def is_playing(self):
         return True
    
     def change_turn(self):
         self.__turn__ = "black" if self.__turn__ == "white" else "white"
+
+    def set_rooks(self, color):
+        j = 6 if color == 'white' else 1
+        for i in range(8):
+            self.__matrix__[j][i].place_piece(Rook(color))
+
             
     def make_piece(self, piece, color):
         piece_classes = {

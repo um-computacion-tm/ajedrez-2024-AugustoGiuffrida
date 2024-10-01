@@ -7,11 +7,11 @@ class Cli:
     def start_game(self):
         chess = Chess()
         while chess.is_playing():
-            print(chess.board.show_board())
-            print("Turn: ", chess.turn)
-            old_pos = (self.range_input("From row (0-7): "),self.range_input("From col (0-7): "))
-            new_pos = (self.range_input("To row (0-7): "),self.range_input("To col (0-7): "))
             try:
+                print(chess.board.show_board())
+                print("Turn: ", chess.turn)
+                old_pos = (self.range_input("From row (0-7): "),self.range_input("From col (0-7): "))
+                new_pos = (self.range_input("To row (0-7): "),self.range_input("To col (0-7): "))
                 chess.play(old_pos,new_pos)
             except InvalidPlay as e:
                 print(e)
