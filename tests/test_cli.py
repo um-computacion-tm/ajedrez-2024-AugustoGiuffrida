@@ -1,8 +1,9 @@
 import unittest
-from unittest.mock import patch, MagicMock, call
+from unittest import mock
+from unittest.mock import patch, MagicMock
 from game.cli import Cli
 from game.chess import Chess
-#from game.menu import Menu
+from game.exepcions import InvalidPlay
 
 class TestCli(unittest.TestCase):
 
@@ -12,62 +13,37 @@ class TestCli(unittest.TestCase):
         cli.start_game()
         mock_is_playing.assert_called_once()
 
-    # @patch('game.chess.Chess.is_playing')
-    # @patch('game.cli.Cli.range_input')
-    # @patch('game.board.Board.show_board')
-    # @patch('game.chess.Chess.turn')
-    # @patch('builtins.print')
-    # @patch('game.chess.Chess.play')
-    # def test_start_game_valid_positions(self, mock_is_playing, mock_range_input, mock_show_board, mock_chess_turn, mock_print,  mock_play):
-    #     cli = Cli()
-    #     print('one')
-    #     cli.start_game()
-    #     mock_is_playing.side_effect = True
-    #     self.assertIsInstance(cli.start_game.chess, Chess)
-    #     mock_show_board.side_effect = 'Tablero xd'
-    #     mock_chess_turn.side_effect = 'white'
-    #     mock_print.assert_has_calls([call("Tablero xd"), call("Turn: white")])
-    #     mock_range_input.side_effect = [0, 0]
-    #     mock_range_input.side_effect = [1, 1]
-    #     self.assertEqual(mock_print.call_count, 2)
-    #     mock_is_playing.side_effect = False
+    @patch('game.chess.Chess.is_playing', side_effect=[True, False])
+    @patch('game.chess.Chess.board', new_callable=MagicMock)  # Parchear el atributo board
+    @patch('builtins.print')  # Para evitar que imprima en la consola durante el test
+    @patch('game.cli.Cli.range_input', side_effect=[0, 0, 1, 0])  # Simula entradas de usuario para old_pos y new_pos
+    @patch('game.chess.Chess.play')  # Mock del método play de Chess
+    def test_start_game_turn(self, mock_play, mock_range_input, mock_print, mock_board, mock_is_playing):
+        mock_board.show_board.return_value = "Board"  # Simula el retorno de show_board
+        cli = Cli()
+        cli.start_game()
 
-    # @patch('game.chess.Chess')  # Mockea el objeto Chess.
-    # @patch('game.cli.Cli.range_input')  # Simula entradas de coordenadas.
-    # @patch('builtins.print')  # Mockea el print para evitar que imprima en los tests.
-    # def test_start_game(self, mock_chess, mock_range_input, mock_print):
-    #     # Instancia el mock del objeto Chess.
+        # Verificar que se llama a Chess.is_playing dos veces
+        self.assertEqual(mock_is_playing.call_count, 2)
 
-    #     cli = Cli()
-    #     cli.start_game()
+        # Verificar que se muestra el tablero y el turno
+        mock_print.assert_any_call("Turn: ", mock.ANY)  # Cambiar 'mock' a 'mock'
+        mock_print.assert_any_call("Board")
 
-    #     mock_chess_instance = mock_chess.return_value
-    #     mock_chess_instance.is_playing.side_effect = [True, False]  # Simula que el juego empieza y luego termina.
-        
-    #     mock_chess_instance.play = MagicMock()
-        
-    #     # Verificar que se llamó a chess.play una vez con las coordenadas correctas.
-    #     mock_range_input.side_effect = [0, 0]
-    #     mock_range_input.side_effect = [1, 1]
+        # Verificar que Chess.play es llamado con las posiciones correctas
+        mock_play.assert_called_once_with((0, 0), (1, 0))
 
-    #     mock_chess_instance.play.assert_called_once_with((0, 0), (1, 1))
-    #     # Verificar que el ciclo terminó cuando is_playing() devolvió False.
-    #     self.assertEqual(mock_chess_instance.is_playing.call_count, 2)
 
-    #     # Verificar que los prints relevantes se llamaron, sin mostrar el tablero.
-    #     mock_print.assert_any_call("Turn: ", mock_chess_instance.turn)
+    @patch('builtins.input', side_effect=['8', '-1', 'a', '2'])  # Simula entradas fuera de rango o inválidas
+    @patch('builtins.print')  # Mock de print para verificar los mensajes
+    def test_range_input_invalid(self, mock_print, mock_input):
+        cli = Cli()
+        result = cli.range_input("From row (0-7): ")
+        self.assertEqual(result, 2)  # Asegurarse de que la entrada válida se retorna al final
 
-    # @patch('builtins.input', side_effect=['a', '1', '1', '2', '2'])
-    # @patch('builtins.print')
-    # @patch('os.get_terminal_size', return_value=MagicMock(columns=80))  # Simular tamaño de terminal
-    # def test_play_sad(self, mock_get_terminal_size, mock_print, mock_input):
-    #     chess = Chess()
-    #     cli = Cli()
-    #     cli.start_game()
-    #     self.assertEqual(mock_input.call_count, 5)
-    #     self.assertEqual(mock_print.call_count, 3)
-    #     mock_print.assert_any_call("Entrada no válida. Por favor, introduce un número entre 0 y 7.")
-    #     self.assertEqual(chess.turn, "black")
+        # Verifica que se imprime el mensaje de error correcto
+        mock_print.assert_any_call("Las coordenadas están fuera del rango permitido (0-7). Inténtalo de nuevo")
+        mock_print.assert_any_call("Entrada no válida. Por favor, introduce un número entre 0 y 7.")
 
 if __name__ == '__main__':
     unittest.main()
