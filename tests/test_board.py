@@ -41,6 +41,8 @@ class TestBoard(unittest.TestCase):
         self.assertEqual(len(positions[7]),8)
         self.assertIsInstance(cell,Cell)
 
+###### Tests orthogonal_move ######
+
     def test_orthogonal_move_horizontal_no_obstacle(self):
         board = Board()
         source = (0,0)
@@ -111,6 +113,7 @@ class TestBoard(unittest.TestCase):
 
         self.assertFalse(result)
     
+###### Tests diagonal_move ######
 
     def test_diagonal_move_down_no_obstacle_1(self):
         board = Board()
@@ -177,6 +180,8 @@ class TestBoard(unittest.TestCase):
         result = board.diagonal_move(source, dest)
         self.assertFalse(result)
 
+###Peon###
+
     def tests_check_path_pawn_valid(self):
         source = (1,1)
         dest = (3,1)
@@ -217,6 +222,8 @@ class TestBoard(unittest.TestCase):
         result = board.check_path(pawn, source, dest)
 
         self.assertFalse(result)
+
+###Torre
 
     def tests_check_path_rook_valid(self):
         source = (0,0)
@@ -259,6 +266,8 @@ class TestBoard(unittest.TestCase):
 
         self.assertFalse(result)    
 
+###Caballo###
+
     def tests_check_path_knight_valid(self):
         source = (0,1)
         dest = (2,2)
@@ -300,6 +309,8 @@ class TestBoard(unittest.TestCase):
 
         self.assertFalse(result)
 
+###Alfil###
+
     def tests_check_path_bishop_valid(self):
         source = (0,0)
         dest = (7,7)
@@ -340,6 +351,150 @@ class TestBoard(unittest.TestCase):
         result = board.check_path(bishop, source, dest)
 
         self.assertFalse(result)
+
+###Rey###
+
+    def tests_check_path_king_valid_diagonal(self):
+        source = (0,4)
+        dest = (1,5)
+        board = Board()
+        king = King("white")
+
+        board.__positions__[source[0]][source[1]].place_piece(king)
+        board.diagonal_move = MagicMock(return_value=True)
+
+        result = board.check_path(king, source, dest)
+
+        self.assertTrue(result)
+
+    def tests_check_path_king_valid_orthogonal(self):
+        source = (0,4)
+        dest = (0,5)
+        board = Board()
+        king = King("white")
+
+        board.__positions__[source[0]][source[1]].place_piece(king)
+        board.orthogonal_move = MagicMock(return_value=True)
+
+        result = board.check_path(king, source, dest)
+
+        self.assertTrue(result)
+
+    def tests_check_path_king_diagonal_capture(self):
+        source = (0,4)
+        dest = (1,5)
+        board = Board()
+        king = King("white")
+        enemy_king = King("black")
+
+        board.__positions__[source[0]][source[1]].place_piece(king)
+        board.diagonal_move = MagicMock(return_value=True)
+        board.__positions__[dest[0]][dest[1]].place_piece(enemy_king)
+
+        result = board.check_path(king, source, dest)
+
+        self.assertTrue(result)
+
+    def tests_check_path_king_orthogonal_capture(self):
+        source = (0,4)
+        dest = (0,5)
+        board = Board()
+        king = King("white")
+        enemy_king = King("black")
+
+        board.__positions__[source[0]][source[1]].place_piece(king)
+        board.orthogonal_move = MagicMock(return_value=True)
+        board.__positions__[dest[0]][dest[1]].place_piece(enemy_king)
+
+        result = board.check_path(king, source, dest)
+
+        self.assertTrue(result)
+
+    def tests_check_path_king_invalid(self):
+        source = (0,4)
+        dest = (0,7)
+        board = Board()
+        king = King("white")
+
+        board.__positions__[source[0]][source[1]].place_piece(king)
+        board.orthogonal_move = MagicMock(return_value=False)
+
+        result = board.check_path(king, source, dest)
+
+        self.assertFalse(result)
+
+###Reina####
+
+    def tests_check_path_queen_valid_diagonal(self):
+        source = (0,0)
+        dest = (7,7)
+        board = Board()
+        queen = Queen("white")
+
+        board.__positions__[source[0]][source[1]].place_piece(queen)
+        board.diagonal_move = MagicMock(return_value=True)
+
+        result = board.check_path(queen, source, dest)
+
+        self.assertTrue(result)
+
+    def tests_check_path_king_queen_orthogonal(self):
+        source = (0,0)
+        dest = (0,7)
+        board = Board()
+        queen = Queen("white")
+
+        board.__positions__[source[0]][source[1]].place_piece(queen)
+        board.orthogonal_move = MagicMock(return_value=True)
+
+        result = board.check_path(queen, source, dest)
+
+        self.assertTrue(result)
+
+    def tests_check_path_queen_diagonal_capture(self):
+        source = (0,0)
+        dest = (7,7)
+        board = Board()
+        queen = Queen("white")
+        enemy_queen = Queen("black")
+
+        board.__positions__[source[0]][source[1]].place_piece(queen)
+        board.diagonal_move = MagicMock(return_value=True)
+        board.__positions__[dest[0]][dest[1]].place_piece(enemy_queen)
+
+        result = board.check_path(queen, source, dest)
+
+        self.assertTrue(result)
+
+    def tests_check_path_queen_orthogonal_capture(self):
+        source = (0,0)
+        dest = (0,7)
+        board = Board()
+        queen = Queen("white")
+        enemy_queen = Queen("black")
+
+        board.__positions__[source[0]][source[1]].place_piece(queen)
+        board.orthogonal_move = MagicMock(return_value=True)
+        board.__positions__[dest[0]][dest[1]].place_piece(enemy_queen)
+
+        result = board.check_path(queen, source, dest)
+
+        self.assertTrue(result)
+
+    def tests_check_path_king_invalid(self):
+        source = (0,1)
+        dest = (2,2)
+        board = Board()
+        queen = Queen("white")
+
+        board.__positions__[source[0]][source[1]].place_piece(queen)
+        board.orthogonal_move = MagicMock(return_value=False)
+
+        result = board.check_path(queen, source, dest)
+
+        self.assertFalse(result)
+
+####### Tests is_valid ######
 
     def test_is_valid_move_empty_destination(self):
         source = (1, 1)
