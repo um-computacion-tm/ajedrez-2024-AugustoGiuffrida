@@ -177,7 +177,7 @@ class TestBoard(unittest.TestCase):
         result = board.diagonal_move(source, dest)
         self.assertFalse(result)
 
-    def test_is_valid(self):
+    def test_is_valid_move_empty_destination(self):
         source = (1, 1)
         dest =  (7, 7)
 
@@ -196,9 +196,59 @@ class TestBoard(unittest.TestCase):
 
         result = board.is_valid(source,dest)
 
-
-
         self.assertTrue(result) 
+
+    def test_is_valid_move_capture(self):
+        source = (1, 1)
+        dest =  (7, 7)
+
+        board = Board()
+
+        piece = Rook("white")
+        board.__positions__[source[0]][source[1]].place_piece(piece)
+
+        friendly_piece = Rook("black")
+        board.__positions__[dest[0]][dest[1]].place_piece(friendly_piece)
+
+        cell = board.__positions__[source[0]][source[1]]
+        piece = cell.get_piece()
+        piece.valid_moves = MagicMock(return_value=True)
+
+        dest_cell = board.__positions__[dest[0]][dest[1]]
+        dest_cell.is_occupied = MagicMock(return_value=True)
+
+        #Preguntarle al elio si esto necesario
+        board.check_path = MagicMock(return_value=True)
+
+        result = board.is_valid(source,dest)
+
+        self.assertTrue(result)
+
+    def test_is_valid_move_same_color(self):
+        source = (1, 1)
+        dest =  (7, 7)
+
+        board = Board()
+
+        piece = Rook("white")
+        board.__positions__[source[0]][source[1]].place_piece(piece)
+
+        friendly_piece = Rook("white")
+        board.__positions__[dest[0]][dest[1]].place_piece(friendly_piece)
+
+        cell = board.__positions__[source[0]][source[1]]
+        piece = cell.get_piece()
+        piece.valid_moves = MagicMock(return_value=True)
+
+        dest_cell = board.__positions__[dest[0]][dest[1]]
+        dest_cell.is_occupied = MagicMock(return_value=True)
+
+        #Preguntarle al elio si esto necesario
+        board.check_path = MagicMock(return_value=True)
+
+        result = board.is_valid(source,dest)
+
+        self.assertFalse(result)  
 
 
     def test_show_board_format(self):
