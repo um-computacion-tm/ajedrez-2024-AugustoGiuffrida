@@ -52,12 +52,8 @@ class Board:
 
     def check_path(self, piece, source, dest):
         if isinstance(piece, Pawn):
-            if dest_cell.is_occupied():
-                # movimiento diagonal
-                pass
-            else:
-                # movimiento ortogonal
-                pass
+            return piece.valid_moves(source,dest)
+
         elif isinstance(piece, Rook):
             return self.orthogonal_move(source,dest)
 
@@ -68,7 +64,12 @@ class Board:
             return self.diagonal_move(source,dest)
             
         elif isinstance(piece, King):
-            pass
+            # Si el movimiento es ortogonal
+            if source[0] == dest[0] or source[1] == dest[1]:
+                return self.orthogonal_move(source, dest)
+            # Si el movimiento es diagonal
+            elif abs(source[0] - dest[0]) == abs(source[1] - dest[1]):
+                return self.diagonal_move(source, dest)
         elif isinstance(piece, Queen):
             # Si el movimiento es ortogonal
             if source[0] == dest[0] or source[1] == dest[1]:
@@ -76,6 +77,7 @@ class Board:
             # Si el movimiento es diagonal
             elif abs(source[0] - dest[0]) == abs(source[1] - dest[1]):
                 return self.diagonal_move(source, dest)
+
         return False
 
 
