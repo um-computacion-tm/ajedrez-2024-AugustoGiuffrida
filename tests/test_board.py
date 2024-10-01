@@ -2,7 +2,7 @@ import unittest
 from unittest.mock import patch, MagicMock
 from game.board import Board
 from game.cell import Cell
-from game.piece import Rook
+from game.piece import Rook,Pawn,Bishop,Queen,King,Knight
 
 
 class TestBoard(unittest.TestCase):
@@ -175,6 +175,170 @@ class TestBoard(unittest.TestCase):
             board.__positions__[7 - i][7 - i].is_occupied = MagicMock(return_value=True)            
 
         result = board.diagonal_move(source, dest)
+        self.assertFalse(result)
+
+    def tests_check_path_pawn_valid(self):
+        source = (1,1)
+        dest = (3,1)
+        board = Board()
+        pawn = Pawn("white")
+
+        board.__positions__[source[0]][source[1]].place_piece(pawn)
+        pawn.valid_moves = MagicMock(return_value=True)
+
+        result = board.check_path(pawn, source, dest)
+
+        self.assertTrue(result)
+
+    def tests_check_path_pawn_capture(self):
+        source = (1,1)
+        dest = (2,2)
+        board = Board()
+        pawn = Pawn("white")
+        enemy_pawn = Pawn("black")
+
+        board.__positions__[source[0]][source[1]].place_piece(pawn)
+        board.__positions__[dest[0]][dest[1]].place_piece(enemy_pawn)
+        pawn.valid_moves = MagicMock(return_value=True)
+
+        result = board.check_path(pawn, source, dest)
+
+        self.assertTrue(result)
+
+    def tests_check_path_pawn_invalid(self):
+        source = (1,1)
+        dest = (2,2)
+        board = Board()
+        pawn = Pawn("white")
+
+        board.__positions__[source[0]][source[1]].place_piece(pawn)
+        pawn.valid_moves = MagicMock(return_value=False)
+
+        result = board.check_path(pawn, source, dest)
+
+        self.assertFalse(result)
+
+    def tests_check_path_rook_valid(self):
+        source = (0,0)
+        dest = (0,7)
+        board = Board()
+        rook = Rook("white")
+
+        board.__positions__[source[0]][source[1]].place_piece(rook)
+        board.orthogonal_move = MagicMock(return_value=True)
+
+        result = board.check_path(rook, source, dest)
+
+        self.assertTrue(result)
+
+    def tests_check_path_rook_capture(self):
+        source = (0,0)
+        dest = (0,7)
+        board = Board()
+        rook = Rook("white")
+        enemy_rook = Rook("black")
+
+        board.__positions__[source[0]][source[1]].place_piece(rook)
+        board.__positions__[dest[0]][dest[1]].place_piece(enemy_rook)
+        board.orthogonal_move = MagicMock(return_value=True)
+
+        result = board.check_path(rook, source, dest)
+
+        self.assertTrue(result)
+
+    def tests_check_path_rook_invalid(self):
+        source = (0,0)
+        dest = (7,7)
+        board = Board()
+        rook = Rook("white")
+
+        board.__positions__[source[0]][source[1]].place_piece(rook)
+        board.orthogonal_move = MagicMock(return_value=False)
+
+        result = board.check_path(rook, source, dest)
+
+        self.assertFalse(result)    
+
+    def tests_check_path_knight_valid(self):
+        source = (0,1)
+        dest = (2,2)
+        board = Board()
+        knight = Knight("white")
+
+        board.__positions__[source[0]][source[1]].place_piece(knight)
+        knight.valid_moves = MagicMock(return_value=True)
+
+        result = board.check_path(knight, source, dest)
+
+        self.assertTrue(result)
+
+    def tests_check_path_knight_capture(self):
+        source = (0,1)
+        dest = (2,2)
+        board = Board()
+        knight = Knight("white")
+        enemy_knight = Knight("black")
+
+        board.__positions__[source[0]][source[1]].place_piece(knight)
+        board.__positions__[dest[0]][dest[1]].place_piece(enemy_knight)
+        knight.valid_moves = MagicMock(return_value=True)
+
+        result = board.check_path(knight, source, dest)
+
+        self.assertTrue(result)
+
+    def tests_check_path_knight_invalid(self):
+        source = (0,1)
+        dest = (7,1)
+        board = Board()
+        knight = Knight("white")
+
+        board.__positions__[source[0]][source[1]].place_piece(knight)
+        knight.valid_moves = MagicMock(return_value=False)
+
+        result = board.check_path(knight, source, dest)
+
+        self.assertFalse(result)
+
+    def tests_check_path_bishop_valid(self):
+        source = (0,0)
+        dest = (7,7)
+        board = Board()
+        bishop = Bishop("white")
+
+        board.__positions__[source[0]][source[1]].place_piece(bishop)
+        board.diagonal_move = MagicMock(return_value=True)
+
+        result = board.check_path(bishop, source, dest)
+
+        self.assertTrue(result)
+
+    def tests_check_path_bishop_capture(self):
+        source = (0,0)
+        dest = (7,7)
+        board = Board()
+        bishop = Bishop("white")
+        enemy_bishop = Bishop("black")
+
+        board.__positions__[source[0]][source[1]].place_piece(bishop)
+        board.__positions__[dest[0]][dest[1]].place_piece(enemy_bishop)
+        board.diagonal_move = MagicMock(return_value=True)
+
+        result = board.check_path(bishop, source, dest)
+
+        self.assertTrue(result)
+
+    def tests_check_path_bishop_invalid(self):
+        source = (0,0)
+        dest = (7,0)
+        board = Board()
+        bishop = Bishop("white")
+
+        board.__positions__[source[0]][source[1]].place_piece(bishop)
+        board.diagonal_move = MagicMock(return_value=False)
+
+        result = board.check_path(bishop, source, dest)
+
         self.assertFalse(result)
 
     def test_is_valid_move_empty_destination(self):
