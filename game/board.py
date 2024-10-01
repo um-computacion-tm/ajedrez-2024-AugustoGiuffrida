@@ -51,34 +51,37 @@ class Board:
    
 
     def check_path(self, piece, source, dest):
+        move_is_valid = False
+
         if isinstance(piece, Pawn):
-            return piece.valid_moves(source,dest)
+            move_is_valid = piece.valid_moves(source,dest)
 
         elif isinstance(piece, Rook):
-            return self.orthogonal_move(source,dest)
+            move_is_valid = self.orthogonal_move(source,dest)
 
         elif isinstance(piece, Knight):
-            return piece.valid_moves(source,dest)
+            move_is_valid = piece.valid_moves(source,dest)
 
         elif isinstance(piece, Bishop):
-            return self.diagonal_move(source,dest)
+            move_is_valid = self.diagonal_move(source,dest)
             
         elif isinstance(piece, King):
             # Si el movimiento es ortogonal
             if source[0] == dest[0] or source[1] == dest[1]:
-                return self.orthogonal_move(source, dest)
+                move_is_valid = self.orthogonal_move(source, dest)
             # Si el movimiento es diagonal
             elif abs(source[0] - dest[0]) == abs(source[1] - dest[1]):
-                return self.diagonal_move(source, dest)
+                move_is_valid =self.diagonal_move(source, dest)
+                
         elif isinstance(piece, Queen):
             # Si el movimiento es ortogonal
             if source[0] == dest[0] or source[1] == dest[1]:
-                return self.orthogonal_move(source, dest)
+                move_is_valid = self.orthogonal_move(source, dest)
             # Si el movimiento es diagonal
             elif abs(source[0] - dest[0]) == abs(source[1] - dest[1]):
-                return self.diagonal_move(source, dest)
+                move_is_valid = self.diagonal_move(source, dest)
 
-        return False
+        return move_is_valid 
 
 
     def is_valid(self, source, dest): # -> True/False
