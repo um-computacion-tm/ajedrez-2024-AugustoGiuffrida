@@ -48,7 +48,7 @@ class Pawn(Pieces):
         # Movimiento hacia adelante
         if not is_capture:
             # Si es el primer movimiento, puede moverse 2 casillas hacia adelante
-            if old_pos[0] == (1 if self.color == "white" else 6):
+            if old_pos[0] == (1 if self.get_color() == "white" else 6):
                 return new_pos[0] == old_pos[0] + 2 * direction and old_pos[1] == new_pos[1] or \
                        new_pos[0] == old_pos[0] + 1 * direction and old_pos[1] == new_pos[1]
             # Movimiento normal (una casilla hacia adelante)
