@@ -7,6 +7,7 @@ omit =
     */test*
     tests/*
     */__init__.py
+    *menu.py
 [report]
 exclude_lines =
     pragma: no cover
@@ -17,3 +18,5 @@ exclude_lines =
     if __name__ == '__main__':
     def suite
     __str__
+    cli = Cli() 
+    cli.start_game()
