@@ -6,6 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Status: [Development]
 
+## [0.0.15] - 2024-10-3
+
+### Added
+- Metodo para la conversion de la posicion
+
+### To do
+- Mejorar la mantenibilidad
+- Terminar de testear
+
+
 ## [0.0.14] - 2024-09-28
 
 ### Added
