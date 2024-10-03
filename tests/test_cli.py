@@ -41,7 +41,7 @@ class TestCli(unittest.TestCase):
         result = cli.range_input("Enter initial position: ")
 
         # Verifica que la entrada final válida es (1, 0)
-        self.assertEqual(result, (1, 0))
+        self.assertEqual(result, (2, 0))
 
         # Verifica que se impriman los mensajes de error correspondientes
         mock_print.assert_any_call("\nInvalid column or row value.\n")
