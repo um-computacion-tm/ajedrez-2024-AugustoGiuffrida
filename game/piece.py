@@ -46,16 +46,6 @@ class Pawn(Pieces):
         # Movimiento hacia adelante
         if self.get_color() == "white":
             # Mover una casilla hacia adelante
-            if source[0] - dest[0] == 1 and source[1] == dest[1]:
-                return True
-            # Primer movimiento: puede avanzar dos casillas
-            if source[0] == 6 and dest[0] == 4 and source[1] == dest[1]:
-                return True
-            # Captura diagonal
-            if source[0] - dest[0] == 1 and abs(source[1] - dest[1]) == 1:
-                return True
-        elif self.get_color() == "black":
-            # Mover una casilla hacia adelante
             if dest[0] - source[0] == 1 and source[1] == dest[1]:
                 return True
             # Primer movimiento: puede avanzar dos casillas
@@ -63,6 +53,16 @@ class Pawn(Pieces):
                 return True
             # Captura diagonal
             if dest[0] - source[0] == 1 and abs(source[1] - dest[1]) == 1:
+                return True
+        elif self.get_color() == "black":
+            # Mover una casilla hacia adelante
+            if source[0] - dest[0] == 1 and source[1] == dest[1]:
+                return True
+            # Primer movimiento: puede avanzar dos casillas
+            if source[0] == 6 and dest[0] == 4 and source[1] == dest[1]:
+                return True
+            # Captura diagonal
+            if source[0] - dest[0] == 1 and abs(source[1] - dest[1]) == 1:
                 return True
         return False
 

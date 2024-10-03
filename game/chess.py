@@ -56,11 +56,6 @@ class Chess:
     def change_turn(self):
         self.__turn__ = "black" if self.__turn__ == "white" else "white"
 
-    def set_rooks(self, color):
-        j = 6 if color == 'white' else 1
-        for i in range(8):
-            self.__matrix__[j][i].place_piece(Rook(color))
-
             
     def make_piece(self, piece, color):
         piece_classes = {

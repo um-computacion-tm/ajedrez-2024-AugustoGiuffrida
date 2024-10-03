@@ -104,8 +104,9 @@ class Board:
         output = "    a     b     c     d     e     f     g     h\n"
         output += "  ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┐\n"
 
-        for i, row in enumerate(self.__positions__):
-            output += f"{8 - i} │"
+        # Invertir las filas al mostrar el tablero
+        for i, row in enumerate(reversed(self.__positions__)):
+            output += f"{7 - i} │"
             for cell in row:
                 piece = cell.get_piece()
                 if piece:
@@ -113,7 +114,7 @@ class Board:
                 else:
                     content = " ".center(5)  # Centramos un espacio en una celda de 5 caracteres
                 output += f"{content}│"
-            output += f" {8 - i}\n"
+            output += f" {7 - i}\n"
             if i < 7:
                 output += "  ├─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┤\n"
             else:
@@ -121,6 +122,7 @@ class Board:
 
         output += "    a     b     c     d     e     f     g     h\n"
         return output
+
 
     # def __repr__(self):
     #     """
