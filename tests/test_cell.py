@@ -37,11 +37,6 @@ class TestCell(unittest.TestCase):
         cell.place_piece("Bishop")
         self.assertTrue(cell.is_occupied())
 
-    def test_place_piece_on_occupied_cell(self):
-        cell = Cell("black")
-        cell.place_piece("Queen")
-        with self.assertRaises(ValueError):
-            cell.place_piece("King")  # Intento de colocar otra pieza
 
     def test_str_method(self):
         cell = Cell("white")

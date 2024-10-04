@@ -481,7 +481,7 @@ class TestBoard(unittest.TestCase):
 
         self.assertTrue(result)
 
-    def tests_check_path_king_invalid(self):
+    def tests_check_path_queen_invalid(self):
         source = (0,1)
         dest = (2,2)
         board = Board()

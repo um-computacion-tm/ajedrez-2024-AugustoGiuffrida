@@ -1,6 +1,7 @@
 import unittest
 from game.chess import Chess
 from game.piece import Pawn, Rook, Knight, Bishop, Queen, King
+from unittest.mock import MagicMock
 
 class TestChess(unittest.TestCase):
 
@@ -10,6 +11,44 @@ class TestChess(unittest.TestCase):
     def test_initial_turn(self):
         # Verifica que el turno inicial es "white"
         self.assertEqual(self.chess.turn, "white")
+
+    def test_play(self):
+        chess = Chess()
+        board = chess.board.get_positions()
+        source = (0, 0)
+        dest = (1, 1)
+
+        # Acceder a la celda
+        cell = board[source[0]][source[1]]
+
+        # Crear mock de la pieza
+        piece_mock = MagicMock()
+        piece_mock.get_color.return_value = "white"
+        piece_mock.valid_moves.return_value = True
+
+        # Mockear la celda para que devuelva la pieza y esté ocupada
+        cell.is_occupied = MagicMock(return_value=True)
+        cell.get_piece = MagicMock(return_value=piece_mock)
+
+        # Mockear el método is_valid del board
+        chess.board.is_valid = MagicMock(return_value=True)
+
+        # Mockear los métodos move y change_turn
+        chess.move = MagicMock()
+        chess.change_turn = MagicMock()  # Corregir esta línea para que sea un mock
+
+        # Ejecutar la función play
+        chess.play(source, dest)
+
+        # Verificar que el método is_valid fue llamado correctamente
+        chess.board.is_valid.assert_called_once_with(source, dest)
+
+        # Verificar que se llamó a move con las posiciones correctas
+        chess.move.assert_called_once_with(source, dest)
+
+        # Verificar que se llamó a change_turn
+        chess.change_turn.assert_called_once()
+
 
     def test_change_turn(self):
         # Cambia de turno y verifica que ahora es "black"
