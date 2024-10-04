@@ -20,8 +20,6 @@ class Cell:
         return str(self.__piece__) if self.__piece__ else " "
 
     def place_piece(self, piece):
-        if self.__piece__ is not None:
-            raise ValueError("Cell already occupied")
         self.__piece__ = piece
 
     def remove_piece(self):
