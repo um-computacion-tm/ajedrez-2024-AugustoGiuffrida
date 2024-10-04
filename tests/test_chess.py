@@ -2,6 +2,7 @@ import unittest
 from game.chess import Chess
 from game.piece import Pawn, Rook, Knight, Bishop, Queen, King
 from unittest.mock import MagicMock
+from game.exepcions import InvalidPlay
 
 class TestChess(unittest.TestCase):
 
@@ -48,6 +49,28 @@ class TestChess(unittest.TestCase):
 
         # Verificar que se llamó a change_turn
         chess.change_turn.assert_called_once()
+
+    def test_play_invalid(self):
+        chess = Chess()
+        board = chess.board.get_positions()
+        source = (0, 0)
+        dest = (1, 1)
+
+        cell = board[source[0]][source[1]]
+
+        piece_mock = MagicMock()
+        piece_mock.get_color.return_value = "white"
+        piece_mock.valid_moves.return_value = False  # Movimiento no válido
+
+        cell.is_occupied = MagicMock(return_value=True)
+        cell.get_piece = MagicMock(return_value=piece_mock)
+
+        # No es necesario mockear is_valid en este caso
+        # chess.board.is_valid = MagicMock(return_value=True)  # Esto ya no es necesario
+
+        # Verificar que se lanza InvalidPlay
+        with self.assertRaises(InvalidPlay):
+            chess.play(source, dest)
 
 
     def test_change_turn(self):
