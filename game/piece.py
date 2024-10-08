@@ -54,13 +54,10 @@ class Pawn(Pieces):
         return False
     
     def _valid_white_moves(self, source, dest):
-        if self._move_forward(source, dest, direction=1):  # Movimiento hacia adelante
-            return True
-        if self._initial_double_move(source, dest, direction=1):  # Primer movimiento: puede avanzar dos casillas
-            return True
-        if self._capture_diagonal(source, dest, direction=1):  # Captura diagonal
-            return True
-        return False
+        forward_move = self._move_forward(source, dest, direction=1)
+        doble_move = self._initial_double_move(source, dest, direction=1)
+        diagonal_cap = self._capture_diagonal(source, dest, direction=1)
+        return True if forward_move or doble_move or diagonal_cap else False
     
     def _valid_black_moves(self, source, dest):
         forward_move = self._move_forward(source, dest, direction=-1)

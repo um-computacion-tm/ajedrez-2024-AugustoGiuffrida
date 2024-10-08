@@ -22,7 +22,7 @@ class Cli:
             converted_position = self.convert_position(position)
             if converted_position:  
                 return converted_position
-            print("Invalid Input. Please try again.")  
+            #print("Invalid Input. Please try again.")  
 
     def convert_position(self, position):
         # Listas de columnas y filas
@@ -35,7 +35,7 @@ class Cli:
             return False
 
         try:
-            # Asegúrate de que la primera letra esté en columns y el número en rows
+           
             new_column, new_row = position[0], position[1]
 
             if new_column not in columns or new_row not in rows:
@@ -43,10 +43,10 @@ class Cli:
                 return False
 
             # Convertimos los caracteres en índices de tuplas
-            y = rows.index(new_row)
-            x = columns.index(new_column)
+            r = rows.index(new_row)
+            c = columns.index(new_column)
 
-            return (y, x)
+            return (r, c)
 
         except (ValueError, IndexError):
             print("\nInvalid input.\n")

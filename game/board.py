@@ -124,7 +124,7 @@ class Board:
         return output
 
 
-    # def __repr__(self):
+    # def show_board(self):
     #     """
     #     Renderiza el tablero en formato de texto, mostrando las piezas en sus posiciones actuales.
     #     Returns:
@@ -153,8 +153,8 @@ class Board:
 
     #     # i: índice de la fila actual en el tablero
     #     # row: lista que representa una fila del tablero
-    #     for i, row in enumerate(self.__positions__):
-    #         output += padding + f"{8 - i} │"  # Añade el número de fila al inicio de la línea.
+    #     for i, row in enumerate(reversed(self.__positions__)):
+    #         output += padding + f"{7 - i} │"  # Añade el número de fila al inicio de la línea.
     #         for cell in row:
     #             piece = cell.get_piece()  # Obtiene la pieza en la celda actual
 
@@ -174,7 +174,7 @@ class Board:
 
     #             # Añade la celda al tablero con el color de fondo correspondiente y el contenido centrado.
     #             output += f"{cell_color}{text_color}{content.center(7)}{RESET}│"
-    #         output += f" {8 - i}\n"  # Añade el número de fila al final de la línea.
+    #         output += f" {7 - i}\n"  # Añade el número de fila al final de la línea.
 
     #         if i < 7:
     #             output += padding + "  ├───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┤\n"

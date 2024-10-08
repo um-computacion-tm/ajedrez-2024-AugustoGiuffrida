@@ -45,7 +45,7 @@ class TestCli(unittest.TestCase):
 
         # Verifica que se impriman los mensajes de error correspondientes
         mock_print.assert_any_call("\nInvalid column or row value.\n")
-        mock_print.assert_any_call("Invalid Input. Please try again.")
+
 
 
 if __name__ == '__main__':
