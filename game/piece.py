@@ -54,24 +54,14 @@ class Pawn(Pieces):
     black_repr = "♟"
     
     def valid_moves(self, source, dest):
-        if self.get_color() == "white":
-            return self._valid_white_moves(source, dest)
-        elif self.get_color() == "black":
-            return self._valid_black_moves(source, dest)
-        return False
+        direction = 1 if self.get_color() == "white" else -1
+        return self._valid_moves(source, dest, direction)
     
-    def _valid_white_moves(self, source, dest):
-        forward_move = self._move_forward(source, dest, direction=1)
-        doble_move = self._initial_double_move(source, dest, direction=1)
-        diagonal_cap = self._capture_diagonal(source, dest, direction=1)
-        return True if forward_move or doble_move or diagonal_cap else False
-    
-    def _valid_black_moves(self, source, dest):
-        forward_move = self._move_forward(source, dest, direction=-1)
-        doble_move = self._initial_double_move(source, dest, direction=-1)
-        diagonal_cap = self._capture_diagonal(source, dest, direction=-1)
-        return True if forward_move or doble_move or diagonal_cap else False
-
+    def _valid_moves(self, source, dest, direction):
+        forward_move = self._move_forward(source, dest, direction)
+        doble_move = self._initial_double_move(source, dest, direction)
+        diagonal_cap = self._capture_diagonal(source, dest, direction)
+        return forward_move or doble_move or diagonal_cap
 
     def _move_forward(self, source, dest, direction):
         # Mover una casilla hacia adelante
