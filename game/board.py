@@ -1,9 +1,7 @@
 from .piece import Pawn, Rook, King, Knight, Queen, Bishop
 from .piece import Pieces
 from .cell import Cell
-import os
-import sys
-sys.stdout.reconfigure(encoding='utf-8')
+
 
 
 class Board:

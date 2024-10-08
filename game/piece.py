@@ -1,6 +1,5 @@
 from .cell import Cell 
-import sys
-sys.stdout.reconfigure(encoding='utf-8')
+
 
 class Pieces:
     def __init__(self, color):
@@ -12,13 +11,20 @@ class Pieces:
     def get_color(self):
         return self.__color__
 
+    def valid_moves_orthogonal(self, old_pos, new_pos):
+        return (old_pos[0]==new_pos[0] or old_pos[1]==new_pos[1]) and (old_pos!=new_pos)
+
+    def valid_moves_diagonal(self, old_pos, new_pos):
+        return abs(new_pos[0] - old_pos[0]) == abs(new_pos[1] - old_pos[1]) and (old_pos != new_pos)
+
 
 class Rook(Pieces):
     white_repr = "♖"
     black_repr = "♜"
 
     def valid_moves(self, old_pos, new_pos):
-        return (old_pos[0]==new_pos[0] or old_pos[1]==new_pos[1]) and (old_pos!=new_pos)
+        return self.valid_moves_orthogonal(old_pos, new_pos)
+
 
     
 class Bishop(Pieces):
@@ -26,7 +32,8 @@ class Bishop(Pieces):
     black_repr = "♝"
 
     def valid_moves(self, old_pos, new_pos):
-        return abs(new_pos[0] - old_pos[0]) == abs(new_pos[1] - old_pos[1]) and (old_pos != new_pos)
+        return self.valid_moves_diagonal(old_pos, new_pos)
+
 
 
 class Knight(Pieces):
@@ -81,8 +88,6 @@ class Pawn(Pieces):
 
 
 
-
-
 class King(Pieces):
     white_repr = "♔"
     black_repr = "♚"
@@ -95,13 +100,8 @@ class Queen(Pieces):
     black_repr = "♛"
 
     def valid_moves(self, old_pos, new_pos):
-        # Verificar que las posiciones no sean iguales
-        if old_pos == new_pos:
-            return False
-        
-        # Movimiento horizontal o vertical
-        return (old_pos[0] == new_pos[0] or old_pos[1] == new_pos[1]) or \
-              (abs(new_pos[0] - old_pos[0]) == abs(new_pos[1] - old_pos[1]))
+        return self.valid_moves_orthogonal(old_pos, new_pos) or \
+            self.valid_moves_diagonal(old_pos, new_pos)
 
 
 
