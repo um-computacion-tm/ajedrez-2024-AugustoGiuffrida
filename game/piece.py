@@ -41,8 +41,13 @@ class Knight(Pieces):
     black_repr = "♞"
 
     def valid_moves(self, old_pos, new_pos):
-        return (abs(new_pos[1] - old_pos[1]) == 1 and abs(new_pos[0] - old_pos[0]) == 2) or \
-               ((abs(new_pos[1] - old_pos[1]) == 2 and abs(new_pos[0] - old_pos[0]) == 1) and old_pos != new_pos)
+        return self._is_valid_knight_move(old_pos, new_pos)
+
+    def _is_valid_knight_move(self, old_pos, new_pos):
+        row_diff = abs(new_pos[0] - old_pos[0])
+        col_diff = abs(new_pos[1] - old_pos[1])
+        return (row_diff == 2 and col_diff == 1) or (row_diff == 1 and col_diff == 2)
+
 
 
 class Pawn(Pieces):
