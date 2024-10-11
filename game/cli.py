@@ -1,4 +1,5 @@
 from .chess import Chess
+from .exepcions import InvalidPlay
 from .menu import Menu
 
 class Cli:
@@ -6,29 +7,55 @@ class Cli:
     def start_game(self):
         chess = Chess()
         while chess.is_playing():
-            self.play(chess)
-
-    def play(self, chess):
-        print(chess.__board__.show_board())
-        print("Turn: ", chess.turn)
-        from_row = self.range_input("From row (0-7): ")
-        from_col = self.range_input("From col (0-7): ")
-        to_row = self.range_input("To row (0-7): ")
-        to_col = self.range_input("To col (0-7): ")
-        chess.change_turn()
+            try:
+                print(chess.board.show_board())
+                print("Turn: ", chess.turn)
+                old_pos = (self.range_input("Enter initial position (e.g 'a2'): "))
+                new_pos = (self.range_input("Enter final position (e.g 'a3'): "))
+                chess.play(old_pos,new_pos)
+            except InvalidPlay as e:
+                print(e)
 
     def range_input(self, prompt):
-        while True:
-            try:
-                value = int(input(prompt))
-                if 0 <= value <= 7:
-                    return value
-                else:
-                    print("Las coordenadas están fuera del rango permitido (0-7). Inténtalo de nuevo")
-            except ValueError:
-                print("Entrada no válida. Por favor, introduce un número entre 0 y 7.")
+        while True: 
+            position = input(prompt).lower().replace(" ", "")
+            converted_position = self.convert_position(position)
+            if converted_position:  
+                return converted_position
+            #print("Invalid Input. Please try again.")  
+
+    def convert_position(self, position):
+        # Listas de columnas y filas
+        columns = ('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h')
+        rows = ('0', '1', '2', '3', '4', '5', '6', '7')
+
+        # Verifica que la longitud de la posición sea de 2 caracteres
+        if len(position) != 2:
+            print("\nInvalid input length.\n")
+            return False
+
+        try:
+           
+            new_column, new_row = position[0], position[1]
+
+            if new_column not in columns or new_row not in rows:
+                print("\nInvalid column or row value.\n")
+                return False
+
+            # Convertimos los caracteres en índices de tuplas
+            r = rows.index(new_row)
+            c = columns.index(new_column)
+
+            return (r, c)
+
+        except (ValueError, IndexError):
+            print("\nInvalid input.\n")
+            return False
+
+
 
 if __name__ == "__main__":
     cli = Cli() 
-    menu = Menu(cli)  # Pasar la instancia de Cli a Menu
-    menu.main()
+    # menu = Menu(cli)  # Pasar la instancia de Cli a Menu
+    # menu.main()
+    cli.start_game()

@@ -6,9 +6,10 @@ import termios
 
 init(autoreset=True)  # Inicializa colorama para resetear colores automáticamente
 
-class  Menu:
+class Menu:
+
     def __init__(self, cli):
-        self.menu_options = ["Iniciar Juego", "Salir"]
+        self.menu_options = ["Iniciar Juego", "Instrucciones", "Salir"]  # Agregamos la opción de Instrucciones
         self.selected_index = 0
         self.cli = cli
 
@@ -70,28 +71,32 @@ class  Menu:
         """Devuelve el texto de la opción en ASCII Art compacto."""
         if option == "Iniciar Juego":
             return f"""{color}
-
      ██ ██    ██  ██████   █████  ██████  
      ██ ██    ██ ██       ██   ██ ██   ██ 
      ██ ██    ██ ██   ███ ███████ ██████  
 ██   ██ ██    ██ ██    ██ ██   ██ ██   ██ 
  █████   ██████   ██████  ██   ██ ██   ██ 
-                                          
-                                          
+ """
 
+        elif option == "Instrucciones":
+            return f"""{color}
+██████  ███████  ██████  ██       █████  ███████ 
+██   ██ ██      ██       ██      ██   ██ ██      
+██████  █████   ██   ███ ██      ███████ ███████ 
+██   ██ ██      ██    ██ ██      ██   ██      ██ 
+██   ██ ███████  ██████  ███████ ██   ██ ███████ 
 """
+                                                 
+                                                 
+                                                                                                     
 
         elif option == "Salir":
             return f"""{color}
-
 ███████  █████  ██      ██ ██████  
 ██      ██   ██ ██      ██ ██   ██ 
 ███████ ███████ ██      ██ ██████  
      ██ ██   ██ ██      ██ ██   ██ 
 ███████ ██   ██ ███████ ██ ██   ██ 
-                                   
-                                   
-
 """
 
     def handle_menu_selection(self):
@@ -99,9 +104,23 @@ class  Menu:
         if self.selected_index == 0:
             os.system('clear')
             self.cli.start_game()
-        elif self.selected_index == 1:
+        elif self.selected_index == 1:  # Opción Instrucciones
+            self.show_instructions()
+        elif self.selected_index == 2:
             print("Saliendo del juego...")
             exit()
+
+    def show_instructions(self):
+        """Muestra las instrucciones del juego y permite regresar al menú."""
+        os.system('clear')
+        print("=== INSTRUCCIONES ===")
+        print("1. El objetivo del ajedrez es dar jaque mate al rey del oponente.")
+        print("2. Cada tipo de pieza tiene sus propios movimientos.")
+        print("3. Usa las coordenadas del tablero (ej: 'a2' a 'a4') para mover piezas.")
+        print("\nPresiona cualquier tecla para volver al menú principal.")
+        
+        self.get_key()  # Espera a que el usuario presione una tecla para volver al menú
+        self.show_start_menu()
 
     def get_key(self):
         """Obtiene la entrada del teclado sin bloqueo en Linux."""

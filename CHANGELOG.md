@@ -6,6 +6,62 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Status: [Development]
 
+## [0.0.15] - 2024-10-3
+
+### Added
+- Opcion regla en el menu
+
+### To do
+- Añadir el fin del juego
+
+## [0.0.15] - 2024-10-3
+
+### Added
+- Metodo para la conversion de la posicion
+
+### To do
+- Mejorar la mantenibilidad
+- Terminar de testear
+
+
+## [0.0.14] - 2024-09-28
+
+### Added
+- Validacion de los movimientos todas las piezas
+
+### To do
+- tests de los metodos implementados
+- arreglar los tests que no funcionan
+
+## [0.0.14] - 2024-09-23
+
+### Added
+- Validacion de los movimientos implementados
+
+### To do
+- tests de los metodos implementados
+- Implementar las validaciones para el resto de las piezas
+
+## [0.0.13] - 2024-09-22
+
+### Added
+- Validacion del movimiento para la pieza Bishop
+
+### To do
+- tests de los metodos implementados
+- Implementar las validaciones para el resto de las piezas
+
+## [0.0.12] - 2024-09-20
+
+### Added
+- Validacion de la posicion inicial introducida por el jugador
+- Validacion del contenido de la celdas
+- Validacion del movimiento para la pieza Rook
+
+### To do
+- tests de los metodos implementados
+- Implementar las validaciones para el resto de las piezas
+
 ## [0.0.12] - 2024-09-08
 
 ### Added
