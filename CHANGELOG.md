@@ -6,7 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Status: [Development]
 
-## [0.0.15] - 2024-10-3
+## [0.0.15] - 2024-10-11
+
+### Added
+- Se añadio el fin del juego
+
+## [0.0.15] - 2024-10-11
 
 ### Added
 - Opcion regla en el menu
