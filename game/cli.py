@@ -1,6 +1,6 @@
 from .chess import Chess
 from .exepcions import InvalidPlay
-
+from .menu import Menu
 
 class Cli:
 
