@@ -24,6 +24,14 @@ class Board:
     def get_cell(self, row, col):
         return self.__positions__[row][col]
 
+    def king_in_game(self, color):
+        for row in self.__positions__:
+            for cell in row:
+                piece = cell.get_piece()
+                if isinstance(piece, King) and piece.get_color() == color:
+                    return True
+        return False  
+
     def orthogonal_move(self, source, dest):
         # Si el movimiento es horizontal entonces index = 1
         index = 1 if source[0] == dest[0] else 0

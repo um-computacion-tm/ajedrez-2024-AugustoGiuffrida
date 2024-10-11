@@ -23,25 +23,29 @@ class Chess:
     def play(self, source, dest):
         cell = self.__matrix__[source[0]][source[1]]
 
-        # Depuración para verificar la celda
-        #print(f"Source Cell: {source}, Occupied: {cell.is_occupied()}")
-        
         if cell.is_occupied():
             piece = cell.get_piece()
-            #print(f"Piece at Source: {piece}, Color: {piece.get_color() if piece else 'None'}")
-            
             turn_color_is_valid = piece.get_color() == self.turn
             move_is_valid = self.__board__.is_valid(source, dest)
 
-            # Depuración para verificar condiciones
-            #print(f"Turn color valid: {turn_color_is_valid}, Move valid: {move_is_valid}")
-
             if turn_color_is_valid and move_is_valid:
                 self.move(source, dest)
+                self.check_game_over()
                 self.change_turn()
                 return
 
         raise InvalidPlay
+
+    def check_game_over(self):
+        white_king_alive = self.__board__.king_in_game("white")
+        black_king_alive = self.__board__.king_in_game("black")
+
+        if not white_king_alive:
+            print("Black wins! White's king has been captured.")
+            exit()
+        elif not black_king_alive:
+            print("White wins! Black's king has been captured.")
+            exit()
 
 
     def move(self, source, dest):
