@@ -9,6 +9,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [0.0.15] - 2024-10-3
 
 ### Added
+- Opcion regla en el menu
+
+### To do
+- Añadir el fin del juego
+
+## [0.0.15] - 2024-10-3
+
+### Added
 - Metodo para la conversion de la posicion
 
 ### To do
