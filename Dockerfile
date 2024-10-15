@@ -4,6 +4,7 @@ RUN apk add --no-cache git
 RUN git clone https://github.com/um-computacion-tm/ajedrez-2024-AugustoGiuffrida.git ajedrez
 
 WORKDIR /ajedrez
+RUN git pull
 
 RUN pip install -r requirements.txt
 
