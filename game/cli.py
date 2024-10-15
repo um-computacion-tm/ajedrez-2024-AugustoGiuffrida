@@ -1,7 +1,6 @@
 from .chess import Chess
 from .exepcions import InvalidPlay
-#
-# from .menu import Menu
+from .menu import Menu
 
 class Cli:
 
@@ -13,7 +12,7 @@ class Cli:
                 print("Turn: ", chess.turn)
                 old_pos = (self.validate_input("Enter initial position (e.g 'a2'): "))
                 new_pos = (self.validate_input("Enter final position (e.g 'a3'): "))
-                chess.play(old_pos,new_pos)
+                play = chess.play(old_pos,new_pos)
             except InvalidPlay as e:
                 print(e)
 
@@ -57,6 +56,6 @@ class Cli:
 
 if __name__ == "__main__":
     cli = Cli() 
-    # menu = Menu(cli)  # Pasar la instancia de Cli a Menu
-    # menu.main()
+    menu = Menu(cli)  # Pasar la instancia de Cli a Menu
+    menu.main()
     cli.start_game()
