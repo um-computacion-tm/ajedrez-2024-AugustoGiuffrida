@@ -114,13 +114,22 @@ class Menu:
         """Muestra las instrucciones del juego y permite regresar al menú."""
         os.system('clear')
         print("=== INSTRUCCIONES ===")
-        print("1. El objetivo del ajedrez es dar jaque mate al rey del oponente.")
-        print("2. Cada tipo de pieza tiene sus propios movimientos.")
-        print("3. Usa las coordenadas del tablero (ej: 'a2' a 'a4') para mover piezas.")
+        print("1. El juego termina cuando se captura al rey de tu oponente.")
+        print("2. Las piezas blancas están en la parte inferior del tablero y las negras en la parte superior.")
+        print("3. Usa las coordenadas del tablero (ej: 'a2' a 'a4') para mover las piezas.")
+        print("4. Movimientos de las piezas:")
+        print("   - Peones: Se mueven hacia adelante una casilla, o dos casillas desde su posición inicial. Capturan en diagonal.")
+        print("   - Torres: Se mueven en línea recta tanto horizontal como verticalmente.")
+        print("   - Caballos: Se mueven en forma de 'L', dos casillas en una dirección y una en perpendicular.")
+        print("   - Alfiles: Se mueven diagonalmente en cualquier dirección.")
+        print("   - Reina: Se mueve en línea recta tanto horizontal como diagonalmente.")
+        print("   - Rey: Se mueve una casilla en cualquier dirección.")
         print("\nPresiona cualquier tecla para volver al menú principal.")
-        
+
         self.get_key()  # Espera a que el usuario presione una tecla para volver al menú
         self.show_start_menu()
+
+
 
     def get_key(self):
         """Obtiene la entrada del teclado sin bloqueo en Linux."""
