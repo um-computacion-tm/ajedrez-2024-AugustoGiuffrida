@@ -16,9 +16,9 @@ class TestCli(unittest.TestCase):
     @patch('game.chess.Chess.is_playing', side_effect=[True, False])
     @patch('game.chess.Chess.board', new_callable=MagicMock)  # Parchear el atributo board
     @patch('builtins.print')  # Para evitar que imprima en la consola durante el test
-    @patch('game.cli.Cli.range_input', side_effect=[(0, 0), (1, 0)])  # Simula entradas de usuario para old_pos y new_pos
+    @patch('game.cli.Cli.validate_input', side_effect=[(0, 0), (1, 0)])  # Simula entradas de usuario para old_pos y new_pos
     @patch('game.chess.Chess.play')  # Mock del método play de Chess
-    def test_start_game_turn(self, mock_play, mock_range_input, mock_print, mock_board, mock_is_playing):
+    def test_start_game_turn(self, mock_play, mock_validate_input, mock_print, mock_board, mock_is_playing):
         mock_board.show_board.return_value = "Board"  # Simula el retorno de show_board
         cli = Cli()
         cli.start_game()
@@ -36,9 +36,9 @@ class TestCli(unittest.TestCase):
 
     @patch('builtins.input', side_effect=['z9', 'a2'])  # Simula entradas inválidas y válidas
     @patch('builtins.print')  # Mock de print para verificar los mensajes
-    def test_range_input_invalid(self, mock_print, mock_input):
+    def test_validate_input_invalid(self, mock_print, mock_input):
         cli = Cli()
-        result = cli.range_input("Enter initial position: ")
+        result = cli.validate_input("Enter initial position: ")
 
         # Verifica que la entrada final válida es (1, 0)
         self.assertEqual(result, (2, 0))

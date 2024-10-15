@@ -10,19 +10,19 @@ class Cli:
             try:
                 print(chess.board.show_board())
                 print("Turn: ", chess.turn)
-                old_pos = (self.range_input("Enter initial position (e.g 'a2'): "))
-                new_pos = (self.range_input("Enter final position (e.g 'a3'): "))
-                chess.play(old_pos,new_pos)
+                old_pos = (self.validate_input("Enter initial position (e.g 'a2'): "))
+                new_pos = (self.validate_input("Enter final position (e.g 'a3'): "))
+                play = chess.play(old_pos,new_pos)
             except InvalidPlay as e:
                 print(e)
 
-    def range_input(self, prompt):
+    def validate_input(self, prompt):
         while True: 
             position = input(prompt).lower().replace(" ", "")
             converted_position = self.convert_position(position)
             if converted_position:  
                 return converted_position
-            #print("Invalid Input. Please try again.")  
+
 
     def convert_position(self, position):
         # Listas de columnas y filas
@@ -56,6 +56,6 @@ class Cli:
 
 if __name__ == "__main__":
     cli = Cli() 
-    # menu = Menu(cli)  # Pasar la instancia de Cli a Menu
-    # menu.main()
+    menu = Menu(cli)  # Pasar la instancia de Cli a Menu
+    menu.main()
     cli.start_game()
