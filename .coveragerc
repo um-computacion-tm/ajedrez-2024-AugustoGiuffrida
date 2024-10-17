@@ -23,3 +23,5 @@ exclude_lines =
     menu.main()
     cli.start_game()
     def show_board
+    def is_playing
+    def get_cell

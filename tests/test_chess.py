@@ -34,7 +34,7 @@ class TestChess(unittest.TestCase):
             mock_print.assert_not_called()
             mock_exit.assert_not_called()
 
-    def test_move_capture_piece(self):
+    def test_white_piece_captures_black(self):
         source = (1, 1)
         dest = (3, 1)
         white_pawn = Pawn("white")
@@ -45,6 +45,19 @@ class TestChess(unittest.TestCase):
         self.assertIn(black_pawn, self.chess.white_captures)
         self.assertEqual(self.chess.board.get_cell(dest[0], dest[1]).get_piece(), white_pawn)
         self.assertIsNone(self.chess.board.get_cell(source[0], source[1]).get_piece())
+
+    def test_black_piece_captures_white(self):
+        source = (6, 1)
+        dest = (5, 1)
+        black_pawn = Pawn("black")
+        self.chess.board.get_cell(source[0], source[1]).place_piece(black_pawn)
+        white_pawn = Pawn("white")
+        self.chess.board.get_cell(dest[0], dest[1]).place_piece(white_pawn)
+        self.chess.move(source, dest)
+        self.assertIn(white_pawn, self.chess.black_captures)
+        self.assertEqual(self.chess.board.get_cell(dest[0], dest[1]).get_piece(), black_pawn)
+        self.assertIsNone(self.chess.board.get_cell(source[0], source[1]).get_piece())
+
 
     def test_move_no_capture(self):
         source = (1, 1)
