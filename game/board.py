@@ -106,88 +106,50 @@ class Board:
                 return self.check_path(piece, source, dest)
         return False
 
-    # def show_board(self):
-    #     output = "    a     b     c     d     e     f     g     h\n"
-    #     output += "  ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┐\n"
+    def show_board(self, white_captures, black_captures):
+        WHITE_BG = '\033[47m'
+        BLACK_BG = '\033[40m'
+        WHITE_TEXT = '\033[37m'
+        BLACK_TEXT = '\033[30m'
+        RESET = '\033[0m'
 
-    #     # Invertir las filas al mostrar el tablero
-    #     for i, row in enumerate(reversed(self.__positions__)):
-    #         output += f"{7 - i} │"
-    #         for cell in row:
-    #             piece = cell.get_piece()
-    #             if piece:
-    #                 content = f"{piece}".center(5)  # Centramos la pieza en una celda de 5 caracteres
-    #             else:
-    #                 content = " ".center(5)  # Centramos un espacio en una celda de 5 caracteres
-    #             output += f"{content}│"
-    #         output += f" {7 - i}\n"
-    #         if i < 7:
-    #             output += "  ├─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┤\n"
-    #         else:
-    #             output += "  └─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┘\n"
-
-    #     output += "    a     b     c     d     e     f     g     h\n"
-    #     return output
-
-
-    def show_board(self):
-        """
-        Renderiza el tablero en formato de texto, mostrando las piezas en sus posiciones actuales.
-        Returns:
-            str: Una representación en formato de texto del tablero de ajedrez.
-        """
-        # Códigos ANSI para el color de fondo y el texto.
-        WHITE_BG = '\033[47m'  # Fondo blanco
-        BLACK_BG = '\033[40m'  # Fondo negro
-        WHITE_TEXT = '\033[37m'  # Texto blanco
-        BLACK_TEXT = '\033[30m'  # Texto negro
-        RESET = '\033[0m'  # Reiniciar color
-
-        # Obtener el tamaño de la terminal
         terminal_width = os.get_terminal_size().columns
-
-        # Tamaño del tablero
-        board_width = 8 * 7 + 9  # 8 celdas de ancho de 7 caracteres cada una + bordes
-
-        # Calcular los espacios necesarios para centrar el tablero
+        board_width = 8 * 7 + 9
         left_padding = max((terminal_width - board_width) // 2, 0)
-        padding = " " * left_padding  # Espacios a la izquierda para centrar el tablero
+        padding = " " * left_padding
 
-        # Construcción del tablero
-        output = padding + "      a      b        c       d       e       f       g       h\n"
+        # Piezas capturadas por las negras (mostradas en la parte superior)
+        output = padding + "Pieces captured: " + " ".join(str(piece) for piece in black_captures) + "\n"
+        output += padding + "      a      b        c       d       e       f       g       h\n"
         output += padding + "  ┌───────┬───────┬───────┬───────┬───────┬───────┬───────┬───────┐\n"
 
-        # i: índice de la fila actual en el tablero
-        # row: lista que representa una fila del tablero
         for i, row in enumerate(reversed(self.__positions__)):
-            output += padding + f"{7 - i} │"  # Añade el número de fila al inicio de la línea.
+            output += padding + f"{7 - i} │"
             for cell in row:
-                piece = cell.get_piece()  # Obtiene la pieza en la celda actual
+                piece = cell.get_piece()
 
-                # Si hay una pieza, se muestra; de lo contrario, muestra un espacio.
                 if piece is not None:
                     content = f"{piece}"
                 else:
                     content = " "
 
-                # Determina el color de la celda y el color del texto.
                 if cell.get_color() == "white":
                     cell_color = WHITE_BG
-                    text_color = BLACK_TEXT  # Texto negro en fondo blanco.
+                    text_color = BLACK_TEXT
                 else:
                     cell_color = BLACK_BG
-                    text_color = WHITE_TEXT  # Texto blanco en fondo negro.
+                    text_color = WHITE_TEXT
 
-                # Añade la celda al tablero con el color de fondo correspondiente y el contenido centrado.
                 output += f"{cell_color}{text_color}{content.center(7)}{RESET}│"
-            output += f" {7 - i}\n"  # Añade el número de fila al final de la línea.
-
+            output += f" {7 - i}\n"
             if i < 7:
                 output += padding + "  ├───────┼───────┼───────┼───────┼───────┼───────┼───────┼───────┤\n"
             else:
                 output += padding + "  └───────┴───────┴───────┴───────┴───────┴───────┴───────┴───────┘\n"
 
-        # Añade el encabezado de las columnas nuevamente en la parte inferior.
         output += padding + "      a      b        c       d       e       f       g       h\n"
-        return output  # Retorna el tablero en formato de texto.
+        # Piezas capturadas por las blancas (mostradas en la parte inferior)
+        output += padding + "Pieces captured: " + " ".join(str(piece) for piece in white_captures) + "\n"
+
+        return output
         

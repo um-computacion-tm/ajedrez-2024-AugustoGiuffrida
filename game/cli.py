@@ -1,14 +1,16 @@
 from .chess import Chess
 from .exepcions import InvalidPlay
 from .menu import Menu
+import os
 
 class Cli:
 
     def start_game(self):
         chess = Chess()
-        while chess.is_playing():
+        while True:
             try:
-                print(chess.board.show_board())
+                os.system('clear')
+                print(chess.board.show_board(chess.white_captures, chess.black_captures))
                 print("Turn: ", chess.turn)
                 old_pos = (self.validate_input("Enter initial position (e.g 'a2'): "))
                 new_pos = (self.validate_input("Enter final position (e.g 'a3'): "))
