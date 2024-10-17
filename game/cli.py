@@ -1,15 +1,13 @@
 from .chess import Chess
 from .exepcions import InvalidPlay
-from .menu import Menu
-import os
+#from .menu import Menu
 
 class Cli:
 
     def start_game(self):
         chess = Chess()
-        while True:
+        while chess.is_playing():
             try:
-                os.system('clear')
                 print(chess.board.show_board(chess.white_captures, chess.black_captures))
                 print("Turn: ", chess.turn)
                 old_pos = (self.validate_input("Enter initial position (e.g 'a2'): "))
@@ -58,6 +56,6 @@ class Cli:
 
 if __name__ == "__main__":
     cli = Cli() 
-    menu = Menu(cli)  # Pasar la instancia de Cli a Menu
-    menu.main()
+    # menu = Menu(cli)  # Pasar la instancia de Cli a Menu
+    # menu.main()
     cli.start_game()

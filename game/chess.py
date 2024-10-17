@@ -22,6 +22,9 @@ class Chess:
     def board(self):
         return self.__board__
 
+    def is_playing(self):
+        return True
+
     def play(self, source, dest):
         cell = self.__matrix__[source[0]][source[1]]
 
