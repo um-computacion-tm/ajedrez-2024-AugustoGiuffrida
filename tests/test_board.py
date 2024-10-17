@@ -19,6 +19,7 @@ class TestBoard(unittest.TestCase):
                 self.assertIsInstance(cell, Cell, "Cada elemento del tablero debe ser una instancia de Cell.")
                 self.assertEqual(cell.get_color(), expected_color, f"Celda en la posición {(row, col)} debería ser {expected_color}.")
 
+
     def test_king_in_game_found(self):
         position = (1, 1)
         king = King("white")
@@ -31,16 +32,13 @@ class TestBoard(unittest.TestCase):
         self.assertTrue(result)
 
     def test_king_in_game_not_found(self):
-        # Simulamos un tablero donde no hay ningún rey
-        empty_cell = MagicMock(spec=Cell)
-        empty_cell.get_piece.return_value = None
+        # Llenamos el tablero con peones en lugar de reyes
+        for row in range(8):
+            for col in range(8):
+                pawn = Pawn("white")
+                self.board.get_cell(row, col).place_piece(pawn)
 
-        # Asegúrate de que todas las posiciones están vacías
-        for row in Board().get_positions():
-            for col in range(len(row)):
-                row[col] = empty_cell
-
-        # Verificamos que king_in_game devuelva False para cualquier color
+        # Verificamos que king_in_game devuelva False ya que no hay reyes
         result = self.board.king_in_game("white")
         self.assertFalse(result)
 
