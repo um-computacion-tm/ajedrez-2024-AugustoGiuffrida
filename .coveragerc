@@ -19,4 +19,6 @@ exclude_lines =
     def suite
     __str__
     cli = Cli() 
+    menu = Menu(cli)  
+    menu.main()
     cli.start_game()
