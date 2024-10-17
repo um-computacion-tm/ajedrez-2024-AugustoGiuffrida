@@ -22,3 +22,4 @@ exclude_lines =
     menu = Menu(cli)  
     menu.main()
     cli.start_game()
+    def show_board
