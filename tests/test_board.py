@@ -7,6 +7,9 @@ from game.piece import Rook,Pawn,Bishop,Queen,King,Knight
 
 class TestBoard(unittest.TestCase):
 
+    def setUp(self):
+        self.board = Board()  # Inicializa el tablero
+
     def test_create_board(self):
         board = Board().get_positions()
         for row in range(8):
@@ -15,6 +18,31 @@ class TestBoard(unittest.TestCase):
                 cell = board[row][col]
                 self.assertIsInstance(cell, Cell, "Cada elemento del tablero debe ser una instancia de Cell.")
                 self.assertEqual(cell.get_color(), expected_color, f"Celda en la posición {(row, col)} debería ser {expected_color}.")
+
+    def test_king_in_game_found(self):
+        position = (1, 1)
+        king = King("white")
+
+        # Usamos la instancia de tablero 'self.board' para colocar el rey
+        self.board.get_cell(position[0], position[1]).place_piece(king)
+
+        # Verificamos que king_in_game devuelva True para el color blanco
+        result = self.board.king_in_game("white")
+        self.assertTrue(result)
+
+    def test_king_in_game_not_found(self):
+        # Simulamos un tablero donde no hay ningún rey
+        empty_cell = MagicMock(spec=Cell)
+        empty_cell.get_piece.return_value = None
+
+        # Asegúrate de que todas las posiciones están vacías
+        for row in Board().get_positions():
+            for col in range(len(row)):
+                row[col] = empty_cell
+
+        # Verificamos que king_in_game devuelva False para cualquier color
+        result = self.board.king_in_game("white")
+        self.assertFalse(result)
 
     def test_get_positions_matrix(self):
         positions = Board().get_positions()
