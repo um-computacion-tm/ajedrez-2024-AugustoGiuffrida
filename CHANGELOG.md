@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Status: [Development]
 
+## [0.0.16] - 2024-10-17
+
+### Added
+- Se añadieron funcionalidades que permiten ver a cada jugador las piezas que han capturado
+
 ## [0.0.15] - 2024-10-11
 
 ### Added
