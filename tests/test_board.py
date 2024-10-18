@@ -522,26 +522,15 @@ class TestBoard(unittest.TestCase):
 
 ####### Tests is_valid ######
 
-    def test_is_valid_move_empty_destination(self):
-        source = (1, 1)
-        dest =  (7, 7)
-
+    def test_rook_invalid_move(self):
         board = Board()
+        rook = Rook("white")
+        board.__positions__[1][1].place_piece(rook)
 
-        piece = Rook("white")
-        board.__positions__[source[0]][source[1]].place_piece(piece)
+        # Movimiento inválido
+        result = board.is_valid((1, 1), (2, 3))  # Movimiento diagonal
+        self.assertFalse(result)
 
-
-        cell = board.__positions__[source[0]][source[1]]
-        piece = cell.get_piece()
-        piece.valid_moves = MagicMock(return_value=True)
-
-        dest_cell = board.__positions__[dest[0]][dest[1]]
-        dest_cell.is_occupied = MagicMock(return_value=False)
-
-        result = board.is_valid(source,dest)
-
-        self.assertTrue(result) 
 
     def test_is_valid_move_capture(self):
         source = (1, 1)
