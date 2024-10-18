@@ -33,27 +33,17 @@ class Board:
         return False  
 
     def orthogonal_move(self, source, dest):
-        # Determinar si el movimiento es horizontal o vertical
-        is_horizontal = source[0] == dest[0]
-        is_vertical = source[1] == dest[1]
-
-        if not (is_horizontal or is_vertical):
-            return False  # No es un movimiento ortogonal
-
-        step = 1 if (is_horizontal and dest[1] > source[1]) or (is_vertical and dest[0] > source[0]) else -1
-        
-        # Verificar si el camino está despejado
-        if is_horizontal:
+        if source[0] == dest[0]:  # Movimiento horizontal
+            step = 1 if dest[1] > source[1] else -1
             for col in range(source[1] + step, dest[1], step):
                 if self.__positions__[source[0]][col].is_occupied():
                     return False
-        else:  # is_vertical
+        elif source[1] == dest[1]:  # Movimiento vertical
+            step = 1 if dest[0] > source[0] else -1
             for row in range(source[0] + step, dest[0], step):
                 if self.__positions__[row][source[1]].is_occupied():
                     return False
-
         return True
-
 
 
     def diagonal_move(self, source, dest):
