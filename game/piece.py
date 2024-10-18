@@ -81,8 +81,6 @@ class Pawn(Pieces):
         dest_cell = board.get_cell(dest[0], dest[1])
         return dest_cell.is_occupied() and dest_cell.get_piece().get_color() != self.get_color()
 
-    def get_dest_cell(self, dest, board):
-        return board.get_cell(dest[0], dest[1])  # Ahora 'board' se pasa como argumento
 
 
 
