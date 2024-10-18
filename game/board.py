@@ -33,15 +33,18 @@ class Board:
         return False  
 
     def orthogonal_move(self, source, dest):
-        # Si el movimiento es horizontal entonces index = 1
-        index = 1 if source[0] == dest[0] else 0
-        mov = dest[index]-source[index]
-        translation = mov if mov>0 else -mov
-        sign = 1 if mov>0 else -1
-        for i in range(1,translation,sign):
-            if self.__positions__[dest[0] if index else i][i if index else dest[1]].is_occupied():
-                return False
+        if source[0] == dest[0]:  # Movimiento horizontal
+            step = 1 if dest[1] > source[1] else -1
+            for col in range(source[1] + step, dest[1], step):
+                if self.__positions__[source[0]][col].is_occupied():
+                    return False
+        elif source[1] == dest[1]:  # Movimiento vertical
+            step = 1 if dest[0] > source[0] else -1
+            for row in range(source[0] + step, dest[0], step):
+                if self.__positions__[row][source[1]].is_occupied():
+                    return False
         return True
+
 
     def diagonal_move(self, source, dest):
         index_row = 1 if (source[0] - dest[0]) < 0   else -1
@@ -63,48 +66,55 @@ class Board:
         move_is_valid = False
 
         if isinstance(piece, Pawn):
-            move_is_valid = piece.valid_moves(source,dest)
+            move_is_valid = piece.valid_moves(source,dest,self)
 
         elif isinstance(piece, Rook):
-            move_is_valid = self.orthogonal_move(source,dest)
+            move_is_valid = self.orthogonal_move(source,dest)  # Corregido
 
         elif isinstance(piece, Knight):
-            move_is_valid = piece.valid_moves(source,dest)
+            move_is_valid = piece.valid_moves(source,dest, self)
 
         elif isinstance(piece, Bishop):
-            move_is_valid = self.diagonal_move(source,dest)
-            
+            move_is_valid = self.diagonal_move(source,dest)  # Corregido
+
         elif isinstance(piece, King):
             # Si el movimiento es ortogonal
             if source[0] == dest[0] or source[1] == dest[1]:
-                move_is_valid = self.orthogonal_move(source, dest)
-            # Si el movimiento es diagonal
-            elif abs(source[0] - dest[0]) == abs(source[1] - dest[1]):
-                move_is_valid =self.diagonal_move(source, dest)
-                
-        elif isinstance(piece, Queen):
-            # Si el movimiento es ortogonal
-            if source[0] == dest[0] or source[1] == dest[1]:
-                move_is_valid = self.orthogonal_move(source, dest)
+                move_is_valid = self.orthogonal_move(source, dest)  # Corregido
             # Si el movimiento es diagonal
             elif abs(source[0] - dest[0]) == abs(source[1] - dest[1]):
                 move_is_valid = self.diagonal_move(source, dest)
 
-        return move_is_valid 
+        elif isinstance(piece, Queen):
+            # Si el movimiento es ortogonal
+            if source[0] == dest[0] or source[1] == dest[1]:
+                move_is_valid = self.orthogonal_move(source, dest)  # Corregido
+            # Si el movimiento es diagonal
+            elif abs(source[0] - dest[0]) == abs(source[1] - dest[1]):
+                move_is_valid = self.diagonal_move(source, dest)
+
+        return move_is_valid
 
 
-    def is_valid(self, source, dest): # -> True/False
-        # Buscamos la celda y la pieza a validar
+
+    def is_valid(self, source, dest):  # -> True/False
         cell = self.__positions__[source[0]][source[1]]
         dest_cell = self.__positions__[dest[0]][dest[1]]
         piece = cell.get_piece()
-        if piece.valid_moves(source, dest):
-            if dest_cell.is_occupied():
-                if dest_cell.get_piece().get_color() != piece.get_color():
+        
+        if piece:
+            # Asegúrate de pasar 'self' como el tablero
+            if piece.valid_moves(source, dest, self):  # Cambiado aquí
+                # Solo permite moverse a una celda ocupada si es una pieza del oponente
+                if dest_cell.is_occupied():
+                    if dest_cell.get_piece().get_color() != piece.get_color():
+                        return self.check_path(piece, source, dest)
+                    else:
+                        return False  # No puede moverse a una celda ocupada por su propia pieza
+                else:
                     return self.check_path(piece, source, dest)
-            else:
-                return self.check_path(piece, source, dest)
         return False
+
 
     def show_board(self, white_captures, black_captures):
         WHITE_BG = '\033[47m'
