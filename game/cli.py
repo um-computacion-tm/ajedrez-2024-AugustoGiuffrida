@@ -1,26 +1,42 @@
 from .chess import Chess
 from .exepcions import InvalidPlay
+import os
 from .menu import Menu
 
 class Cli:
 
     def start_game(self):
+        os.system('cls' if os.name == 'nt' else 'clear')
         chess = Chess()
+        err=None
         while chess.is_playing():
             try:
-                print(chess.board.show_board())
+                print(chess.board.show_board(chess.white_captures, chess.black_captures))
+                if err:
+                    print(err)
+                    err=None
                 print("Turn: ", chess.turn)
-                old_pos = (self.validate_input("Enter initial position (e.g 'a2'): "))
-                new_pos = (self.validate_input("Enter final position (e.g 'a3'): "))
-                play = chess.play(old_pos,new_pos)
+                old_pos = self.validate_input("Enter initial position (e.g 'a2') or type 'exit' to quit: ")
+                if old_pos == "exit":
+                    print("Exiting the game.")
+                    break
+                new_pos = self.validate_input("Enter final position (e.g 'a3') or type 'exit' to quit: ")
+                if new_pos == "exit":
+                    print("Exiting the game.")
+                    break
+                chess.play(old_pos, new_pos)
             except InvalidPlay as e:
-                print(e)
+                os.system('cls' if os.name == 'nt' else 'clear')
+                err=f'{e}\nPlease try again.'
+
 
     def validate_input(self, prompt):
-        while True: 
+        while True:
             position = input(prompt).lower().replace(" ", "")
+            if position == "exit":  
+                return "exit"
             converted_position = self.convert_position(position)
-            if converted_position:  
+            if converted_position:
                 return converted_position
 
 

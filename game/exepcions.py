@@ -1,4 +1,4 @@
 class InvalidPlay(Exception):
-    message = "Movimiento de pieza invalido"
+    message = "Invalid piece movement"
     def __str__(self):
         return self.message

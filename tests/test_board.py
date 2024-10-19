@@ -7,6 +7,9 @@ from game.piece import Rook,Pawn,Bishop,Queen,King,Knight
 
 class TestBoard(unittest.TestCase):
 
+    def setUp(self):
+        self.board = Board()  # Inicializa el tablero
+
     def test_create_board(self):
         board = Board().get_positions()
         for row in range(8):
@@ -15,6 +18,29 @@ class TestBoard(unittest.TestCase):
                 cell = board[row][col]
                 self.assertIsInstance(cell, Cell, "Cada elemento del tablero debe ser una instancia de Cell.")
                 self.assertEqual(cell.get_color(), expected_color, f"Celda en la posición {(row, col)} debería ser {expected_color}.")
+
+
+    def test_king_in_game_found(self):
+        position = (1, 1)
+        king = King("white")
+
+        # Usamos la instancia de tablero 'self.board' para colocar el rey
+        self.board.get_cell(position[0], position[1]).place_piece(king)
+
+        # Verificamos que king_in_game devuelva True para el color blanco
+        result = self.board.king_in_game("white")
+        self.assertTrue(result)
+
+    def test_king_in_game_not_found(self):
+        # Llenamos el tablero con peones en lugar de reyes
+        for row in range(8):
+            for col in range(8):
+                pawn = Pawn("white")
+                self.board.get_cell(row, col).place_piece(pawn)
+
+        # Verificamos que king_in_game devuelva False ya que no hay reyes
+        result = self.board.king_in_game("white")
+        self.assertFalse(result)
 
     def test_get_positions_matrix(self):
         positions = Board().get_positions()
@@ -569,19 +595,6 @@ class TestBoard(unittest.TestCase):
 
         self.assertFalse(result)  
 
-
-    # def test_show_board_format(self):
-    #     board_output = Board().show_board()
-    #     lines = board_output.splitlines()
-    #     self.assertEqual(len(lines), 19, "El tablero debe representarse en 19 líneas.")
-
-    #     # Verificar las primeras y últimas líneas
-    #     self.assertTrue(lines[0].startswith("    a     b     c     d     e     f     g     h"), "La primera línea del tablero no es correcta.")
-    #     self.assertTrue(lines[-1].startswith("    a     b     c     d     e     f     g     h"), "La última línea del tablero no es correcta.")
-        
-    #     # Verificar algunas líneas centrales del tablero
-    #     self.assertIn("  └─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┘", lines, "La línea final del tablero no está presente.")
-    #     self.assertIn("  ├─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┤", lines, "La línea de separación del tablero no está presente.")
 
 if __name__ == "__main__":
     unittest.main()

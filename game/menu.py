@@ -115,6 +115,7 @@ class Menu:
         os.system('clear')
         print("=== INSTRUCCIONES ===")
         print("1. El juego termina cuando se captura al rey de tu oponente.")
+        print("2. El juego se puede terminar ingreando la palabra 'exit'.")
         print("2. Las piezas blancas están en la parte inferior del tablero y las negras en la parte superior.")
         print("3. Usa las coordenadas del tablero (ej: 'a2' a 'a4') para mover las piezas.")
         print("4. Movimientos de las piezas:")

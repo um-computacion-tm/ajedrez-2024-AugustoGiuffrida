@@ -14,12 +14,12 @@ class TestCli(unittest.TestCase):
         mock_is_playing.assert_called_once()
 
     @patch('game.chess.Chess.is_playing', side_effect=[True, False])
-    @patch('game.chess.Chess.board', new_callable=MagicMock)  # Parchear el atributo board
-    @patch('builtins.print')  # Para evitar que imprima en la consola durante el test
-    @patch('game.cli.Cli.validate_input', side_effect=[(0, 0), (1, 0)])  # Simula entradas de usuario para old_pos y new_pos
-    @patch('game.chess.Chess.play')  # Mock del método play de Chess
+    @patch('game.chess.Chess.board', new_callable=MagicMock)
+    @patch('builtins.print')
+    @patch('game.cli.Cli.validate_input', side_effect=[(0, 0), (1, 0)])
+    @patch('game.chess.Chess.play')  
     def test_start_game_turn(self, mock_play, mock_validate_input, mock_print, mock_board, mock_is_playing):
-        mock_board.show_board.return_value = "Board"  # Simula el retorno de show_board
+        mock_board.show_board.return_value = "Board"
         cli = Cli()
         cli.start_game()
 
@@ -33,9 +33,8 @@ class TestCli(unittest.TestCase):
         # Verificar que Chess.play es llamado con las posiciones correctas
         mock_play.assert_called_once_with((0, 0), (1, 0))
 
-
-    @patch('builtins.input', side_effect=['z9', 'a2'])  # Simula entradas inválidas y válidas
-    @patch('builtins.print')  # Mock de print para verificar los mensajes
+    @patch('builtins.input', side_effect=['z9', 'a2'])  # Entrada inválida y válida
+    @patch('builtins.print')  
     def test_validate_input_invalid(self, mock_print, mock_input):
         cli = Cli()
         result = cli.validate_input("Enter initial position: ")
@@ -45,6 +44,23 @@ class TestCli(unittest.TestCase):
 
         # Verifica que se impriman los mensajes de error correspondientes
         mock_print.assert_any_call("\nInvalid column or row value.\n")
+
+
+    @patch('builtins.print')
+    def test_convert_position_invalid_length(self, mock_print):
+        cli = Cli()
+        result = cli.convert_position('a12')  # Entrada con longitud inválida
+        self.assertFalse(result)
+
+        # Verifica que se imprime el mensaje de longitud inválida
+        mock_print.assert_any_call("\nInvalid input length.\n")
+
+    @patch('builtins.print')
+    @patch('builtins.input', side_effect=['1a'])  # Provocará un ValueError
+    def test_convert_position_value_error(self, mock_input, mock_print):
+        cli = Cli()
+        result = cli.convert_position('1a')  # Simulamos entrada que causará un ValueError
+        self.assertFalse(result)
 
 
 

@@ -6,12 +6,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Status: [Development]
 
-## [0.0.15] - 2024-10-11
+## [0.0.18] - 2024-10-19
+
+### Added
+- Se añadio funcionalidades que permite salir al usuario mediante la palabra 'exit'
+
+## [0.0.16] - 2024-10-17
+
+### Added
+- Se añadieron funcionalidades que permiten ver a cada jugador las piezas que han capturado
+
+## [0.0.17] - 2024-10-11
 
 ### Added
 - Se añadio el fin del juego
 
-## [0.0.15] - 2024-10-11
+## [0.0.16] - 2024-10-11
 
 ### Added
 - Opcion regla en el menu

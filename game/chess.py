@@ -3,6 +3,7 @@ from .exepcions import InvalidPlay
 from .board import Board
 from .cell import Cell
 import json
+import os
 
 class Chess:
 
@@ -10,7 +11,9 @@ class Chess:
         self.__turn__= "white"
         self.__board__ = Board()                         # Inicializa el tablero.
         self.__matrix__= self.__board__.get_positions()  # ObtÃ©n las posiciones del tablero.
-        self.set_pieces()                                # Coloca las piezas en sus posiciones iniciales.
+        self.set_pieces()                                # Coloca las piezas en sus posiciones iniciales.                            
+        self.white_captures = []                         # Piezas capturadas por las blancas
+        self.black_captures = []                         # Piezas capturadas por las negras
 
     @property
     def turn(self):
@@ -19,6 +22,9 @@ class Chess:
     @property
     def board(self):
         return self.__board__
+
+    def is_playing(self):
+        return True
 
     def play(self, source, dest):
         cell = self.__matrix__[source[0]][source[1]]
@@ -32,9 +38,10 @@ class Chess:
                 self.move(source, dest)
                 self.check_game_over()
                 self.change_turn()
+                os.system('cls' if os.name == 'nt' else 'clear')
                 return
 
-        raise InvalidPlay
+        raise InvalidPlay(f"Invalid move from {source} to {dest}.")
 
     def check_game_over(self):
         white_king_alive = self.__board__.king_in_game("white")
@@ -49,13 +56,18 @@ class Chess:
 
 
     def move(self, source, dest):
-        old_cell = self.__board__.get_cell(source[0], source[1])  # Cambiado
-        new_cell = self.__board__.get_cell(dest[0], dest[1])      # Cambiado
+        old_cell = self.__board__.get_cell(source[0], source[1])
+        new_cell = self.__board__.get_cell(dest[0], dest[1])
+
+        if new_cell.is_occupied():
+            captured_piece = new_cell.get_piece()
+            if captured_piece.get_color() == "white":
+                self.black_captures.append(captured_piece)  # Las negras capturan
+            else:
+                self.white_captures.append(captured_piece)  # Las blancas capturan
+
         new_cell.place_piece(old_cell.remove_piece())
 
-
-    def is_playing(self):
-        return True
    
     def change_turn(self):
         self.__turn__ = "black" if self.__turn__ == "white" else "white"
