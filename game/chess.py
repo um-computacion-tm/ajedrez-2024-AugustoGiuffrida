@@ -3,6 +3,7 @@ from .exepcions import InvalidPlay
 from .board import Board
 from .cell import Cell
 import json
+import os
 
 class Chess:
 
@@ -37,9 +38,10 @@ class Chess:
                 self.move(source, dest)
                 self.check_game_over()
                 self.change_turn()
+                os.system('cls' if os.name == 'nt' else 'clear')
                 return
 
-        raise InvalidPlay
+        raise InvalidPlay(f"Invalid move from {source} to {dest}.")
 
     def check_game_over(self):
         white_king_alive = self.__board__.king_in_game("white")
