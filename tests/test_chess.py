@@ -34,7 +34,7 @@ class TestChess(unittest.TestCase):
             mock_print.assert_not_called()
             mock_exit.assert_not_called()
 
-    def test_white_piece_captures_black(self):
+    def test_white_pawn_captures_black(self):
         source = (1, 1)
         dest = (3, 1)
         white_pawn = Pawn("white")
@@ -46,7 +46,7 @@ class TestChess(unittest.TestCase):
         self.assertEqual(self.chess.board.get_cell(dest[0], dest[1]).get_piece(), white_pawn)
         self.assertIsNone(self.chess.board.get_cell(source[0], source[1]).get_piece())
 
-    def test_black_piece_captures_white(self):
+    def test_black_pawn_captures_white(self):
         source = (6, 1)
         dest = (5, 1)
         black_pawn = Pawn("black")
@@ -57,6 +57,260 @@ class TestChess(unittest.TestCase):
         self.assertIn(white_pawn, self.chess.black_captures)
         self.assertEqual(self.chess.board.get_cell(dest[0], dest[1]).get_piece(), black_pawn)
         self.assertIsNone(self.chess.board.get_cell(source[0], source[1]).get_piece())
+
+    def test_white_rook_captures_black(self):
+        source = (0, 0)
+        dest = (3, 0)
+        white_rook = Rook("white")
+        self.chess.board.get_cell(source[0], source[1]).place_piece(white_rook)
+        black_pawn = Pawn("black")
+        self.chess.board.get_cell(dest[0], dest[1]).place_piece(black_pawn)
+        self.chess.move(source, dest)
+        self.assertIn(black_pawn, self.chess.white_captures)
+        self.assertEqual(self.chess.board.get_cell(dest[0], dest[1]).get_piece(), white_rook)
+        self.assertIsNone(self.chess.board.get_cell(source[0], source[1]).get_piece())
+
+    def test_black_rook_captures_white(self):
+        source = (7, 0)
+        dest = (4, 0)
+        black_rook = Rook("black")
+        self.chess.board.get_cell(source[0], source[1]).place_piece(black_rook)
+        white_pawn = Pawn("white")
+        self.chess.board.get_cell(dest[0], dest[1]).place_piece(white_pawn)
+        self.chess.move(source, dest)
+        self.assertIn(white_pawn, self.chess.black_captures)
+        self.assertEqual(self.chess.board.get_cell(dest[0], dest[1]).get_piece(), black_rook)
+        self.assertIsNone(self.chess.board.get_cell(source[0], source[1]).get_piece())
+
+    def test_invalid_white_rook_capture(self):
+        source = (0, 0)
+        dest = (0, 2)  # Movimiento inválido para capturar
+        white_rook = Rook("white")
+        self.chess.board.get_cell(source[0], source[1]).place_piece(white_rook)
+        black_pawn = Pawn("black")
+        self.chess.board.get_cell(dest[0], dest[1]).place_piece(black_pawn)
+
+        move_is_valid = self.chess.board.is_valid(source, dest)
+        self.assertFalse(move_is_valid)
+        self.assertEqual(self.chess.board.get_cell(source[0], source[1]).get_piece(), white_rook)
+        self.assertEqual(self.chess.board.get_cell(dest[0], dest[1]).get_piece(), black_pawn)
+
+    def test_invalid_black_rook_capture(self):
+        source = (7, 0)
+        dest = (7, 2)  # Movimiento inválido para capturar
+        black_rook = Rook("black")
+        self.chess.board.get_cell(source[0], source[1]).place_piece(black_rook)
+        white_pawn = Pawn("white")
+        self.chess.board.get_cell(dest[0], dest[1]).place_piece(white_pawn)
+
+        move_is_valid = self.chess.board.is_valid(source, dest)
+        self.assertFalse(move_is_valid)
+        self.assertEqual(self.chess.board.get_cell(source[0], source[1]).get_piece(), black_rook)
+        self.assertEqual(self.chess.board.get_cell(dest[0], dest[1]).get_piece(), white_pawn)
+
+
+    def test_white_knight_captures_black(self):
+        source = (0, 1)
+        dest = (2, 2)
+        white_knight = Knight("white")
+        self.chess.board.get_cell(source[0], source[1]).place_piece(white_knight)
+        black_pawn = Pawn("black")
+        self.chess.board.get_cell(dest[0], dest[1]).place_piece(black_pawn)
+        self.chess.move(source, dest)
+        self.assertIn(black_pawn, self.chess.white_captures)
+        self.assertEqual(self.chess.board.get_cell(dest[0], dest[1]).get_piece(), white_knight)
+        self.assertIsNone(self.chess.board.get_cell(source[0], source[1]).get_piece())
+
+    def test_black_knight_captures_white(self):
+        source = (7, 1)
+        dest = (5, 2)
+        black_knight = Knight("black")
+        self.chess.board.get_cell(source[0], source[1]).place_piece(black_knight)
+        white_pawn = Pawn("white")
+        self.chess.board.get_cell(dest[0], dest[1]).place_piece(white_pawn)
+        self.chess.move(source, dest)
+        self.assertIn(white_pawn, self.chess.black_captures)
+        self.assertEqual(self.chess.board.get_cell(dest[0], dest[1]).get_piece(), black_knight)
+        self.assertIsNone(self.chess.board.get_cell(source[0], source[1]).get_piece())
+
+    def test_invalid_white_knight_capture(self):
+        source = (0, 1)
+        dest = (2, 1)  # Movimiento inválido para el caballo
+        white_knight = Knight("white")
+        self.chess.board.get_cell(source[0], source[1]).place_piece(white_knight)
+        black_pawn = Pawn("black")
+        self.chess.board.get_cell(dest[0], dest[1]).place_piece(black_pawn)
+
+        move_is_valid = self.chess.board.is_valid(source, dest)
+        self.assertFalse(move_is_valid)
+        self.assertEqual(self.chess.board.get_cell(source[0], source[1]).get_piece(), white_knight)
+        self.assertEqual(self.chess.board.get_cell(dest[0], dest[1]).get_piece(), black_pawn)
+
+    def test_invalid_black_knight_capture(self):
+        source = (7, 1)
+        dest = (5, 1)  # Movimiento inválido para el caballo
+        black_knight = Knight("black")
+        self.chess.board.get_cell(source[0], source[1]).place_piece(black_knight)
+        white_pawn = Pawn("white")
+        self.chess.board.get_cell(dest[0], dest[1]).place_piece(white_pawn)
+
+        move_is_valid = self.chess.board.is_valid(source, dest)
+        self.assertFalse(move_is_valid)
+        self.assertEqual(self.chess.board.get_cell(source[0], source[1]).get_piece(), black_knight)
+        self.assertEqual(self.chess.board.get_cell(dest[0], dest[1]).get_piece(), white_pawn)
+
+
+    def test_white_bishop_captures_black(self):
+        source = (0, 2)
+        dest = (2, 0)
+        white_bishop = Bishop("white")
+        self.chess.board.get_cell(source[0], source[1]).place_piece(white_bishop)
+        black_pawn = Pawn("black")
+        self.chess.board.get_cell(dest[0], dest[1]).place_piece(black_pawn)
+        self.chess.move(source, dest)
+        self.assertIn(black_pawn, self.chess.white_captures)
+        self.assertEqual(self.chess.board.get_cell(dest[0], dest[1]).get_piece(), white_bishop)
+        self.assertIsNone(self.chess.board.get_cell(source[0], source[1]).get_piece())
+
+    def test_black_bishop_captures_white(self):
+        source = (7, 2)
+        dest = (5, 0)
+        black_bishop = Bishop("black")
+        self.chess.board.get_cell(source[0], source[1]).place_piece(black_bishop)
+        white_pawn = Pawn("white")
+        self.chess.board.get_cell(dest[0], dest[1]).place_piece(white_pawn)
+        self.chess.move(source, dest)
+        self.assertIn(white_pawn, self.chess.black_captures)
+        self.assertEqual(self.chess.board.get_cell(dest[0], dest[1]).get_piece(), black_bishop)
+        self.assertIsNone(self.chess.board.get_cell(source[0], source[1]).get_piece())
+
+    def test_invalid_white_bishop_capture(self):
+        source = (0, 2)
+        dest = (0, 0)  # Movimiento inválido para el alfil
+        white_bishop = Bishop("white")
+        self.chess.board.get_cell(source[0], source[1]).place_piece(white_bishop)
+        black_pawn = Pawn("black")
+        self.chess.board.get_cell(dest[0], dest[1]).place_piece(black_pawn)
+
+        move_is_valid = self.chess.board.is_valid(source, dest)
+        self.assertFalse(move_is_valid)
+        self.assertEqual(self.chess.board.get_cell(source[0], source[1]).get_piece(), white_bishop)
+        self.assertEqual(self.chess.board.get_cell(dest[0], dest[1]).get_piece(), black_pawn)
+
+    def test_invalid_black_bishop_capture(self):
+        source = (7, 2)
+        dest = (7, 0)  # Movimiento inválido para el alfil
+        black_bishop = Bishop("black")
+        self.chess.board.get_cell(source[0], source[1]).place_piece(black_bishop)
+        white_pawn = Pawn("white")
+        self.chess.board.get_cell(dest[0], dest[1]).place_piece(white_pawn)
+
+        move_is_valid = self.chess.board.is_valid(source, dest)
+        self.assertFalse(move_is_valid)
+        self.assertEqual(self.chess.board.get_cell(source[0], source[1]).get_piece(), black_bishop)
+        self.assertEqual(self.chess.board.get_cell(dest[0], dest[1]).get_piece(), white_pawn)
+
+
+    def test_white_queen_captures_black(self):
+        source = (0, 3)
+        dest = (3, 3)
+        white_queen = Queen("white")
+        self.chess.board.get_cell(source[0], source[1]).place_piece(white_queen)
+        black_pawn = Pawn("black")
+        self.chess.board.get_cell(dest[0], dest[1]).place_piece(black_pawn)
+        self.chess.move(source, dest)
+        self.assertIn(black_pawn, self.chess.white_captures)
+        self.assertEqual(self.chess.board.get_cell(dest[0], dest[1]).get_piece(), white_queen)
+        self.assertIsNone(self.chess.board.get_cell(source[0], source[1]).get_piece())
+
+    def test_black_queen_captures_white(self):
+        source = (7, 3)
+        dest = (4, 3)
+        black_queen = Queen("black")
+        self.chess.board.get_cell(source[0], source[1]).place_piece(black_queen)
+        white_pawn = Pawn("white")
+        self.chess.board.get_cell(dest[0], dest[1]).place_piece(white_pawn)
+        self.chess.move(source, dest)
+        self.assertIn(white_pawn, self.chess.black_captures)
+        self.assertEqual(self.chess.board.get_cell(dest[0], dest[1]).get_piece(), black_queen)
+        self.assertIsNone(self.chess.board.get_cell(source[0], source[1]).get_piece())
+
+    def test_invalid_white_queen_capture(self):
+        source = (0, 3)
+        dest = (1, 5)  # Movimiento inválido para la reina
+        white_queen = Queen("white")
+        self.chess.board.get_cell(source[0], source[1]).place_piece(white_queen)
+        black_pawn = Pawn("black")
+        self.chess.board.get_cell(dest[0], dest[1]).place_piece(black_pawn)
+
+        move_is_valid = self.chess.board.is_valid(source, dest)
+        self.assertFalse(move_is_valid)
+        self.assertEqual(self.chess.board.get_cell(source[0], source[1]).get_piece(), white_queen)
+        self.assertEqual(self.chess.board.get_cell(dest[0], dest[1]).get_piece(), black_pawn)
+
+    def test_invalid_black_queen_capture(self):
+        source = (7, 3)
+        dest = (6, 5)  # Movimiento inválido para la reina
+        black_queen = Queen("black")
+        self.chess.board.get_cell(source[0], source[1]).place_piece(black_queen)
+        white_pawn = Pawn("white")
+        self.chess.board.get_cell(dest[0], dest[1]).place_piece(white_pawn)
+
+        move_is_valid = self.chess.board.is_valid(source, dest)
+        self.assertFalse(move_is_valid)
+        self.assertEqual(self.chess.board.get_cell(source[0], source[1]).get_piece(), black_queen)
+        self.assertEqual(self.chess.board.get_cell(dest[0], dest[1]).get_piece(), white_pawn)
+
+
+    def test_white_king_captures_black(self):
+        source = (0, 4)
+        dest = (1, 4)
+        white_king = King("white")
+        self.chess.board.get_cell(source[0], source[1]).place_piece(white_king)
+        black_pawn = Pawn("black")
+        self.chess.board.get_cell(dest[0], dest[1]).place_piece(black_pawn)
+        self.chess.move(source, dest)
+        self.assertIn(black_pawn, self.chess.white_captures)
+        self.assertEqual(self.chess.board.get_cell(dest[0], dest[1]).get_piece(), white_king)
+        self.assertIsNone(self.chess.board.get_cell(source[0], source[1]).get_piece())
+
+    def test_black_king_captures_white(self):
+        source = (7, 4)
+        dest = (6, 4)
+        black_king = King("black")
+        self.chess.board.get_cell(source[0], source[1]).place_piece(black_king)
+        white_pawn = Pawn("white")
+        self.chess.board.get_cell(dest[0], dest[1]).place_piece(white_pawn)
+        self.chess.move(source, dest)
+        self.assertIn(white_pawn, self.chess.black_captures)
+        self.assertEqual(self.chess.board.get_cell(dest[0], dest[1]).get_piece(), black_king)
+        self.assertIsNone(self.chess.board.get_cell(source[0], source[1]).get_piece())
+
+    def test_invalid_white_king_capture(self):
+        source = (0, 4)
+        dest = (2, 4)  # Movimiento inválido para el rey
+        white_king = King("white")
+        self.chess.board.get_cell(source[0], source[1]).place_piece(white_king)
+        black_pawn = Pawn("black")
+        self.chess.board.get_cell(dest[0], dest[1]).place_piece(black_pawn)
+
+        move_is_valid = self.chess.board.is_valid(source, dest)
+        self.assertFalse(move_is_valid)
+        self.assertEqual(self.chess.board.get_cell(source[0], source[1]).get_piece(), white_king)
+        self.assertEqual(self.chess.board.get_cell(dest[0], dest[1]).get_piece(), black_pawn)
+
+    def test_invalid_black_king_capture(self):
+        source = (7, 4)
+        dest = (5, 4)  # Movimiento inválido para el rey
+        black_king = King("black")
+        self.chess.board.get_cell(source[0], source[1]).place_piece(black_king)
+        white_pawn = Pawn("white")
+        self.chess.board.get_cell(dest[0], dest[1]).place_piece(white_pawn)
+
+        move_is_valid = self.chess.board.is_valid(source, dest)
+        self.assertFalse(move_is_valid)
+        self.assertEqual(self.chess.board.get_cell(source[0], source[1]).get_piece(), black_king)
+        self.assertEqual(self.chess.board.get_cell(dest[0], dest[1]).get_piece(), white_pawn)
 
 
     def test_move_no_capture(self):

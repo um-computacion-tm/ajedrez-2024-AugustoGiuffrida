@@ -33,17 +33,9 @@ class Board:
         return False  
 
     def orthogonal_move(self, source, dest):
-        if source[0] == dest[0]:  # Movimiento horizontal
-            step = 1 if dest[1] > source[1] else -1
-            for col in range(source[1] + step, dest[1], step):
-                if self.__positions__[source[0]][col].is_occupied():
-                    return False
-        elif source[1] == dest[1]:  # Movimiento vertical
-            step = 1 if dest[0] > source[0] else -1
-            for row in range(source[0] + step, dest[0], step):
-                if self.__positions__[row][source[1]].is_occupied():
-                    return False
-        return True
+        start, end = sorted((source, dest))
+        cells = self.__positions__[start[0]][start[1]+1:end[1]] if start[0] == end[0] else (self.__positions__[i][start[1]] for i in range(start[0]+1, end[0]))
+        return all(not cell.is_occupied() for cell in cells)
 
 
     def diagonal_move(self, source, dest):
