@@ -10,18 +10,27 @@ class Cli:
             try:
                 print(chess.board.show_board(chess.white_captures, chess.black_captures))
                 print("Turn: ", chess.turn)
-                old_pos = (self.validate_input("Enter initial position (e.g 'a2'): "))
-                new_pos = (self.validate_input("Enter final position (e.g 'a3'): "))
-                play = chess.play(old_pos,new_pos)
+                old_pos = self.validate_input("Enter initial position (e.g 'a2') or type 'exit' to quit: ")
+                if old_pos == "exit":
+                    print("Exiting the game.")
+                    break
+                new_pos = self.validate_input("Enter final position (e.g 'a3') or type 'exit' to quit: ")
+                if new_pos == "exit":
+                    print("Exiting the game.")
+                    break
+                play = chess.play(old_pos, new_pos)
             except InvalidPlay as e:
                 print(e)
 
     def validate_input(self, prompt):
-        while True: 
+        while True:
             position = input(prompt).lower().replace(" ", "")
+            if position == "exit":  # Si el usuario ingresa 'exit', salir del bucle
+                return "exit"
             converted_position = self.convert_position(position)
-            if converted_position:  
+            if converted_position:
                 return converted_position
+
 
 
     def convert_position(self, position):
