@@ -72,6 +72,6 @@ class Cli:
 
 if __name__ == "__main__":
     cli = Cli() 
-    menu = Menu(cli)  # Pasar la instancia de Cli a Menu
+    menu = Menu(cli)  
     menu.main()
     cli.start_game()
