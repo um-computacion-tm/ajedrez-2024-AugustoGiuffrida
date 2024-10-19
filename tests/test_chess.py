@@ -108,7 +108,6 @@ class TestChess(unittest.TestCase):
         self.assertEqual(self.chess.board.get_cell(source[0], source[1]).get_piece(), black_rook)
         self.assertEqual(self.chess.board.get_cell(dest[0], dest[1]).get_piece(), white_pawn)
 
-
     def test_white_knight_captures_black(self):
         source = (0, 1)
         dest = (2, 2)

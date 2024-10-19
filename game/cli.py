@@ -18,9 +18,10 @@ class Cli:
                 if new_pos == "exit":
                     print("Exiting the game.")
                     break
-                play = chess.play(old_pos, new_pos)
+                chess.play(old_pos, new_pos)
             except InvalidPlay as e:
-                print(e)
+                print(str(e))  
+
 
     def validate_input(self, prompt):
         while True:
