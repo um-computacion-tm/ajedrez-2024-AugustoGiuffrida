@@ -1,41 +1,56 @@
-# Ajedrez-Augusto Giuffrida ♟
+# ♟ Ajedrez - Augusto Giuffrida
 
-El ajedrez es un juego de estrategia entre dos jugadores que se enfrentan en un tablero de 8×8 casillas. Cada jugador controla un conjunto de 16 piezas: un rey, una reina, dos torres, dos caballos, dos alfiles y ocho peones. El objetivo del juego capturar al rey del oponente. Este proyecto ofrece una implementación del juego en Python, incluyendo CLI interactivo.
+El ajedrez es un juego de estrategia donde dos jugadores se enfrentan en un tablero de 8×8 casillas. Cada jugador controla 16 piezas: un rey, una reina, dos torres, dos caballos, dos alfiles y ocho peones. El objetivo es capturar al rey del oponente. Este proyecto implementa el juego de ajedrez en Python con una interfaz de línea de comandos (CLI) interactiva.
 
-## Contenidos 📖
-- [Reglas](#reglas-📜)
-- [Instalación](#instalación-🚀)
-- [Cómo jugar](#cómo-jugar-🎮)
-- [Estado del Proyecto](#estado-del-proyecto-🏅)
-- [Diagrama de Clases](#flujo-de-clases-🛠️)
+## 📖 Contenidos
+- [📜 Reglas](#-reglas)
+- [🚀 Instalación](#-instalación)
+- [🎮 Cómo jugar](#-cómo-jugar)
+- [🏅 Estado del Proyecto](#-estado-del-proyecto)
+- [🛠️ Diagrama de Clases](#-diagrama-de-clases)
+- [👨‍🎓 Alumno](#-alumno)
 
-
-## Reglas 📜
+## 📜 Reglas
 
 - **Movimientos de las piezas**:
-  - **Rey**: se mueve una casilla en cualquier dirección.
-  - **Reina**: se mueve cualquier número de casillas en cualquier dirección.
-  - **Torre**: se mueve cualquier número de casillas en línea recta, vertical u horizontal.
-  - **Alfil**: se mueve cualquier número de casillas en diagonal.
-  - **Caballo**: se mueve en forma de "L", dos casillas en una dirección y una en perpendicular.
-  - **Peón**: se mueve una casilla hacia adelante, y captura en diagonal.
-  
+  - ♔ **Rey**: se mueve una casilla en cualquier dirección.
+  - ♕ **Reina**: se mueve cualquier número de casillas en cualquier dirección.
+  - ♖ **Torre**: se mueve en línea recta, vertical u horizontal.
+  - ♗ **Alfil**: se mueve en diagonal.
+  - ♘ **Caballo**: se mueve en forma de "L".
+  - ♙ **Peón**: se mueve hacia adelante, captura en diagonal.
 
-Puedes consultar una guía completa de las reglas del ajedrez [aquí](https://es.wikipedia.org/wiki/Ajedrez).
+📚 Puedes consultar una guía completa de las reglas del ajedrez [aquí](https://es.wikipedia.org/wiki/Ajedrez).
 
-## Descarga 🚀
+## 🚀 Instalación
+
+Clona el repositorio para obtener el código fuente del proyecto:
 
 ```bash
 git clone https://github.com/um-computacion-tm/ajedrez-2024-AugustoGiuffrida.git
 ```
 
-## Ejecutar el juego 🎮
+## 🎮 Cómo jugar
+
+1. Crear la imagen:
+
+```bash
+docker buildx build --no-cache -t <nombre_imagen> .
+```
+
+2. Ejecutar la imagen:
+
+```bash
+docker run -it <nombre_imagen>
+```
+
+O simplemente ejecutar el juego con Python:
 
 ```python
 python3 -m game.cli
 ```
 
-## Badges 🏅
+## 🏅 Badges
 
 
 | *_CircleCI_* | *_Main branch_* | *_Develop branch_* |
@@ -47,23 +62,27 @@ python3 -m game.cli
 | Status | [![Maintainability](https://api.codeclimate.com/v1/badges/7a72c784af7a29857334/maintainability)](https://codeclimate.com/github/um-computacion-tm/ajedrez-2024-AugustoGiuffrida/maintainability) | [![Test Coverage](https://api.codeclimate.com/v1/badges/7a72c784af7a29857334/test_coverage)](https://codeclimate.com/github/um-computacion-tm/ajedrez-2024-AugustoGiuffrida/test_coverage) |
 
 
-
-## Flujo de Clases 🛠️
+## 🛠️ Diagrama de Clases
 
 ```mermaid
 graph TD;
+    Cell-->Board;
+    Board-->Chess;
+    Menu-->Cli;
+    Chess-->Cli;
+    Pieces-->Chess;
     Rook-->Pieces;
     Bishop-->Pieces;
     Knight-->Pieces;
     Pawn-->Pieces;
     King-->Pieces;
     Queen-->Pieces;
-    Chess-->Cli;
-    Menu-->Cli;
-    Board-->Chess;
-    Pieces-->Chess;
-    Cell-->Board;
 ```
+
+## 👨‍🎓 Alumno
+
+Nombre: Augusto Giuffrida
+Legajo: 60137
 
 
 
