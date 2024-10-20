@@ -3,12 +3,12 @@
 El ajedrez es un juego de estrategia donde dos jugadores se enfrentan en un tablero de 8×8 casillas. Cada jugador controla 16 piezas: un rey, una reina, dos torres, dos caballos, dos alfiles y ocho peones. El objetivo es capturar al rey del oponente. Este proyecto implementa el juego de ajedrez en Python con una interfaz de línea de comandos (CLI) interactiva.
 
 ## 📖 Contenidos
-- [📜 Reglas](#-reglas)
-- [🚀 Instalación](#-instalación)
-- [🎮 Cómo jugar](#-cómo-jugar)
-- [🏅 Estado del Proyecto](#-estado-del-proyecto)
-- [🛠️ Diagrama de Clases](#-diagrama-de-clases)
-- [👨‍🎓 Alumno](#-alumno)
+- 📜[Reglas](#-reglas)
+- 🚀[Instalación](#-instalación)
+- 🎮[Cómo jugar](#-cómo-jugar)
+- 🏅[Estado del Proyecto](#-estado-del-proyecto)
+- 🛠️[Diagrama de Clases](#-diagrama-de-clases)
+- 👨‍🎓[Alumno](#-alumno)
 
 ## 📜 Reglas
 
@@ -66,17 +66,29 @@ python3 -m game.cli
 
 ```mermaid
 graph TD;
-    Cell-->Board;
-    Board-->Chess;
-    Chess-->Cli;
-    Menu-->Cli;
-    Pieces-->Chess;
-    Rook-->Pieces;
-    Bishop-->Pieces;
-    Knight-->Pieces;
-    Pawn-->Pieces;
-    King-->Pieces;
-    Queen-->Pieces;
+    
+    subgraph "Interfaz (CLI)"
+        Cli --> Menu
+    end
+
+    subgraph "Lógica del Juego"
+        Chess --> Board
+        Chess --> Pieces
+    end
+
+    subgraph "Componentes del Tablero"
+        Board --> Cell
+    end
+
+    subgraph "Piezas de Ajedrez"
+        Pieces --> Rook
+        Pieces --> Bishop
+        Pieces --> Knight
+        Pieces --> Pawn
+        Pieces --> King
+        Pieces --> Queen
+    end
+
 ```
 
 ## 👨‍🎓 Alumno
@@ -86,7 +98,7 @@ Nombre: Augusto Giuffrida
 Legajo: 60137
 
 
-![gif](https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExODB4OTMxNXZrOTA3YWJtdTVhaTBrbHdyazB5ZGpqMmUwMjQ3M2hiZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/2vB2oTE8eYuV2Ze4ZU/giphy.gif)
+![gif](https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExa2J0MHU5ajZqdzcybjdmaGYxa3B4dXNrdWdzNGV2cDF2bGVvaXY4ciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/aCg3RWzbmnTBRbapwi/giphy.gif)
 
 
 
