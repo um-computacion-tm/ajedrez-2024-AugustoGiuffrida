@@ -46,12 +46,28 @@ docker run -it <nombre_imagen>
 
 O simplemente ejecutar el juego con Python:
 
-```python
+1. Crear un entorno virtual:
+```bash
+python3 -m venv nombre_del_entorno
+```
+
+2.  Activar el entorno virtual en macOS y Linux:
+```bash
+source nombre_del_entorno/bin/activate
+```
+
+3. Instalar dependencias
+```bash
+pip install -r requirements.txt
+```
+
+4. Ejecutar el juego
+```bash
 python3 -m game.cli
 ```
 
-## 🏅 Badges
 
+## 🏅 Badges
 
 | *_CircleCI_* | *_Main branch_* | *_Develop branch_* |
 | :---:   | :---:   | :---: |
@@ -70,7 +86,7 @@ graph TD;
     subgraph "Relaciones"
         Board --> Chess 
         Pieces --> Chess
-        Cli --> Chess
+        Chess --> Cli
     end
 
     subgraph "Interfaz (CLI)"
