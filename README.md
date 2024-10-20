@@ -44,11 +44,6 @@ docker buildx build --no-cache -t <nombre_imagen> .
 docker run -it <nombre_imagen>
 ```
 
-O simplemente ejecutar el juego con Python:
-
-```python
-python3 -m game.cli
-```
 
 ## 🏅 Badges
 
