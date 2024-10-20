@@ -62,6 +62,9 @@ python3 -m game.cli
 | Status | [![Maintainability](https://api.codeclimate.com/v1/badges/7a72c784af7a29857334/maintainability)](https://codeclimate.com/github/um-computacion-tm/ajedrez-2024-AugustoGiuffrida/maintainability) | [![Test Coverage](https://api.codeclimate.com/v1/badges/7a72c784af7a29857334/test_coverage)](https://codeclimate.com/github/um-computacion-tm/ajedrez-2024-AugustoGiuffrida/test_coverage) |
 
 
+## 🛠️ Diagrama de Clases
+
+```mermaid
 graph TD;
 
     subgraph "🧠 Relaciones"
@@ -86,7 +89,7 @@ graph TD;
     subgraph "🏰 Componentes del Tablero"
         Cell --> Board
     end
-
+```
 
 
 ## 👨‍🎓 Alumno
