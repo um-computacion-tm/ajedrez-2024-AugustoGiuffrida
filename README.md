@@ -68,8 +68,8 @@ python3 -m game.cli
 graph TD;
     Cell-->Board;
     Board-->Chess;
-    Menu-->Cli;
     Chess-->Cli;
+    Menu-->Cli;
     Pieces-->Chess;
     Rook-->Pieces;
     Bishop-->Pieces;
@@ -82,8 +82,11 @@ graph TD;
 ## 👨‍🎓 Alumno
 
 Nombre: Augusto Giuffrida
+
 Legajo: 60137
 
+
+![gif](https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExODB4OTMxNXZrOTA3YWJtdTVhaTBrbHdyazB5ZGpqMmUwMjQ3M2hiZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/2vB2oTE8eYuV2Ze4ZU/giphy.gif)
 
 
 
