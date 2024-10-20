@@ -67,13 +67,14 @@ python3 -m game.cli
 ```mermaid
 graph TD;
     
-    subgraph "Interfaz (CLI)"
-        Cli --> Menu
-    end
-
     subgraph "Lógica del Juego"
         Chess --> Board
         Chess --> Pieces
+        Chess --> Cli
+    end
+
+    subgraph "Interfaz (CLI)"
+        Cli --> Menu
     end
 
     subgraph "Componentes del Tablero"
