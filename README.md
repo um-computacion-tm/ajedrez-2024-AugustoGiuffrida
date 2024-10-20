@@ -67,27 +67,27 @@ python3 -m game.cli
 ```mermaid
 graph TD;
 
-    subgraph "🧠 Relaciones"
+    subgraph "Relaciones"
         Board --> Chess 
         Pieces --> Chess
         Cli --> Chess
     end
 
-    subgraph "♟️ Piezas de Ajedrez"
+    subgraph "Interfaz (CLI)"
+        Menu --> Cli
+    end
+
+    subgraph "Componentes del Tablero"
+        Cell --> Board
+    end
+
+    subgraph "Piezas de Ajedrez"
         Rook   --> Pieces
         Bishop --> Pieces  
         Knight --> Pieces
         Pawn --> Pieces
         King --> Pieces
         Queen --> Pieces
-    end
-
-    subgraph "🎮 Interfaz (CLI)"
-        Menu --> Cli
-    end
-
-    subgraph "🏰 Componentes del Tablero"
-        Cell --> Board
     end
 ```
 
