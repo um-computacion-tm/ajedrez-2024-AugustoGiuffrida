@@ -67,11 +67,11 @@ python3 -m game.cli
 ```mermaid
 graph TD;
 
-    subgraph ""
+    
         Board --> Chess 
         Pieces --> Chess
         Cli --> Chess
-    end
+
 
     subgraph "Interfaz (CLI)"
         Menu --> Cli
