@@ -62,35 +62,32 @@ python3 -m game.cli
 | Status | [![Maintainability](https://api.codeclimate.com/v1/badges/7a72c784af7a29857334/maintainability)](https://codeclimate.com/github/um-computacion-tm/ajedrez-2024-AugustoGiuffrida/maintainability) | [![Test Coverage](https://api.codeclimate.com/v1/badges/7a72c784af7a29857334/test_coverage)](https://codeclimate.com/github/um-computacion-tm/ajedrez-2024-AugustoGiuffrida/test_coverage) |
 
 
-## 🛠️ Diagrama de Clases
-
-```mermaid
 graph TD;
-    
-    subgraph "Lógica del Juego"
-        Chess --> Board
-        Chess --> Pieces
-        Chess --> Cli
+
+    subgraph "🧠 Relaciones"
+        Board --> Chess 
+        Pieces --> Chess
+        Cli --> Chess
     end
 
-    subgraph "Interfaz (CLI)"
-        Cli --> Menu
+    subgraph "♟️ Piezas de Ajedrez"
+        Rook   --> Pieces
+        Bishop --> Pieces  
+        Knight --> Pieces
+        Pawn --> Pieces
+        King --> Pieces
+        Queen --> Pieces
     end
 
-    subgraph "Componentes del Tablero"
-        Board --> Cell
+    subgraph "🎮 Interfaz (CLI)"
+        Menu --> Cli
     end
 
-    subgraph "Piezas de Ajedrez"
-        Pieces --> Rook
-        Pieces --> Bishop
-        Pieces --> Knight
-        Pieces --> Pawn
-        Pieces --> King
-        Pieces --> Queen
+    subgraph "🏰 Componentes del Tablero"
+        Cell --> Board
     end
 
-```
+
 
 ## 👨‍🎓 Alumno
 
