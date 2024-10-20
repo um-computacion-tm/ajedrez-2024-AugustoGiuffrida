@@ -67,7 +67,7 @@ python3 -m game.cli
 ```mermaid
 graph TD;
 
-    subgraph "Relaciones"
+    subgraph
         Board --> Chess 
         Pieces --> Chess
         Cli --> Chess
