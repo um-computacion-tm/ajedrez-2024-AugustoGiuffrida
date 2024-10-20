@@ -86,7 +86,7 @@ graph TD;
     subgraph "Relaciones"
         Board --> Chess 
         Pieces --> Chess
-        Chess --> Cli
+        Cli --> Chess
     end
 
     subgraph "Interfaz (CLI)"
