@@ -1,6 +1,14 @@
-# Ajedrez-Augusto Giuffrida ♔
+# Ajedrez-Augusto Giuffrida ♟
 
-El ajedrez es un juego de estrategia entre dos jugadores que se enfrentan en un tablero de 8×8 casillas. Cada jugador controla un conjunto de 16 piezas: un rey, una reina, dos torres, dos caballos, dos alfiles y ocho peones. El objetivo del juego es dar jaque mate al rey del oponente.
+El ajedrez es un juego de estrategia entre dos jugadores que se enfrentan en un tablero de 8×8 casillas. Cada jugador controla un conjunto de 16 piezas: un rey, una reina, dos torres, dos caballos, dos alfiles y ocho peones. El objetivo del juego capturar al rey del oponente. Este proyecto ofrece una implementación del juego en Python, incluyendo CLI interactivo.
+
+## Contenidos 📖
+- [Reglas](#reglas-📜)
+- [Instalación](#instalación-🚀)
+- [Cómo jugar](#cómo-jugar-🎮)
+- [Estado del Proyecto](#estado-del-proyecto-🏅)
+- [Diagrama de Clases](#flujo-de-clases-🛠️)
+
 
 ## Reglas 📜
 
@@ -18,7 +26,7 @@ Puedes consultar una guía completa de las reglas del ajedrez [aquí](https://es
 ## Descarga 🚀
 
 ```bash
-git clone https://github.com/tu_usuario/ajedrez-augusto-giuffrida.git
+git clone https://github.com/um-computacion-tm/ajedrez-2024-AugustoGiuffrida.git
 ```
 
 ## Ejecutar el juego 🎮
@@ -50,8 +58,8 @@ graph TD;
     Pawn-->Pieces;
     King-->Pieces;
     Queen-->Pieces;
-    Menu-->Cli;
     Chess-->Cli;
+    Menu-->Cli;
     Board-->Chess;
     Pieces-->Chess;
     Cell-->Board;
