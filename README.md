@@ -9,14 +9,17 @@ Aquí tienes un simple flujo de comunicación entre clases:
 
 ```mermaid
 graph TD;
-    Main-->Chess;
-    Main-->Tool;
-    Chess-->Board;
-    Chess-->Player;
-    Chess-->Piece;
-    Board-->Cell;
-    Cell-->Piece;
-
+    Menu-->Cli;
+    Chess-->Cli;
+    Board-->Chess;
+    Pieces-->Chess;
+    Cell-->Board;
+    Rook-->Pieces;
+    Bishop-->Pieces;
+    Knight-->Pieces;
+    Pawn-->Pieces;
+    King-->Pieces;
+    Queen-->Pieces;
 ```
 
 
