@@ -19,11 +19,11 @@ class Cli:
                 old_pos = self.validate_input("Enter initial position (e.g 'a2') or type 'exit' to quit: ")
                 if old_pos == "exit":
                     print("Exiting the game.")
-                    break
+                    exit()
                 new_pos = self.validate_input("Enter final position (e.g 'a3') or type 'exit' to quit: ")
                 if new_pos == "exit":
                     print("Exiting the game.")
-                    break
+                    exit()
                 chess.play(old_pos, new_pos)
             except InvalidPlay as e:
                 os.system('cls' if os.name == 'nt' else 'clear')
